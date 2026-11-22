@@ -66,7 +66,6 @@
             position: relative;
         }
 
-        /* Sidebar Drawer */
         .sidebar {
             width: 290px;
             background-color: var(--sidebar-bg);
@@ -138,7 +137,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Main Body */
         .main-wrapper {
             flex: 1;
             display: flex;
@@ -214,10 +212,16 @@
             border: 1px solid var(--border-color);
         }
 
+        .btn-logout {
+            background: #ef4444 !important;
+            border-color: #dc2626 !important;
+            color: #fff !important;
+        }
+
         .bot-shield-pill {
-            background: #1e1b4b;
-            border: 1px solid #4338ca;
-            color: #a5b4fc;
+            background: #064e3b;
+            border: 1px solid #10b981;
+            color: #34d399;
             padding: 5px 12px;
             border-radius: 12px;
             font-size: 0.78rem;
@@ -225,9 +229,9 @@
         }
 
         [data-theme="light"] .bot-shield-pill {
-            background: #e0e7ff;
-            border: 1px solid #818cf8;
-            color: #3730a3;
+            background: #d1fae5;
+            border: 1px solid #059669;
+            color: #065f46;
         }
 
         .content-area {
@@ -278,21 +282,6 @@
             border: 1px solid #bfdbfe;
         }
 
-        .play-limit-tag {
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            margin-left: auto;
-        }
-        .tag-available { background: #064e3b; color: #34d399; }
-        .tag-cooldown { background: #78350f; color: #fde047; }
-        .tag-exhausted { background: #7f1d1d; color: #fca5a5; }
-
-        [data-theme="light"] .tag-available { background: #d1fae5; color: #065f46; }
-        [data-theme="light"] .tag-cooldown { background: #fef3c7; color: #92400e; }
-        [data-theme="light"] .tag-exhausted { background: #fee2e2; color: #991b1b; }
-
         .btn-play {
             background-color: var(--primary);
             color: #fff;
@@ -312,13 +301,6 @@
             background-color: var(--primary-hover);
         }
 
-        .btn-play.disabled {
-            background-color: #64748b !important;
-            color: #cbd5e1 !important;
-            cursor: not-allowed !important;
-        }
-
-        /* Leaderboard Table */
         .leaderboard-table {
             width: 100%;
             border-collapse: collapse;
@@ -362,7 +344,6 @@
         .rank-3 { background: #b45309; color: #fff; }
         .rank-other { background: var(--input-bg); color: var(--text-muted); }
 
-        /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -523,19 +504,20 @@
         <ul class="nav-menu">
             <div class="nav-divider" data-i18n="nav_games_section">Games Arena</div>
             <li class="nav-item active" id="nav_arena" onclick="switchView('game_arena')">🎮 <span data-i18n="nav_all_games">All Games Arena</span></li>
-            <li class="nav-item" id="nav_grammar" onclick="tryPlayGame('Basic Grammar Master Game', 'grammar')">📖 <span data-i18n="game_grammar">Basic Grammar Game</span></li>
-            <li class="nav-item" id="nav_banker" onclick="tryPlayGame('Game For Bankers', 'banker')">🏦 <span data-i18n="game_banker">Game For Bankers</span></li>
-            <li class="nav-item" id="nav_affiliate" onclick="tryPlayGame('MassBD Affiliate Game', 'affiliate')">💼 <span data-i18n="game_affiliate">MassBD Affiliate</span></li>
-            <li class="nav-item" id="nav_ielts" onclick="tryPlayGame('IELTS Master Game', 'ielts')">✈️ <span data-i18n="game_ielts">IELTS Game</span></li>
-            <li class="nav-item" id="nav_admission" onclick="tryPlayGame('University & Medical Admission Game', 'admission')">🎓 <span data-i18n="game_admission">Admission Arena</span></li>
-            <li class="nav-item" id="nav_bcs" onclick="tryPlayGame('BCS & Govt Job Arena', 'bcs')">🏛️ <span data-i18n="game_bcs">BCS & Govt Job</span></li>
+            <li class="nav-item" id="nav_bcs" onclick="openGameSelection('Job Preparation Arena (BCS & Govt)', 'bcs')">🏛️ <span data-i18n="game_bcs">Job Preparation Arena</span></li>
+            <li class="nav-item" id="nav_grammar" onclick="openGameSelection('Basic Grammar Master Game', 'grammar')">📖 <span data-i18n="game_grammar">Basic Grammar Game</span></li>
+            <li class="nav-item" id="nav_banker" onclick="openGameSelection('Game For Bankers', 'banker')">🏦 <span data-i18n="game_banker">Game For Bankers</span></li>
+            <li class="nav-item" id="nav_affiliate" onclick="openGameSelection('MassBD Affiliate Game', 'affiliate')">💼 <span data-i18n="game_affiliate">MassBD Affiliate</span></li>
+            <li class="nav-item" id="nav_ielts" onclick="openGameSelection('IELTS Master Game', 'ielts')">✈️ <span data-i18n="game_ielts">IELTS Game</span></li>
+            <li class="nav-item" id="nav_admission" onclick="openGameSelection('University & Medical Admission Game', 'admission')">🎓 <span data-i18n="game_admission">Admission Arena</span></li>
             
             <div class="nav-divider" data-i18n="nav_user_section">User & Leaderboard</div>
             <li class="nav-item" id="nav_global" onclick="switchView('global_position')">🌍 <span data-i18n="nav_global">Global Position (Top 20)</span></li>
-            <li class="nav-item" id="nav_portal" onclick="switchView('user_portal')">👤 <span data-i18n="nav_portal">User Portal & Limit</span></li>
+            <li class="nav-item" id="nav_portal" onclick="switchView('user_portal')">👤 <span data-i18n="nav_portal">User Portal</span></li>
             <li class="nav-item" id="nav_report" onclick="switchView('my_report')">📊 <span data-i18n="nav_report">My Report</span></li>
             <li class="nav-item" id="nav_deposit" onclick="switchView('deposit_view')">💳 <span data-i18n="nav_deposit">Deposit / Payment</span></li>
             <li class="nav-item" id="nav_admin" onclick="switchView('admin_panel')">🛡️ <span data-i18n="nav_admin">Admin Panel</span></li>
+            <li class="nav-item" style="color:#ef4444;" onclick="handleUserLogout()">🚪 <span data-i18n="btn_logout">লগআউট (Logout)</span></li>
         </ul>
         <div style="padding: 15px 20px; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
             <div><strong>Admin:</strong> Anwar</div>
@@ -554,10 +536,13 @@
                 <button class="top-action-btn theme-toggle-btn" onclick="toggleTheme()">
                     <span id="themeBtnText">🌙 Dark</span>
                 </button>
+                <button class="top-action-btn btn-logout" onclick="handleUserLogout()">
+                    🚪 <span data-i18n="btn_logout">Logout</span>
+                </button>
             </div>
             <div class="wallet-badges">
-                <span class="bot-shield-pill" data-i18n="bot_shield_badge">🛡️ 4h Cooldown / 3 Plays Active</span>
-                <div class="wallet-pill">🎮 Demo: <span id="demoPoints" style="color:#60a5fa;">100 Pts</span></div>
+                <span class="bot-shield-pill" data-i18n="bot_shield_badge">⚡ নো কুলডাউন / আনলিমিটেড প্র্যাকটিস</span>
+                <div class="wallet-pill">🎮 Demo: <span id="demoPoints" style="color:#60a5fa;">10,000 Pts</span></div>
                 <div class="wallet-pill">💰 Real: <span id="realBalance" style="color:#10b981;">৳00.00</span></div>
             </div>
         </header>
@@ -565,14 +550,11 @@
         <section class="content-area">
             <!-- View: Game Arena -->
             <div id="view_game_arena">
-                <div style="margin-bottom: 20px; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:10px;">
-                    <div>
-                        <h2 data-i18n="arena_title">🎯 Educational Exam & Tournament Arena</h2>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="arena_subtitle">
-                            ⏱️ নিয়ম: ১টি গেম প্রতি ৪ ঘণ্টায় মাত্র ১ বার | লাইফটাইমে মোট ৩ বার | আপডেট করলে পুনরায় ৩ বার সুযোগ।
-                        </p>
-                    </div>
-                    <button class="btn-play" onclick="resetUserLimitsForDemo()" style="background:#4f46e5; font-size:0.85rem; padding:6px 14px;" data-i18n="btn_renew_limit">🔄 অ্যাকাউন্ট আপডেট / লিমিট রিনিউ</button>
+                <div style="margin-bottom: 20px;">
+                    <h2 data-i18n="arena_title">🎯 Educational Exam & Tournament Arena</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="arena_subtitle">
+                        ⏱️ প্রতি প্রশ্ন: ২৮ সেকেন্ড | নো স্কিপ | সঠিক উত্তর: +৫ পয়েন্ট (+০.২৫৳) | ভুল উত্তর: -১০ পয়েন্ট (-০.৫০৳)
+                    </p>
                 </div>
 
                 <div class="grid-cards" id="arenaGridContainer"></div>
@@ -608,20 +590,16 @@
                 </div>
             </div>
 
-            <!-- View: User Portal & Limits -->
+            <!-- View: User Portal -->
             <div id="view_user_portal" style="display: none;">
-                <h2 data-i18n="portal_title">👤 User Portal & Lifetime Quota Status</h2>
+                <h2 data-i18n="portal_title">👤 User Portal & Candidate Profile</h2>
                 <div style="background:var(--bg-card); padding:24px; border-radius:12px; border:1px solid var(--border-color); max-width:650px; margin-top:15px; box-shadow:var(--shadow-card);">
                     <p><strong data-i18n="lbl_cand_name">Candidate Name:</strong> Md. Student Account</p>
                     <p><strong data-i18n="lbl_cand_phone">Phone:</strong> 017XXXXXXXX</p>
-                    <p><strong data-i18n="lbl_cand_tier">Account Tier:</strong> <span id="portalAccountTier" style="color:#60a5fa; font-weight:700;">Standard User</span></p>
-                    <p data-i18n="lbl_quota_rules">কুইজ খেলার নিয়ম: প্রতি ৪ ঘণ্টায় ১ বার এবং লাইফটাইমে মোট ৩ বার।</p>
+                    <p><strong>Demo Bonus Points:</strong> <span style="color:#60a5fa; font-weight:700;">10,000 Pts (Granted)</span></p>
+                    <p><strong data-i18n="lbl_cand_tier">Account Tier:</strong> <span id="portalAccountTier" style="color:#10b981; font-weight:700;">Active Standard (Unlimited Play)</span></p>
                     <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
-                    <h4 style="margin-bottom:10px; color:#d97706;" data-i18n="lbl_upgrade_header">🔄 অ্যাকাউন্ট আপডেট অপশন:</h4>
-                    <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:15px;" data-i18n="lbl_upgrade_desc">
-                        আপনার ৩ বারের লিমিট শেষ হয়ে গেলে অথবা নতুন সাইকেল শুরু করতে নিচে ক্লিক করে অ্যাকাউন্ট আপডেট করুন।
-                    </p>
-                    <button class="btn-play" onclick="resetUserLimitsForDemo()" style="background:#10b981;" data-i18n="btn_do_upgrade">🔄 অ্যাকাউন্ট আপডেট করুন (Reset 3-Plays Quota)</button>
+                    <button class="btn-play btn-logout" onclick="handleUserLogout()" style="width:100%;">🚪 সাইন আউট / লগআউট করুন</button>
                 </div>
             </div>
 
@@ -657,9 +635,8 @@
             <!-- View: Admin Panel -->
             <div id="view_admin" style="display: none;">
                 <h2 data-i18n="admin_title">🛡️ এডমিন ম্যানেজমেন্ট প্যানেল</h2>
-                <div style="margin: 20px 0; display:flex; gap:10px; flex-wrap:wrap;">
+                <div style="margin: 20px 0;">
                     <button class="btn-play" onclick="downloadQuizReportCSV()" data-i18n="btn_download_csv">📥 কুইজ রিপোর্ট CSV ডাউনলোড</button>
-                    <button class="btn-play" onclick="resetUserLimitsForDemo()" style="background:#ef4444;" data-i18n="btn_admin_reset">⚡ অল ইউজার লিমিট রিসেট (Admin)</button>
                 </div>
                 <div id="adminHistoryTable" style="margin-top:15px; overflow-x:auto;">
                     <table style="width:100%; border-collapse:collapse; text-align:left;">
@@ -691,8 +668,8 @@
         <div style="margin-bottom: 15px;">
             <label style="color:var(--text-muted); font-size:0.9rem;" data-i18n="lbl_select_set">সেট নির্বাচন (Set):</label>
             <select id="selSet" style="width:100%; padding:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:6px; margin-top:5px;">
-                <option value="1">Set 01 (Official 25-30 Questions)</option>
-                <option value="2">Set 02 (Comprehensive Practice Set)</option>
+                <option value="1">Set 01 (Official 30 Questions)</option>
+                <option value="2">Set 02 (Comprehensive 30 Questions)</option>
             </select>
         </div>
 
@@ -731,7 +708,7 @@
         <div class="quiz-timer-bar">
             <div>
                 <span id="quizGameTitle" style="font-weight:700; color:#3b82f6;">Game</span>
-                <span id="quizProgress" style="font-size:0.85rem; color:var(--text-muted); margin-left:10px;">Q 1/25</span>
+                <span id="quizProgress" style="font-size:0.85rem; color:var(--text-muted); margin-left:10px;">Q 1/30</span>
             </div>
             <div class="timer-badge">⏱️ <span id="timerSec">28</span>s</div>
         </div>
@@ -795,18 +772,39 @@
 </div>
 
 <script>
-// --- THEME SYSTEM (Dark Mode <-> Light Mode) ---
+// --- DEMO POINTS (10,000 PTS FOR ALL USERS) ---
+function initDemoPoints() {
+    let pts = localStorage.getItem('edu_demo_points');
+    if (!pts || parseInt(pts) < 10000) {
+        pts = '10000';
+        localStorage.setItem('edu_demo_points', pts);
+    }
+    document.getElementById('demoPoints').innerText = parseInt(pts).toLocaleString() + " Pts";
+}
+
+function handleUserLogout() {
+    const msg = currentLang === 'bn' ? 
+        "আপনি কি নিশ্চিতভাবে লগআউট করতে চান?" : 
+        "Are you sure you want to log out?";
+    if (confirm(msg)) {
+        alert(currentLang === 'bn' ? 
+            "✅ সফলভাবে লগআউট সম্পন্ন হয়েছে!" : 
+            "✅ Logged out successfully!"
+        );
+        switchView('game_arena');
+    }
+}
+
+// --- THEME SYSTEM ---
 let currentTheme = localStorage.getItem('edu_theme') || 'dark';
 
 function applyTheme() {
     document.documentElement.setAttribute('data-theme', currentTheme);
     const themeBtn = document.getElementById('themeBtnText');
     if (themeBtn) {
-        if (currentLang === 'bn') {
-            themeBtn.innerText = currentTheme === 'dark' ? '🌙 ডার্ক' : '☀️ লাইট';
-        } else {
-            themeBtn.innerText = currentTheme === 'dark' ? '🌙 Dark' : '☀️ Light';
-        }
+        themeBtn.innerText = currentTheme === 'dark' ? 
+            (currentLang === 'bn' ? '🌙 ডার্ক' : '🌙 Dark') : 
+            (currentLang === 'bn' ? '☀️ লাইট' : '☀️ Light');
     }
 }
 
@@ -816,27 +814,26 @@ function toggleTheme() {
     applyTheme();
 }
 
-// --- BILINGUAL DICTIONARY (Bangla <-> English) ---
+// --- BILINGUAL DICTIONARY ---
 const TRANSLATIONS = {
     bn: {
         nav_games_section: "গেমস এরিনা",
         nav_all_games: "সকল গেম এরিনা",
+        game_bcs: "জব প্রিপারেশন এরিনা (BCS)",
         game_grammar: "বেসিক গ্রামার গেম",
         game_banker: "গেম ফর ব্যাংকার্স",
         game_affiliate: "ম্যাসবিডি অ্যাফিলিয়েট",
         game_ielts: "আইইএলটিএস গেম",
         game_admission: "ভর্তি পরীক্ষা এরিনা",
-        game_bcs: "বিসিএস ও সরকারি চাকরি",
         nav_user_section: "ইউজার ও লিডারবোর্ড",
         nav_global: "গ্লোবাল পজিশন (শীর্ষ ২০)",
-        nav_portal: "ইউজার পোর্টাল ও লিমিট",
+        nav_portal: "ইউজার পোর্টাল",
         nav_report: "আমার রিপোর্ট",
         nav_deposit: "ডিপোজিট / পেমেন্ট",
         nav_admin: "এডমিন প্যানেল",
-        bot_shield_badge: "🛡️ ৪ ঘণ্টা কুলডাউন / ৩ বার লিমিট সক্রিয়",
+        bot_shield_badge: "⚡ নো কুলডাউন / আনলিমিটেড প্র্যাকটিস",
         arena_title: "🎯 এডুকেশনাল এক্সাম ও টুর্নামেন্ট এরিনা",
-        arena_subtitle: "⏱️ নিয়ম: ১টি গেম প্রতি ৪ ঘণ্টায় মাত্র ১ বার | লাইফটাইমে মোট ৩ বার | আপডেট করলে পুনরায় ৩ বার সুযোগ।",
-        btn_renew_limit: "🔄 অ্যাকাউন্ট আপডেট / লিমিট রিনিউ",
+        arena_subtitle: "⏱️ প্রতি প্রশ্ন: ২৮ সেকেন্ড | নো স্কিপ | সঠিক উত্তর: +৫ পয়েন্ট (+০.২৫৳) | ভুল উত্তর: -১০ পয়েন্ট (-০.৫০৳)",
         global_title: "🌍 গ্লোবাল পজিশন ও শীর্ষ ২০ প্রতিযোগী",
         global_subtitle: "বিশ্বজুড়ে শিক্ষার্থীদের লাইভ র‍্যাংকিং ও পয়েন্ট তালিকা (Top 20)",
         th_rank: "র‍্যাংক",
@@ -846,14 +843,10 @@ const TRANSLATIONS = {
         th_points: "মোট পয়েন্ট",
         th_taka: "অর্জিত টাকা (BDT)",
         th_status: "স্ট্যাটাস",
-        portal_title: "👤 ইউজার পোর্টাল ও কোটা স্ট্যাটাস",
+        portal_title: "👤 ইউজার পোর্টাল ও প্রোফাইল",
         lbl_cand_name: "শিক্ষার্থীর নাম:",
         lbl_cand_phone: "মোবাইল নাম্বার:",
         lbl_cand_tier: "অ্যাকাউন্ট স্ট্যাটাস:",
-        lbl_quota_rules: "কুইজ খেলার নিয়ম: প্রতি ৪ ঘণ্টায় ১ বার এবং লাইফটাইমে মোট ৩ বার।",
-        lbl_upgrade_header: "🔄 অ্যাকাউন্ট আপডেট অপশন:",
-        lbl_upgrade_desc: "আপনার ৩ বারের লিমিট শেষ হয়ে গেলে অথবা নতুন সাইকেল শুরু করতে নিচে ক্লিক করে অ্যাকাউন্ট আপডেট করুন।",
-        btn_do_upgrade: "🔄 অ্যাকাউন্ট আপডেট করুন (Reset 3-Plays Quota)",
         report_title: "📊 আমার পরীক্ষার পারফরম্যান্স রিপোর্ট",
         report_empty: "এখনও কোনো ব্যক্তিগত রিপোর্ট জমা হয়নি। পরীক্ষা সম্পন্ন করার পর এখানে রেকর্ড আপডেট হবে।",
         deposit_title: "💳 রিয়েল টুর্নামেন্ট ডিপোজিট ফর্ম",
@@ -863,7 +856,6 @@ const TRANSLATIONS = {
         btn_submit_dep: "ডিপোজিট সাবমিট করুন",
         admin_title: "🛡️ এডমিন ম্যানেজমেন্ট প্যানেল",
         btn_download_csv: "📥 কুইজ রিপোর্ট CSV ডাউনলোড",
-        btn_admin_reset: "⚡ অল ইউজার লিমিট রিসেট (Admin)",
         lbl_select_set: "সেট নির্বাচন (Set):",
         lbl_select_level: "লেভেল নির্বাচন (7 Tiers):",
         lbl_select_mode: "মোড নির্বাচন:",
@@ -881,27 +873,26 @@ const TRANSLATIONS = {
         res_current_total: "🏆 আপনার বর্তমান ব্যালেন্স:",
         prompt_play_next: "❓ আপনি কি পরবর্তী গেম খেলতে চান?",
         btn_return_arena: "🏠 গেম এরিনায় ফিরুন",
-        play_btn: "🚀 গেম খেলুন"
+        btn_logout: "লগআউট"
     },
     en: {
         nav_games_section: "Games Arena",
         nav_all_games: "All Games Arena",
+        game_bcs: "Job Preparation Arena (BCS)",
         game_grammar: "Basic Grammar Game",
         game_banker: "Game For Bankers",
         game_affiliate: "MassBD Affiliate",
         game_ielts: "IELTS Master Game",
         game_admission: "Admission Arena",
-        game_bcs: "BCS & Govt Job",
         nav_user_section: "User & Leaderboard",
         nav_global: "Global Position (Top 20)",
-        nav_portal: "User Portal & Limit",
+        nav_portal: "User Portal",
         nav_report: "My Report",
         nav_deposit: "Deposit / Payment",
         nav_admin: "Admin Panel",
-        bot_shield_badge: "🛡️ 4h Cooldown / 3 Plays Active",
+        bot_shield_badge: "⚡ No Cooldown / Unlimited Practice",
         arena_title: "🎯 Educational Exam & Tournament Arena",
-        arena_subtitle: "⏱️ Rules: 1 Game per 4 hours | 3 Times lifetime | Update account to repeat quota.",
-        btn_renew_limit: "🔄 Update Account / Renew Limit",
+        arena_subtitle: "⏱️ 28s per Question | No Skip | Correct: +5 Pts (+৳0.25) | Wrong: -10 Pts (-৳0.50)",
         global_title: "🌍 Global Position & Top 20 Candidates",
         global_subtitle: "Live Global Ranking and Score Leaderboard (Top 20)",
         th_rank: "Rank",
@@ -911,14 +902,10 @@ const TRANSLATIONS = {
         th_points: "Total Points",
         th_taka: "Earned BDT",
         th_status: "Status",
-        portal_title: "👤 User Portal & Lifetime Quota Status",
+        portal_title: "👤 User Portal & Candidate Profile",
         lbl_cand_name: "Candidate Name:",
         lbl_cand_phone: "Mobile Phone:",
         lbl_cand_tier: "Account Status:",
-        lbl_quota_rules: "Gameplay Rule: Once per 4 hours & Max 3 times lifetime.",
-        lbl_upgrade_header: "🔄 Account Update Option:",
-        lbl_upgrade_desc: "When your 3 plays are finished, update account below to reset your quota.",
-        btn_do_upgrade: "🔄 Update Account (Reset 3-Plays Quota)",
         report_title: "📊 My Exam Performance Report",
         report_empty: "No exam records found yet. Complete quizzes to see analytics here.",
         deposit_title: "💳 Real Tournament Deposit Form",
@@ -928,7 +915,6 @@ const TRANSLATIONS = {
         btn_submit_dep: "Submit Deposit Request",
         admin_title: "🛡️ Admin Management Panel",
         btn_download_csv: "📥 Download Quiz Report CSV",
-        btn_admin_reset: "⚡ Reset All User Limits (Admin)",
         lbl_select_set: "Select Set:",
         lbl_select_level: "Select Level (7 Tiers):",
         lbl_select_mode: "Select Mode:",
@@ -946,7 +932,7 @@ const TRANSLATIONS = {
         res_current_total: "🏆 Your Updated Balance:",
         prompt_play_next: "❓ Do you want to play the next game?",
         btn_return_arena: "🏠 Return to Game Arena",
-        play_btn: "🚀 Play Game"
+        btn_logout: "Logout"
     }
 };
 
@@ -956,9 +942,7 @@ function applyLanguage() {
     const dict = TRANSLATIONS[currentLang];
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (dict[key]) {
-            el.innerText = dict[key];
-        }
+        if (dict[key]) el.innerText = dict[key];
     });
 
     document.getElementById('langBtnText').innerText = currentLang === 'bn' ? 'বাংলা (BN)' : 'English (EN)';
@@ -972,91 +956,14 @@ function toggleLanguage() {
     applyLanguage();
 }
 
-// --- GAME LIMIT & 4-HOUR COOLDOWN SYSTEM ---
-const COOLDOWN_HOURS = 4;
-const MAX_LIFETIME_PLAYS = 3;
-
-function getGameTracker() {
-    const defaultData = { isUpdatedUser: false, games: {} };
-    try {
-        const stored = localStorage.getItem('edu_game_play_tracker');
-        return stored ? JSON.parse(stored) : defaultData;
-    } catch(e) {
-        return defaultData;
-    }
-}
-
-function saveGameTracker(tracker) {
-    localStorage.setItem('edu_game_play_tracker', JSON.stringify(tracker));
-    renderArenaCards();
-}
-
-function checkGamePlayEligibility(gameKey) {
-    const tracker = getGameTracker();
-    const gameStat = tracker.games[gameKey] || { playCount: 0, lastPlayed: 0 };
-    const now = Date.now();
-
-    if (gameStat.playCount >= MAX_LIFETIME_PLAYS) {
-        return {
-            allowed: false,
-            reason: 'exhausted',
-            message: currentLang === 'bn' ?
-                `🚫 লিমিট শেষ: আপনি এই গেমটি সর্বোচ্চ ${MAX_LIFETIME_PLAYS} বার খেলেছেন! আরও খেলতে অ্যাকাউন্ট আপডেট করুন।` :
-                `🚫 Limit Reached: You have played this game ${MAX_LIFETIME_PLAYS} times! Please update your account to play more.`
-        };
-    }
-
-    if (gameStat.lastPlayed > 0) {
-        const diffMs = now - gameStat.lastPlayed;
-        const requiredMs = COOLDOWN_HOURS * 60 * 60 * 1000;
-        if (diffMs < requiredMs) {
-            const remainingMs = requiredMs - diffMs;
-            const hours = Math.floor(remainingMs / (1000 * 60 * 60));
-            const mins = Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
-            return {
-                allowed: false,
-                reason: 'cooldown',
-                message: currentLang === 'bn' ?
-                    `⏳ ৪ ঘণ্টার কুলডাউন সক্রিয়! আপনি এই গেমটি ৪ ঘণ্টায় মাত্র ১ বার খেলতে পারবেন।\n\nপরবর্তী সুযোগ পাবেন: ${hours} ঘণ্টা ${mins} মিনিট পর।` :
-                    `⏳ 4-Hour Cooldown Active! You can play this game only once per 4 hours.\n\nNext available in: ${hours}h ${mins}m.`
-            };
-        }
-    }
-
-    return { allowed: true, count: gameStat.playCount };
-}
-
-function recordGamePlayed(gameKey) {
-    const tracker = getGameTracker();
-    if (!tracker.games[gameKey]) {
-        tracker.games[gameKey] = { playCount: 0, lastPlayed: 0 };
-    }
-    tracker.games[gameKey].playCount += 1;
-    tracker.games[gameKey].lastPlayed = Date.now();
-    saveGameTracker(tracker);
-}
-
-function resetUserLimitsForDemo() {
-    const tracker = getGameTracker();
-    tracker.isUpdatedUser = true;
-    tracker.games = {};
-    saveGameTracker(tracker);
-    alert(currentLang === 'bn' ? 
-        '✅ আপনার অ্যাকাউন্ট সফলভাবে আপডেট করা হয়েছে!\nসকল গেমের খেলার সুযোগ পুনরায় রিসেট করা হলো (৪ ঘণ্টায় ১ বার ও মোট ৩ বার)।' :
-        '✅ Your account has been updated successfully!\nAll game quotas have been reset (1 per 4h & 3 times total).'
-    );
-    document.getElementById('portalAccountTier').innerText = "Premium Updated (Active)";
-    document.getElementById('portalAccountTier').style.color = "#10b981";
-}
-
 // --- All 10 Games Meta List ---
 const GAMES_CATALOG = [
+    { key: "bcs", title: "Job Preparation Arena (BCS & Govt)", category: "Competitive Exam", desc: "BCS, Bank, Primary & Govt Job Preliminary Simulator (Set 01 & Set 02 - 30+30 Questions)." },
     { key: "grammar", title: "Basic Grammar Master Game", category: "English & Grammar", desc: "Articles, Prepositions, Tenses, Subjunctive Mood, Voice & Idioms (Official 25 Questions)." },
     { key: "banker", title: "Game For Bankers", category: "Finance & Banking", desc: "Bank Math, CRR, SLR, General Banking, LC, Forex, CAMELS Rating & Financial Analysis." },
     { key: "affiliate", title: "MassBD Affiliate Game", category: "Digital Sales & SEO", desc: "CPA, Cookie tracking, Referral link, CTR, SEO, কমিশন ও ডিজিটাল সেলিং (massbd.org)।" },
     { key: "ielts", title: "IELTS Master Game", category: "Language Proficiency", desc: "Academic & General Training Vocabulary, Collocations, Reading Tricks & Grammar." },
     { key: "admission", title: "University & Medical Admission", category: "Higher Education", desc: "Physics, Chemistry, Biology, Higher Math & Medical-Engineering admission test model." },
-    { key: "bcs", title: "BCS & Govt Job Arena", category: "Competitive Exam", desc: "Bangladesh Affairs, International Relations, Math, Science & BCS Preliminary Model." },
     { key: "freelancing", title: "Online Income & Freelancing", category: "Freelancing Skills", desc: "Marketplace rules, Client handling, CPA strategies, Remote work & Sales conversion." },
     { key: "software", title: "Skills & Software Selling", category: "IT & Tech", desc: "Software licenses, SaaS sales, Tech support, CMS & Website management fundamentals." },
     { key: "school", title: "School Foundation (Class 1-10)", category: "School Level", desc: "Basic Arithmetic, Elementary Science, General Knowledge & Kids IQ Development." },
@@ -1066,54 +973,18 @@ const GAMES_CATALOG = [
 function renderArenaCards() {
     const container = document.getElementById('arenaGridContainer');
     if (!container) return;
-    const tracker = getGameTracker();
     const btnLabel = currentLang === 'bn' ? '🚀 গেম খেলুন' : '🚀 Play Game';
 
-    container.innerHTML = GAMES_CATALOG.map(g => {
-        const check = checkGamePlayEligibility(g.key);
-        const playedCount = tracker.games[g.key] ? tracker.games[g.key].playCount : 0;
-        
-        let tagHtml = currentLang === 'bn' ? 
-            `<span class="play-limit-tag tag-available">🎯 খেলা হয়েছে: ${playedCount}/${MAX_LIFETIME_PLAYS}</span>` :
-            `<span class="play-limit-tag tag-available">🎯 Played: ${playedCount}/${MAX_LIFETIME_PLAYS}</span>`;
-            
-        let btnDisabledClass = '';
-        if (check.reason === 'exhausted') {
-            tagHtml = currentLang === 'bn' ? 
-                `<span class="play-limit-tag tag-exhausted">🔒 ৩/৩ লিমিট শেষ</span>` :
-                `<span class="play-limit-tag tag-exhausted">🔒 3/3 Limit Reached</span>`;
-            btnDisabledClass = 'disabled';
-        } else if (check.reason === 'cooldown') {
-            tagHtml = currentLang === 'bn' ? 
-                `<span class="play-limit-tag tag-cooldown">⏳ ৪ ঘণ্টা কুলডাউন</span>` :
-                `<span class="play-limit-tag tag-cooldown">⏳ 4h Cooldown</span>`;
-            btnDisabledClass = 'disabled';
-        }
-
-        return `
-            <div class="game-card">
-                <div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span class="card-header-badge">${g.category}</span>
-                        ${tagHtml}
-                    </div>
-                    <h3 style="margin: 10px 0 4px 0; color:var(--text-main);">${g.title}</h3>
-                    <p style="color: var(--text-muted); font-size: 0.85rem;">${g.desc}</p>
-                </div>
-                <button class="btn-play ${btnDisabledClass}" onclick="tryPlayGame('${g.title}', '${g.key}')">${btnLabel}</button>
+    container.innerHTML = GAMES_CATALOG.map(g => `
+        <div class="game-card">
+            <div>
+                <span class="card-header-badge">${g.category}</span>
+                <h3 style="margin: 10px 0 4px 0; color:var(--text-main);">${g.title}</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">${g.desc}</p>
             </div>
-        `;
-    }).join('');
-}
-
-function tryPlayGame(title, key) {
-    const check = checkGamePlayEligibility(key);
-    if (!check.allowed) {
-        alert(check.message);
-        if (check.reason === 'exhausted') switchView('user_portal');
-        return;
-    }
-    openGameSelection(title, key);
+            <button class="btn-play" onclick="openGameSelection('${g.title}', '${g.key}')">${btnLabel}</button>
+        </div>
+    `).join('');
 }
 
 // --- Web Audio API Synthesizer ---
@@ -1168,7 +1039,7 @@ let questionRenderTime = 0;
 
 document.addEventListener('visibilitychange', function() {
     if (document.hidden && document.getElementById('quizModal').style.display === 'flex') {
-        alert('⚠️ Anti-Bot Warning: Switching tabs or minimizing during exam is prohibited!');
+        alert('⚠️ Anti-Bot Warning: Switching tabs during exam is prohibited!');
     }
 });
 
@@ -1184,7 +1055,7 @@ window.addEventListener('keydown', function(e) {
         (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
         e.key === 'PrintScreen') {
         e.preventDefault();
-        alert('⚠️ Security Warning: Source code inspection and screen capturing are strictly blocked!');
+        alert('⚠️ Security Warning: Screen capture and dev tools are blocked!');
         return false;
     }
 });
@@ -1244,7 +1115,6 @@ function filterLeaderboard() {
     renderGlobalLeaderboard(filtered);
 }
 
-// --- Navigation ---
 function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('open');
     document.getElementById('backdrop').classList.toggle('active');
@@ -1288,6 +1158,72 @@ function switchView(viewName) {
 
 // --- Question Bank ---
 const QUESTION_DATABASE = {
+    bcs: {
+        set1: [
+            { q: "বাংলা সাহিত্যের প্রাচীনতম নিদর্শন চর্যাপদ কে আবিষ্কার করেন?", options: ["ড. মুহম্মদ শহীদুল্লাহ", "হরপ্রসাদ শাস্ত্রী", "সুনীতিকুমার চট্টোপাধ্যায়", "সুকুমার সেন"], ans: 1, level: "primary" },
+            { q: "বাংলাদেশের সংবিধানে কয়টি অনুচ্ছেদ রয়েছে?", options: ["১৩৩টি", "১৪৩টি", "১৫৩টি", "১৬৩টি"], ans: 2, level: "primary" },
+            { q: "পদ্মা সেতুর দৈর্ঘ্য কত কিলোমিটার?", options: ["৬.১৫ কিমি", "৫.৮০ কিমি", "৭.২০ কিমি", "৬.৫০ কিমি"], ans: 0, level: "primary" },
+            { q: "বঙ্গবন্ধু স্যাটেলাইট-১ কোন দেশ থেকে উৎক্ষেপণ করা হয়?", options: ["যুক্তরাষ্ট্র (ফ্লোরিডা)", "রাশিয়া", "ফ্রান্স", "চীন"], ans: 0, level: "mid" },
+            { q: "বাংলা বর্ণমালায় মাত্রাহীন বর্ণ কয়টি?", options: ["৭টি", "৮টি", "৯টি", "১০টি"], ans: 3, level: "primary" },
+            { q: "মুজিবনগর সরকার কবে শপথ গ্রহণ করে?", options: ["১০ এপ্রিল ১৯৭১", "১৭ এপ্রিল ১৯৭১", "২৬ মার্চ ১৯৭১", "১৬ ডিসেম্বর ১৯৭১"], ans: 1, level: "mid" },
+            { q: "রবীন্দ্রনাথ ঠাকুর কত সালে সাহিত্যে নোবেল পুরস্কার পান?", options: ["১৯১১", "১৯১৩", "১৯১৪", "১৯২১"], ans: 1, level: "primary" },
+            { q: "বাংলাদেশের সর্বউত্তরের উপজেলার নাম কী?", options: ["তেঁতুলিয়া", "বাংলাবান্ধা", "রুহিয়া", "পঞ্চগড় সদর"], ans: 0, level: "primary" },
+            { q: "'সূর্যদীঘল বাড়ী' উপন্যাসটির রচয়িতা কে?", options: ["আবু ইসহাক", "শওকত ওসমান", "জহির রায়হান", "সৈয়দ ওয়ালীউল্লাহ"], ans: 0, level: "mid" },
+            { q: "নিচের কোন নদীটি হিমালয় থেকে উৎপন্ন হয়েছে?", options: ["মেঘনা", "পদ্মা", "যমুনা", "কর্ণফুলী"], ans: 1, level: "mid" },
+            { q: "জাতিসংঘের নিরাপত্তা পরিষদের স্থায়ী সদস্য সংখ্যা কত?", options: ["৫টি", "১০টি", "১৫টি", "৭টি"], ans: 0, level: "primary" },
+            { q: "বাংলাদেশের প্রথম আদমশুমারি অনুষ্ঠিত হয় কোন সালে?", options: ["১৯৭২", "১৯৭৩", "১৯৭৪", "১৯৭৫"], ans: 2, level: "mid" },
+            { q: "কম্পিউটারের প্রধান মেমরি কোনটি?", options: ["RAM", "Hard Disk", "CD-ROM", "Pen Drive"], ans: 0, level: "primary" },
+            { q: "'অসমাপ্ত আত্মজীবনী' গ্রন্থের রচয়িতা কে?", options: ["বঙ্গবন্ধু শেখ মুজিবুর রহমান", "তাজউদ্দীন আহমদ", "মওলানা ভাসানী", "আবুল মনসুর আহমদ"], ans: 0, level: "primary" },
+            { q: "বায়ুমণ্ডলে অক্সিজেনের শতকরা পরিমাণ কত?", options: ["২০.৯৫%", "৭৮.০৯%", "০.০৩%", "১.০০%"], ans: 0, level: "mid" },
+            { q: "বাংলাদেশের একমাত্র প্রবাল দ্বীপ কোনটি?", options: ["সেন্টমার্টিন", "হাতিয়া", "সন্দ্বীপ", "মহেশখালী"], ans: 0, level: "primary" },
+            { q: "মুক্তিযুদ্ধকালে বাংলাদেশকে কয়টি সেক্টরে ভাগ করা হয়েছিল?", options: ["৯টি", "১০টি", "১১টি", "১২টি"], ans: 2, level: "primary" },
+            { q: "গ্রিনহাউস ইফেক্টের জন্য প্রধান দায়ী কোন গ্যাস?", options: ["কার্বন ডাই-অক্সাইড", "নাইট্রোজেন", "হাইড্রোজেন", "অক্সিজেন"], ans: 0, level: "primary" },
+            { q: "আন্তর্জাতিক নারী দিবস কবে পালিত হয়?", options: ["৮ মার্চ", "১ মে", "৫ জুন", "১০ ডিসেম্বর"], ans: 0, level: "primary" },
+            { q: "রক্তের গ্রুপ আবিষ্কার করেন কে?", options: ["কার্ল ল্যান্ডস্টাইনার", "আলেকজান্ডার ফ্লেমিং", "রবার্ট হুক", "লুই পাস্তুর"], ans: 0, level: "executive" },
+            { q: "শহীদ বুদ্ধিজীবী দিবস কবে পালিত হয়?", options: ["১৪ ডিসেম্বর", "১৬ ডিসেম্বর", "৭ মার্চ", "২৬ মার্চ"], ans: 0, level: "primary" },
+            { q: "কোন মুঘল সুবাদার বাংলাকে 'জান্নাতাবাদ' নামকরণ করেন?", options: ["হুমায়ুন", "আকবর", "জাহাঙ্গীর", "শাহজাহান"], ans: 0, level: "executive" },
+            { q: "SDG (টেকসই উন্নয়ন লক্ষ্যমাত্রা)-এর অভীষ্ট কয়টি?", options: ["১৫টি", "১৬টি", "১৭টি", "১৮টি"], ans: 2, level: "executive" },
+            { q: "বাংলাদেশ জাতিসংঘের কততম সদস্য রাষ্ট্র?", options: ["১৩৬তম", "১৩২তম", "১৪০তম", "১৩০তম"], ans: 0, level: "executive" },
+            { q: "আন্তর্জাতিক মাতৃভাষা দিবস হিসেবে ২১শে ফেব্রুয়ারিকে স্বীকৃতি দেয় কোন সংস্থা?", options: ["ইউনেস্কো (UNESCO)", "ইউনিসেফ", "ইউএনডিপি", "বিশ্বব্যাংক"], ans: 0, level: "mid" },
+            { q: "'লালসালু' উপন্যাসের কেন্দ্রীয় চরিত্রের নাম কী?", options: ["মজিদ", "খালেক ব্যাপারী", "রহিমা", "জমিলা"], ans: 0, level: "mid" },
+            { q: "কোন দেশ প্রথম বাংলাদেশকে স্বীকৃতি প্রদান করে?", options: ["ভুটান", "ভারত", "রাশিয়া", "যুক্তরাজ্য"], ans: 0, level: "mid" },
+            { q: "বিশ্বব্যাংকের সদর দপ্তর কোথায় অবস্থিত?", options: ["ওয়াশিংটন ডিসি", "নিউইয়র্ক", "জেনেভা", "প্যারিস"], ans: 0, level: "primary" },
+            { q: "বাংলাদেশের দীর্ঘতম নদী কোনটি?", options: ["মেঘনা", "পদ্মা", "যমুনা", "ব্রহ্মপুত্র"], ans: 0, level: "mastery" },
+            { q: "জাতীয় স্মৃতিসৌধের স্থপতি কে?", options: ["সৈয়দ মাইনুল হোসেন", "শামীম শিকদার", "হামিদুর রহমান", "মাজহারুল ইসলাম"], ans: 0, level: "mid" }
+        ],
+        set2: [
+            { q: "একটি সংখ্যার ৩ গুণের সাথে দ্বিগুণ যোগ করলে ৯০ হয়। সংখ্যাটি কত?", options: ["১৫", "১৮", "২০", "২৫"], ans: 1, level: "primary" },
+            { q: "৫টি ক্রমিক সংখ্যার যোগফল ১০০ হলে, মধ্যম সংখ্যাটি কত?", options: ["১৯", "২০", "২১", "২২"], ans: 1, level: "primary" },
+            { q: "১০% ক্ষতিতে একটি পণ্য ৪৫০ টাকায় বিক্রি করা হলে, ক্রয়মূল্য কত?", options: ["৫০০ টাকা", "৪৮০ টাকা", "৫২০ টাকা", "৫৫০ টাকা"], ans: 0, level: "mid" },
+            { q: "বৃত্তের ব্যাস ৩ গুণ বৃদ্ধি পেলে ক্ষেত্রফল কত গুণ বৃদ্ধি পাবে?", options: ["৩ গুণ", "৬ গুণ", "৯ গুণ", "১২ গুণ"], ans: 2, level: "mid" },
+            { q: "log2(8) এর মান কত?", options: ["২", "৩", "৪", "৮"], ans: 1, level: "primary" },
+            { q: "পিতা ও পুত্রের বয়সের সমষ্টি ৬০ বছর। পিতার বয়স পুত্রের বয়সের ৩ গুণ হলে পিতার বয়স কত?", options: ["৪০", "৪৫", "৫০", "৩৫"], ans: 1, level: "primary" },
+            { q: "Choose the correct spelling:", options: ["Lieutenant", "Leftenant", "Lieutanant", "Lientenant"], ans: 0, level: "mid" },
+            { q: "What is the synonym of 'Competent'?", options: ["Capable", "Lazy", "Weak", "Hostile"], ans: 0, level: "primary" },
+            { q: "A person who writes dictionaries is called a:", options: ["Lexicographer", "Calligrapher", "Biographer", "Cartographer"], ans: 0, level: "executive" },
+            { q: "Identify the antonym of 'Optimist':", options: ["Pessimist", "Pragmatist", "Altruist", "Realist"], ans: 0, level: "primary" },
+            { q: "কোন ভিটামিনের অভাবে স্কার্ভি রোগ হয়?", options: ["ভিটামিন এ", "ভিটামিন বি", "ভিটামিন সি", "ভিটামিন ডি"], ans: 2, level: "primary" },
+            { q: "মানবদেহের স্বাভাবিক তাপমাত্রা কত ডিগ্রি ফারেনহাইট?", options: ["৯৮.৪°F", "৯৮.৬°F", "৯৯.০°F", "৯৭.৮°F"], ans: 1, level: "mid" },
+            { q: "পানির স্ফুটনাঙ্ক কত ডিগ্রি সেলসিয়াস?", options: ["৯০°C", "১০০°C", "৮০°C", "১২০°C"], ans: 1, level: "primary" },
+            { q: "বাংলাদেশ ব্যাংকের প্রথম গভর্নরের নাম কী?", options: ["এ এন এম হামিদুল্লাহ", "ফখরুদ্দীন আহমদ", "ড. আতিউর রহমান", "লুৎফর রহমান সরকার"], ans: 0, level: "executive" },
+            { q: "বাংলাদেশের সংবিধানে মৌলিক অধিকার সংক্রান্ত অনুচ্ছেদ কতটি?", options: ["১৮টি", "১২টি", "১৮টি (অনুচ্ছেদ ২৭-৪৪)", "১৫টি"], ans: 2, level: "mastery" },
+            { q: "জাতীয় সংসদে সংরক্ষিত নারী আসনের সংখ্যা কত?", options: ["৪৫টি", "৫০টি", "৫৫টি", "৬০টি"], ans: 1, level: "primary" },
+            { q: "বাংলাদেশের বৃহত্তম স্থলবন্দর কোনটি?", options: ["বেনাপোল", "বুড়িমারী", "হিলি", "বাংলাবান্ধা"], ans: 0, level: "primary" },
+            { q: "বিশ্ব স্বাস্থ্য সংস্থা (WHO)-এর সদর দপ্তর কোথায়?", options: ["জেনেভা", "প্যারিস", "রোম", "ভিয়েনা"], ans: 0, level: "primary" },
+            { q: "এশিয়ার দীর্ঘতম নদীর নাম কী?", options: ["ইয়াংসিকিয়াং", "হুয়াংহো", "মেকং", "গঙ্গা"], ans: 0, level: "mid" },
+            { q: "'Gitanjali' এর ইংরেজি অনুবাদ কে করেছিলেন?", options: ["রবীন্দ্রনাথ ঠাকুর নিজে", "ডব্লিউ বি ইয়েটস", "অরবিন্দ", "টমাস হার্ডি"], ans: 0, level: "mastery" },
+            { q: "CPU-এর পূর্ণরূপ কী?", options: ["Central Processing Unit", "Central Program Unit", "Core Processing Unit", "Control Power Unit"], ans: 0, level: "primary" },
+            { q: "আইনের দৃষ্টিতে সবাই সমান—এটি সংবিধানের কত নম্বর অনুচ্ছেদ?", options: ["২৭", "২৮", "২৯", "৩১"], ans: 0, level: "executive" },
+            { q: "কোন তাপমাত্রায় সেলসিয়াস ও ফারেনহাইট স্কেল সমান পাঠ দেয়?", options: ["-৪০°", "০°", "১০০°", "-৩২°"], ans: 0, level: "mid" },
+            { q: "বিদ্যুৎ শক্তির বাণিজ্যিক একক কী?", options: ["কিলোওয়াট-ঘণ্টা (Board of Trade Unit)", "ওয়াট", "জুল", "ভোল্ট"], ans: 0, level: "mid" },
+            { q: "সবুজ পাতার কোষে সালোকসংশ্লেষণ কোথায় সম্পন্ন হয়?", options: ["ক্লোরোপ্লাস্টে", "মাইটোকন্ড্রিয়ায়", "রাইবোসোমে", "গলগি বডিতে"], ans: 0, level: "mid" },
+            { q: "ব্রহ্মপুত্র নদ হিমালয়ের কোন হিমবাহ থেকে উৎপন্ন হয়েছে?", options: ["চেমাযুংদুং", "গঙ্গোত্রী", "যমুনোত্রী", "সিয়াচেন"], ans: 0, level: "mastery" },
+            { q: "'The merchant of Venice' নাটকটির রচয়িতা কে?", options: ["William Shakespeare", "George Bernard Shaw", "John Milton", "Christopher Marlowe"], ans: 0, level: "mid" },
+            { q: "ছয় দফা দাবি কত সালে আনুষ্ঠানিকভাবে ঘোষিত হয়?", options: ["১৯৬৬", "১৯৬৯", "১৯৭০", "১৯৬২"], ans: 0, level: "primary" },
+            { q: "সুন্দরবনকে ইউনেস্কো কত সালে বিশ্ব ঐতিহ্য এলাকা (World Heritage) ঘোষণা করে?", options: ["১৯৯৭", "১৯৯৯", "২০০১", "১৯৯৫"], ans: 0, level: "executive" },
+            { q: "১ নটিক্যাল মাইল = কত কিলোমিটার?", options: ["১.৮৫২ কিমি", "১.৬১ কিমি", "২.০০ কিমি", "১.৭৫ কিমি"], ans: 0, level: "mastery" }
+        ]
+    },
     grammar: {
         set1: [
             { q: "Choose the correct article: \"She is ___ honest girl.\"", options: ["a", "an", "the", "no article"], ans: 1, level: "primary" },
@@ -1353,12 +1289,6 @@ const QUESTION_DATABASE = {
             { q: "মহাকর্ষীয় ধ্রুবক G এর মান কত?", options: ["6.673 x 10^-11 N m^2 kg^-2", "9.8 m s^-2", "3 x 10^8 m s^-1", "1.6 x 10^-19 C"], ans: 0, level: "mid" }
         ]
     },
-    bcs: {
-        set1: [
-            { q: "বঙ্গবন্ধু স্যাটেলাইট-১ কোন দেশ থেকে উৎক্ষেপণ করা হয়?", options: ["যুক্তরাষ্ট্র (ফ্লোরিডা)", "রাশিয়া", "ফ্রান্স", "চীন"], ans: 0, level: "mid" },
-            { q: "পদ্মা সেতুর দৈর্ঘ্য কত কিলোমিটার?", options: ["৬.১৫ কিমি", "৫.৮০ কিমি", "৭.২০ কিমি", "৬.৫০ কিমি"], ans: 0, level: "primary" }
-        ]
-    },
     freelancing: {
         set1: [
             { q: "ফ্রিল্যান্সিংয়ে বায়ার রিকোয়েস্টে প্রধানত কী উল্লেখ করতে হয়?", options: ["কাজের সমাধান ও অভিজ্ঞতা", "ব্যক্তিগত পরিচয়", "টাকার পরিমাণ প্রথমে", "পরিবারের বিবরণ"], ans: 0, level: "primary" }
@@ -1404,14 +1334,6 @@ function closeSelectionModal() {
 }
 
 function launchQuizFromSelection() {
-    const check = checkGamePlayEligibility(selectedGameKey);
-    if (!check.allowed) {
-        alert(check.message);
-        closeSelectionModal();
-        if (check.reason === 'exhausted') switchView('user_portal');
-        return;
-    }
-
     const setNum = document.getElementById('selSet').value;
     const level = document.getElementById('selLevel').value;
     const mode = document.getElementById('selMode').value;
@@ -1432,10 +1354,9 @@ function launchQuizFromSelection() {
         isDemoMode = true;
     }
 
-    recordGamePlayed(selectedGameKey);
     closeSelectionModal();
 
-    const gameData = QUESTION_DATABASE[selectedGameKey] || QUESTION_DATABASE['grammar'];
+    const gameData = QUESTION_DATABASE[selectedGameKey] || QUESTION_DATABASE['bcs'];
     const setQuestions = (setNum == 2 && gameData.set2) ? gameData.set2 : gameData.set1;
 
     if (level === 'all') {
@@ -1558,10 +1479,11 @@ function finishQuiz() {
 
     let totalPointsDisplay = 0;
     if (isDemoMode) {
-        let currentDemo = parseInt(document.getElementById('demoPoints').innerText) || 0;
+        let currentDemo = parseInt(localStorage.getItem('edu_demo_points') || '10000');
         let newDemo = Math.max(0, currentDemo + userScorePoints);
-        document.getElementById('demoPoints').innerText = newDemo + " Pts";
-        totalPointsDisplay = newDemo + " Pts (Demo)";
+        localStorage.setItem('edu_demo_points', newDemo);
+        document.getElementById('demoPoints').innerText = newDemo.toLocaleString() + " Pts";
+        totalPointsDisplay = newDemo.toLocaleString() + " Pts (Demo)";
     } else {
         let currentReal = parseFloat(document.getElementById('realBalance').innerText.replace('৳', '')) || 0;
         let newReal = Math.max(0, currentReal + userScoreTaka);
@@ -1583,10 +1505,10 @@ function finishQuiz() {
 
     let canPlayNext = false;
     if (isDemoMode) {
-        const demoPts = parseInt(document.getElementById('demoPoints').innerText) || 0;
+        const demoPts = parseInt(localStorage.getItem('edu_demo_points') || '10000');
         canPlayNext = demoPts >= 10;
         noticeEl.innerHTML = canPlayNext ? 
-            (currentLang === 'bn' ? `✅ আপনার প্র্যাকটিস ব্যালেন্স: <strong>${demoPts} Pts</strong> (পরবর্তী গেম খেলার জন্য পর্যাপ্ত)।` : `✅ Practice Balance: <strong>${demoPts} Pts</strong> (Available for next game).`) : 
+            (currentLang === 'bn' ? `✅ আপনার প্র্যাকটিস ব্যালেন্স: <strong>${demoPts.toLocaleString()} Pts</strong> (পরবর্তী গেম খেলার জন্য পর্যাপ্ত)।` : `✅ Practice Balance: <strong>${demoPts.toLocaleString()} Pts</strong> (Available for next game).`) : 
             (currentLang === 'bn' ? `⚠️ আপনার প্র্যাকটিস ব্যালেন্স শেষ হয়ে গেছে।` : `⚠️ Practice balance exhausted.`);
     } else {
         const realBal = parseFloat(document.getElementById('realBalance').innerText.replace('৳', '')) || 0;
@@ -1688,6 +1610,7 @@ function downloadQuizReportCSV() {
 }
 
 window.onload = function() {
+    initDemoPoints();
     applyTheme();
     applyLanguage();
     renderGlobalLeaderboard();
