@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>EDU GAME FOR ALL - OFFICIAL WORKSPACE</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -20,7 +23,6 @@
             --border-color: #242f48;
         }
 
-        /* Anti-Copy and Security Styles */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -90,14 +92,14 @@
         }
 
         .nav-item {
-            padding: 12px 16px;
+            padding: 10px 14px;
             border-radius: 8px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 0.95rem;
+            gap: 10px;
+            font-size: 0.9rem;
             color: var(--text-muted);
             transition: 0.2s;
         }
@@ -106,6 +108,15 @@
             background-color: var(--primary);
             color: #fff;
             font-weight: 600;
+        }
+
+        .nav-divider {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            color: #4b5563;
+            padding: 10px 14px 4px 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         /* Main Body */
@@ -138,7 +149,7 @@
 
         .wallet-badges {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -159,7 +170,7 @@
             background: #1e1b4b;
             border: 1px solid #4338ca;
             color: #a5b4fc;
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 12px;
             font-size: 0.78rem;
             font-weight: 600;
@@ -170,10 +181,10 @@
             flex: 1;
         }
 
-        .grid-2 {
+        .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 18px;
             margin-top: 15px;
         }
 
@@ -181,10 +192,11 @@
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 22px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            justify-content: space-between;
+            gap: 12px;
             transition: transform 0.2s, border-color 0.2s;
         }
 
@@ -208,7 +220,7 @@
             background-color: var(--primary);
             color: #fff;
             border: none;
-            padding: 10px 18px;
+            padding: 10px 16px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
@@ -223,13 +235,54 @@
             background-color: var(--primary-hover);
         }
 
+        /* Leaderboard Table */
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .leaderboard-table th {
+            background: #1e293b;
+            color: #93c5fd;
+            padding: 14px;
+            text-align: left;
+            font-size: 0.92rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .leaderboard-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .leaderboard-table tr:hover {
+            background: #182238;
+        }
+
+        .rank-badge {
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 6px;
+            display: inline-block;
+            text-align: center;
+            min-width: 32px;
+        }
+
+        .rank-1 { background: #eab308; color: #000; }
+        .rank-2 { background: #94a3b8; color: #000; }
+        .rank-3 { background: #b45309; color: #fff; }
+        .rank-other { background: #1e293b; color: #9ca3af; }
+
         /* Modal Overlay */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.85);
             display: none;
             justify-content: center;
@@ -252,13 +305,10 @@
 
         .modal-close-btn {
             position: absolute;
-            top: 15px;
-            right: 18px;
-            background: none;
-            border: none;
+            top: 15px; right: 18px;
+            background: none; border: none;
             color: var(--text-muted);
-            font-size: 1.4rem;
-            cursor: pointer;
+            font-size: 1.4rem; cursor: pointer;
         }
 
         .quiz-timer-bar {
@@ -316,7 +366,6 @@
             color: #f87171 !important;
         }
 
-        /* Result Card */
         .result-card-box {
             background: #111827;
             border: 1px solid var(--border-color);
@@ -338,14 +387,10 @@
             border-bottom: none;
         }
 
-        /* Mobile Backdrop */
         .mobile-backdrop {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.6);
             z-index: 999;
         }
@@ -375,13 +420,21 @@
             <button class="close-drawer-btn" onclick="toggleSidebar()">✕</button>
         </div>
         <ul class="nav-menu">
-            <li class="nav-item active" onclick="switchView('game_arena')">🎮 Game Arena</li>
-            <li class="nav-item" onclick="switchView('bankers_game')">🏦 Game For Bankers</li>
-            <li class="nav-item" onclick="switchView('affiliate_game')">💼 MassBD Affiliate</li>
-            <li class="nav-item" onclick="switchView('grammar_game')">📖 Basic Grammar Game</li>
-            <li class="nav-item" onclick="switchView('user_portal')">👤 User Portal</li>
-            <li class="nav-item" onclick="switchView('deposit_view')">💳 Deposit / Payment</li>
-            <li class="nav-item" onclick="switchView('admin_panel')">🛡️ Admin Panel</li>
+            <div class="nav-divider">Games Arena</div>
+            <li class="nav-item active" id="nav_arena" onclick="switchView('game_arena')">🎮 All Games Arena</li>
+            <li class="nav-item" id="nav_grammar" onclick="openGameSelection('Basic Grammar Master Game', 'grammar')">📖 Basic Grammar Game</li>
+            <li class="nav-item" id="nav_banker" onclick="openGameSelection('Game For Bankers', 'banker')">🏦 Game For Bankers</li>
+            <li class="nav-item" id="nav_affiliate" onclick="openGameSelection('MassBD Affiliate Game', 'affiliate')">💼 MassBD Affiliate</li>
+            <li class="nav-item" id="nav_ielts" onclick="openGameSelection('IELTS Master Game', 'ielts')">✈️ IELTS Game</li>
+            <li class="nav-item" id="nav_admission" onclick="openGameSelection('University & Medical Admission Game', 'admission')">🎓 Admission Arena</li>
+            <li class="nav-item" id="nav_bcs" onclick="openGameSelection('BCS & Govt Job Arena', 'bcs')">🏛️ BCS & Govt Job</li>
+            
+            <div class="nav-divider">User & Leaderboard</div>
+            <li class="nav-item" id="nav_global" onclick="switchView('global_position')">🌍 Global Position (Top 20)</li>
+            <li class="nav-item" id="nav_portal" onclick="switchView('user_portal')">👤 User Portal</li>
+            <li class="nav-item" id="nav_report" onclick="switchView('my_report')">📊 My Report</li>
+            <li class="nav-item" id="nav_deposit" onclick="switchView('deposit_view')">💳 Deposit / Payment</li>
+            <li class="nav-item" id="nav_admin" onclick="switchView('admin_panel')">🛡️ Admin Panel</li>
         </ul>
         <div style="padding: 15px 20px; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
             <div><strong>Admin:</strong> Anwar</div>
@@ -401,47 +454,164 @@
         </header>
 
         <section class="content-area">
-            <!-- View: Game Arena -->
+            <!-- View: Game Arena (All 10 Games) -->
             <div id="view_game_arena">
                 <div style="margin-bottom: 20px;">
-                    <h2>🎯 Educational Exam & Tournament Arena</h2>
+                    <h2>🎯 Educational Exam & Tournament Arena (All Games)</h2>
                     <p style="color: var(--text-muted); font-size: 0.9rem;">
                         ⏱️ প্রতি প্রশ্ন: ২৮ সেকেন্ড | নো স্কিপ | সঠিক উত্তর: +৫ পয়েন্ট (+০.২৫৳) | ভুল উত্তর: -১০ পয়েন্ট (-০.৫০৳)
                     </p>
                 </div>
 
-                <div class="grid-2">
-                    <!-- Basic Grammar Game -->
+                <div class="grid-cards">
+                    <!-- 1. Basic Grammar Game -->
                     <div class="game-card">
-                        <span class="card-header-badge">English & Grammar</span>
-                        <h3>Basic Grammar Master Game</h3>
-                        <p style="color: var(--text-muted); font-size: 0.88rem;">Articles, Prepositions, Tenses, Subjunctive Mood, Voice & Idioms.</p>
-                        <button class="btn-play" onclick="openGameSelection('Basic Grammar Game', 'grammar')">🚀 Play Grammar Challenge</button>
+                        <div>
+                            <span class="card-header-badge">English & Grammar</span>
+                            <h3 style="margin: 8px 0 4px 0;">Basic Grammar Master Game</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Articles, Prepositions, Tenses, Subjunctive Mood, Voice & Idioms (Official 25 Questions Included).</p>
+                        </div>
+                        <button class="btn-play" onclick="openGameSelection('Basic Grammar Master Game', 'grammar')">🚀 Play Grammar Challenge</button>
                     </div>
 
-                    <!-- Game For Bankers -->
+                    <!-- 2. Game For Bankers -->
                     <div class="game-card">
-                        <span class="card-header-badge">Finance & Banking</span>
-                        <h3>Game For Bankers</h3>
-                        <p style="color: var(--text-muted); font-size: 0.88rem;">Bank Math, CRR, SLR, General Banking, LC, Forex & Financial Analysis.</p>
+                        <div>
+                            <span class="card-header-badge">Finance & Banking</span>
+                            <h3 style="margin: 8px 0 4px 0;">Game For Bankers</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Bank Math, CRR, SLR, General Banking, LC, Forex, CAMELS Rating & Financial Analysis.</p>
+                        </div>
                         <button class="btn-play" onclick="openGameSelection('Game For Bankers', 'banker')">🚀 Play Banker's Challenge</button>
                     </div>
 
-                    <!-- MassBD Affiliate Game -->
+                    <!-- 3. MassBD Affiliate Game -->
                     <div class="game-card">
-                        <span class="card-header-badge">Digital Sales & SEO</span>
-                        <h3>MassBD Affiliate Game</h3>
-                        <p style="color: var(--text-muted); font-size: 0.88rem;">CPA, Cookie tracking, Referral link, CTR, SEO, কমিশন ও ডিজিটাল সেলিং (massbd.org)।</p>
+                        <div>
+                            <span class="card-header-badge">Digital Sales & SEO</span>
+                            <h3 style="margin: 8px 0 4px 0;">MassBD Affiliate Game</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">CPA, Cookie tracking, Referral link, CTR, SEO, কমিশন ও ডিজিটাল সেলিং (massbd.org)।</p>
+                        </div>
                         <button class="btn-play" onclick="openGameSelection('MassBD Affiliate Game', 'affiliate')">🚀 Play Affiliate Game</button>
                     </div>
 
-                    <!-- Job Prep Game -->
+                    <!-- 4. IELTS Master Game -->
                     <div class="game-card">
-                        <span class="card-header-badge">Competitive Exam</span>
-                        <h3>BCS & Govt Job Arena</h3>
-                        <p style="color: var(--text-muted); font-size: 0.88rem;">General Knowledge, Math, Science & Bangladesh Affairs.</p>
+                        <div>
+                            <span class="card-header-badge">Language Proficiency</span>
+                            <h3 style="margin: 8px 0 4px 0;">IELTS Master Game</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Academic & General Training Vocabulary, Collocations, Reading Tricks & Grammar.</p>
+                        </div>
+                        <button class="btn-play" onclick="openGameSelection('IELTS Master Game', 'ielts')">🚀 Play IELTS Challenge</button>
+                    </div>
+
+                    <!-- 5. University & Medical Admission -->
+                    <div class="game-card">
+                        <div>
+                            <span class="card-header-badge">Higher Education</span>
+                            <h3 style="margin: 8px 0 4px 0;">University & Medical Admission</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Physics, Chemistry, Biology, Higher Math & Medical-Engineering admission test model.</p>
+                        </div>
+                        <button class="btn-play" onclick="openGameSelection('University & Medical Admission Game', 'admission')">🚀 Play Admission Test</button>
+                    </div>
+
+                    <!-- 6. BCS & Govt Job Arena -->
+                    <div class="game-card">
+                        <div>
+                            <span class="card-header-badge">Competitive Exam</span>
+                            <h3 style="margin: 8px 0 4px 0;">BCS & Govt Job Arena</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Bangladesh Affairs, International Relations, Math, Science & BCS Preliminary Model.</p>
+                        </div>
                         <button class="btn-play" onclick="openGameSelection('BCS & Govt Job Arena', 'bcs')">🚀 Play Job Prep Game</button>
                     </div>
+
+                    <!-- 7. MassBD Online Income & Freelancing -->
+                    <div class="game-card">
+                        <div>
+                            <span class="card-header-badge">Freelancing Skills</span>
+                            <h3 style="margin: 8px 0 4px 0;">Online Income & Freelancing</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Marketplace rules, Client handling, CPA strategies, Remote work & Sales conversion.</p>
+                        </div>
+                        <button class="btn-play" onclick="openGameSelection('Online Income & Freelancing Game', 'freelancing')">🚀 Play Freelancing Game</button>
+                    </div>
+
+                    <!-- 8. Digital Skills & Software Selling -->
+                    <div class="game-card">
+                        <div>
+                            <span class="card-header-badge">IT & Tech</span>
+                            <h3 style="margin: 8px 0 4px 0;">Skills & Software Selling</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Software licenses, SaaS sales, Tech support, CMS & Website management fundamentals.</p>
+                        </div>
+                        <button class="btn-play" onclick="openGameSelection('Skills & Software Selling Game', 'software')">🚀 Play Software Sales Game</button>
+                    </div>
+
+                    <!-- 9. Primary & High School Foundation -->
+                    <div class="game-card">
+                        <div>
+                            <span class="card-header-badge">School Level</span>
+                            <h3 style="margin: 8px 0 4px 0;">School Foundation (Class 1-10)</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Basic Arithmetic, Elementary Science, General Knowledge & Kids IQ Development.</p>
+                        </div>
+                        <button class="btn-play" onclick="openGameSelection('School Foundation Game', 'school')">🚀 Play School Game</button>
+                    </div>
+
+                    <!-- 10. General Knowledge & Brain Booster -->
+                    <div class="game-card">
+                        <div>
+                            <span class="card-header-badge">IQ & Brain Booster</span>
+                            <h3 style="margin: 8px 0 4px 0;">Brain Booster & Quick IQ</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Mental Math, Pattern Recognition, Analytical Reasoning & Quick Cognitive Puzzles.</p>
+                        </div>
+                        <button class="btn-play" onclick="openGameSelection('Brain Booster & Quick IQ', 'brain')">🚀 Play IQ Booster</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View: Global Position (Top 20 Leaderboard) -->
+            <div id="view_global_position" style="display: none;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
+                    <div>
+                        <h2>🌍 Global Position & Top 20 Candidates</h2>
+                        <p style="color: var(--text-muted); font-size:0.9rem;">বিশ্বজুড়ে শিক্ষার্থীদের লাইভ র‍্যাংকিং ও পয়েন্ট তালিকা (Top 20)</p>
+                    </div>
+                    <div>
+                        <input type="text" id="leaderSearch" onkeyup="filterLeaderboard()" placeholder="🔍 নাম বা জেলা খুঁজুন..." style="padding:8px 14px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:8px; font-size:0.9rem;">
+                    </div>
+                </div>
+
+                <div style="overflow-x:auto;">
+                    <table class="leaderboard-table" id="leaderboardTable">
+                        <thead>
+                            <tr>
+                                <th>র‍্যাংক</th>
+                                <th>প্রতিযোগীর নাম</th>
+                                <th>জেলা / অঞ্চল</th>
+                                <th>লেভেল</th>
+                                <th>মোট পয়েন্ট</th>
+                                <th>অর্জিত টাকা (BDT)</th>
+                                <th>স্ট্যাটাস</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- View: User Portal -->
+            <div id="view_user_portal" style="display: none;">
+                <h2>👤 User Portal & Candidate Profile</h2>
+                <div style="background:var(--bg-card); padding:24px; border-radius:12px; border:1px solid var(--border-color); max-width:650px; margin-top:15px;">
+                    <p><strong>Candidate Name:</strong> Md. Student Account</p>
+                    <p><strong>Phone:</strong> 017XXXXXXXX</p>
+                    <p><strong>Account Status:</strong> <span style="color:#34d399;">Active (Demo/Practice)</span></p>
+                    <p><strong>Real Game Status:</strong> <span style="color:#fbbf24;">Pending Deposit Approval</span></p>
+                </div>
+            </div>
+
+            <!-- View: My Report -->
+            <div id="view_my_report" style="display: none;">
+                <h2>📊 My Exam Performance Report</h2>
+                <div id="myReportContent" style="background:var(--bg-card); padding:20px; border-radius:12px; border:1px solid var(--border-color); margin-top:15px;">
+                    <p>এখনও কোনো ব্যক্তিগত রিপোর্ট জমা হয়নি। পরীক্ষা সম্পন্ন করার পর এখানে রেকর্ড আপডেট হবে।</p>
                 </div>
             </div>
 
@@ -600,9 +770,7 @@
                 <p id="nextGameBalanceNotice" style="font-size: 0.85rem; color: #a5b4fc; margin-bottom: 14px;">
                     আপনার ব্যালেন্স চেক করা হচ্ছে...
                 </p>
-                <div id="nextGameActionButtons" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                    <!-- Injected dynamically based on balance -->
-                </div>
+                <div id="nextGameActionButtons" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;"></div>
             </div>
 
             <button class="btn-play" onclick="exitQuiz()" style="margin: 0 auto; background: #374151;">🏠 গেম এরিনায় ফিরুন</button>
@@ -616,12 +784,8 @@ const AudioContextClass = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
 
 function initAudio() {
-    if (!audioCtx) {
-        audioCtx = new AudioContextClass();
-    }
-    if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-    }
+    if (!audioCtx) audioCtx = new AudioContextClass();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
 }
 
 function playSuccessSound() {
@@ -664,25 +828,18 @@ function playErrorSound() {
 // --- Anti-Bot & Anti-Cheating System ---
 let isSuperAdmin = false;
 let questionRenderTime = 0;
-let userSwitchedTabsCount = 0;
 
-// 1. Detect Tab Switch / Minimize during exam
 document.addEventListener('visibilitychange', function() {
     if (document.hidden && document.getElementById('quizModal').style.display === 'flex') {
-        userSwitchedTabsCount++;
-        alert('⚠️ অ্যান্টি-বট সতর্কতা: পরীক্ষা চলাকালীন ট্যাব পরিবর্তন বা অন্য অ্যাপে যাওয়া নিষিদ্ধ! আপনার অ্যাকশন রেকর্ড করা হচ্ছে।');
+        alert('⚠️ অ্যান্টি-বট সতর্কতা: পরীক্ষা চলাকালীন অন্য অ্যাপ বা ট্যাবে যাওয়া নিষিদ্ধ!');
     }
 });
 
-// 2. Disable Right-click, Copy, Selection
-document.addEventListener('contextmenu', function(e) {
-    if (!isSuperAdmin) { e.preventDefault(); return false; }
-});
+document.addEventListener('contextmenu', function(e) { if (!isSuperAdmin) { e.preventDefault(); return false; } });
 document.addEventListener('copy', function(e) { if (!isSuperAdmin) e.preventDefault(); });
 document.addEventListener('cut', function(e) { if (!isSuperAdmin) e.preventDefault(); });
 document.addEventListener('selectstart', function(e) { if (!isSuperAdmin) e.preventDefault(); });
 
-// 3. Block Shortcuts & DevTools
 window.addEventListener('keydown', function(e) {
     if (isSuperAdmin) return;
     if (e.key === 'F12' || 
@@ -695,39 +852,106 @@ window.addEventListener('keydown', function(e) {
     }
 });
 
-// --- UI Navigation ---
+// --- 20 Global Leaders Data ---
+const GLOBAL_LEADERS = [
+    { rank: 1, name: "Tanvir Hasan", district: "Dhaka", level: "👑 Mastery", points: "18,450 Pts", taka: "৳922.50", status: "Active" },
+    { rank: 2, name: "Nusrat Jahan", district: "Chittagong", level: "👑 Mastery", points: "16,920 Pts", taka: "৳846.00", status: "Active" },
+    { rank: 3, name: "Md. Shakil Ahmed", district: "Rajshahi", level: "💼 Executive", points: "15,700 Pts", taka: "৳785.00", status: "Active" },
+    { rank: 4, name: "Farhana Yasmin", district: "Sylhet", level: "💼 Executive", points: "14,850 Pts", taka: "৳742.50", status: "Active" },
+    { rank: 5, name: "Arifur Rahman", district: "Khulna", level: "💼 Executive", points: "13,900 Pts", taka: "৳695.00", status: "Active" },
+    { rank: 6, name: "Sadia Afrin", district: "Barisal", level: "🎖️ Mid Level", points: "12,650 Pts", taka: "৳632.50", status: "Active" },
+    { rank: 7, name: "Mehedi Hasan", district: "Rangpur", level: "🎖️ Mid Level", points: "11,800 Pts", taka: "৳590.00", status: "Active" },
+    { rank: 8, name: "Jannatul Ferdous", district: "Mymensingh", level: "🎖️ Mid Level", points: "10,950 Pts", taka: "৳547.50", status: "Active" },
+    { rank: 9, name: "Rakibul Islam", district: "Comilla", level: "🎖️ Mid Level", points: "9,820 Pts", taka: "৳491.00", status: "Active" },
+    { rank: 10, name: "Sumaiya Akter", district: "Gazipur", level: "📘 Basic 03", points: "9,150 Pts", taka: "৳457.50", status: "Active" },
+    { rank: 11, name: "Kamrul Hasan", district: "Bogra", level: "📗 Basic 02", points: "8,700 Pts", taka: "৳435.00", status: "Active" },
+    { rank: 12, name: "Rashedul Islam", district: "Pabna", level: "📗 Basic 02", points: "8,250 Pts", taka: "৳412.50", status: "Active" },
+    { rank: 13, name: "Tasnim Sultana", district: "Narayanganj", level: "📘 Basic 01", points: "7,900 Pts", taka: "৳395.00", status: "Active" },
+    { rank: 14, name: "Asif Mahmud", district: "Jessore", level: "🔰 Primary", points: "7,450 Pts", taka: "৳372.50", status: "Active" },
+    { rank: 15, name: "Sharmin Sultana", district: "Kushtia", level: "🔰 Primary", points: "6,980 Pts", taka: "৳349.00", status: "Active" },
+    { rank: 16, name: "Nahid Hossain", district: "Dinajpur", level: "🔰 Primary", points: "6,400 Pts", taka: "৳320.00", status: "Active" },
+    { rank: 17, name: "Rumana Parvin", district: "Tangail", level: "🔰 Primary", points: "5,950 Pts", taka: "৳297.50", status: "Active" },
+    { rank: 18, name: "Mahfuzur Rahman", district: "Noakhali", level: "🔰 Primary", points: "5,420 Pts", taka: "৳271.00", status: "Active" },
+    { rank: 19, name: "Fahmida Khatun", district: "Feni", level: "🔰 Primary", points: "4,890 Pts", taka: "৳244.50", status: "Active" },
+    { rank: 20, name: "Al-Amin Hossain", district: "Faridpur", level: "🔰 Primary", points: "4,350 Pts", taka: "৳217.50", status: "Active" }
+];
+
+function renderGlobalLeaderboard(list) {
+    const tbody = document.getElementById('leaderboardBody');
+    tbody.innerHTML = (list || GLOBAL_LEADERS).map(item => {
+        let badgeClass = 'rank-other';
+        let badgeIcon = '#' + item.rank;
+        if (item.rank === 1) { badgeClass = 'rank-1'; badgeIcon = '🥇 1'; }
+        else if (item.rank === 2) { badgeClass = 'rank-2'; badgeIcon = '🥈 2'; }
+        else if (item.rank === 3) { badgeClass = 'rank-3'; badgeIcon = '🥉 3'; }
+
+        return `
+            <tr>
+                <td><span class="rank-badge ${badgeClass}">${badgeIcon}</span></td>
+                <td><strong>${item.name}</strong></td>
+                <td>${item.district}</td>
+                <td>${item.level}</td>
+                <td style="color:#38bdf8; font-weight:600;">${item.points}</td>
+                <td style="color:#34d399; font-weight:600;">${item.taka}</td>
+                <td><span style="color:#10b981;">● ${item.status}</span></td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function filterLeaderboard() {
+    const q = document.getElementById('leaderSearch').value.toLowerCase();
+    const filtered = GLOBAL_LEADERS.filter(item => 
+        item.name.toLowerCase().includes(q) || item.district.toLowerCase().includes(q)
+    );
+    renderGlobalLeaderboard(filtered);
+}
+
+// --- Navigation ---
 function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const backdrop = document.getElementById('backdrop');
-    sidebar.classList.toggle('open');
-    backdrop.classList.toggle('active');
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('backdrop').classList.toggle('active');
 }
 
 function switchView(viewName) {
-    const views = ['game_arena', 'deposit', 'admin'];
-    views.forEach(v => {
+    const allViews = ['game_arena', 'global_position', 'user_portal', 'my_report', 'deposit', 'admin'];
+    allViews.forEach(v => {
         const el = document.getElementById('view_' + v);
         if (el) el.style.display = 'none';
     });
-    
-    if (viewName === 'game_arena' || viewName === 'bankers_game' || viewName === 'affiliate_game' || viewName === 'grammar_game') {
+
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+    if (viewName === 'game_arena') {
         document.getElementById('view_game_arena').style.display = 'block';
+        document.getElementById('nav_arena').classList.add('active');
+    } else if (viewName === 'global_position') {
+        document.getElementById('view_global_position').style.display = 'block';
+        document.getElementById('nav_global').classList.add('active');
+        renderGlobalLeaderboard();
+    } else if (viewName === 'user_portal') {
+        document.getElementById('view_user_portal').style.display = 'block';
+        document.getElementById('nav_portal').classList.add('active');
+    } else if (viewName === 'my_report') {
+        document.getElementById('view_my_report').style.display = 'block';
+        document.getElementById('nav_report').classList.add('active');
     } else if (viewName === 'deposit_view') {
         document.getElementById('view_deposit').style.display = 'block';
+        document.getElementById('nav_deposit').classList.add('active');
     } else if (viewName === 'admin_panel') {
         document.getElementById('view_admin').style.display = 'block';
+        document.getElementById('nav_admin').classList.add('active');
         renderAdminHistory();
     }
-    
+
     document.getElementById('sidebar').classList.remove('open');
     document.getElementById('backdrop').classList.remove('active');
 }
 
-// --- Question Bank (User Specified 25 Questions + Bankers + MassBD) ---
+// --- Comprehensive Question Bank for All 10 Games ---
 const QUESTION_DATABASE = {
     grammar: {
         set1: [
-            // Part 1: Primary / Easy Level (Questions 1–8)
             { q: "Choose the correct article: \"She is ___ honest girl.\"", options: ["a", "an", "the", "no article"], ans: 1, level: "primary" },
             { q: "Which word is a verb in the sentence: \"The cat sleeps on the sofa.\"", options: ["cat", "sleeps", "on", "sofa"], ans: 1, level: "primary" },
             { q: "What is the plural form of \"Child\"?", options: ["Childs", "Childrens", "Children", "Childes"], ans: 2, level: "primary" },
@@ -736,7 +960,6 @@ const QUESTION_DATABASE = {
             { q: "What is the opposite (antonym) of \"Brave\"?", options: ["Bold", "Coward", "Strong", "Happy"], ans: 1, level: "primary" },
             { q: "Choose the correct spelling:", options: ["Recieve", "Receive", "Recive", "Receeve"], ans: 1, level: "primary" },
             { q: "Identify the adjective in the sentence: \"He bought a red car.\"", options: ["He", "bought", "red", "car"], ans: 2, level: "primary" },
-            // Part 2: Medium Level (Questions 9–17)
             { q: "Fill in the blank: \"She ___ to school every day.\"", options: ["go", "goes", "going", "gone"], ans: 1, level: "mid" },
             { q: "Choose the correct preposition: \"He is good ___ mathematics.\"", options: ["in", "on", "at", "with"], ans: 2, level: "mid" },
             { q: "Identify the tense: \"I have finished my homework.\"", options: ["Simple Past", "Past Continuous", "Present Perfect", "Future Perfect"], ans: 2, level: "mid" },
@@ -746,7 +969,6 @@ const QUESTION_DATABASE = {
             { q: "What is the synonym of \"Abandon\"?", options: ["Keep", "Forsake", "Adopt", "Continue"], ans: 1, level: "mid" },
             { q: "Choose the correct question tag: \"You don't like coffee, ___?\"", options: ["do you", "don't you", "are you", "did you"], ans: 0, level: "mid" },
             { q: "Fill in the blank: \"She has been living here ___ 2015.\"", options: ["for", "from", "since", "by"], ans: 2, level: "mid" },
-            // Part 3: Very Hard Level (Questions 18–25)
             { q: "Fill in the blank: \"Scarcely had he reached the station ___ the train left.\"", options: ["than", "when", "then", "after"], ans: 1, level: "mastery" },
             { q: "Choose the grammatically correct sentence:", options: ["One of my friend is a doctor.", "One of my friends are a doctor.", "One of my friends is a doctor.", "One of my friend are doctors."], ans: 2, level: "mastery" },
             { q: "Fill in the blank using the subjunctive mood: \"If I ___ a bird, I would fly in the sky.\"", options: ["was", "am", "were", "had been"], ans: 2, level: "mastery" },
@@ -759,9 +981,7 @@ const QUESTION_DATABASE = {
         set2: [
             { q: "Choose the correct form: 'Each of the students ___ done their work.'", options: ["have", "has", "are", "were"], ans: 1, level: "mid" },
             { q: "Identify the part of speech of 'Fast' in 'He runs fast.'", options: ["Noun", "Verb", "Adverb", "Adjective"], ans: 2, level: "primary" },
-            { q: "What is the plural of 'Criterion'?", options: ["Criterions", "Criteria", "Criterias", "Criterium"], ans: 1, level: "mastery" },
-            { q: "'Call it a day' idiom-এর অর্থ কী?", options: ["Start working", "Stop working on something", "Call someone", "Enjoy a sunny day"], ans: 1, level: "mid" },
-            { q: "No sooner had I reached ___ he came.", options: ["when", "than", "then", "before"], ans: 1, level: "executive" }
+            { q: "What is the plural of 'Criterion'?", options: ["Criterions", "Criteria", "Criterias", "Criterium"], ans: 1, level: "mastery" }
         ]
     },
     banker: {
@@ -771,11 +991,6 @@ const QUESTION_DATABASE = {
             { q: "Letter of Credit (LC) প্রধানত কোন বাণিজ্যে ব্যবহৃত হয়?", options: ["অভ্যন্তরীণ খুচরা বিক্রয়", "আন্তর্জাতিক আমদানি-রপ্তানি", "অনলাইন শপিং", "মাইক্রো ক্রেডিট"], ans: 1, level: "executive" },
             { q: "চেকের মেয়াদ সাধারণত ইস্যু তারিখ থেকে কত মাস বৈধ থাকে?", options: ["৩ মাস", "৬ মাস", "১ বছর", "অনির্দিষ্ট"], ans: 1, level: "mid" },
             { q: "CAMELS রেটিং এ 'C' অক্ষরটি কী নির্দেশ করে?", options: ["Credit", "Capital Adequacy", "Cash", "Customer"], ans: 1, level: "mastery" }
-        ],
-        set2: [
-            { q: "ব্যাংকের জন্য গ্রাহকের আমানত কী হিসেবে গণ্য হয়?", options: ["Asset (সম্পদ)", "Liability (দায়)", "Income", "Expense"], ans: 1, level: "primary" },
-            { q: "SLR এর পূর্ণরূপ কী?", options: ["Statutory Liquidity Ratio", "Standard Loan Rate", "System Liquid Reserve", "Secured Loan Ratio"], ans: 0, level: "mid" },
-            { q: "ব্যাংকিং অংকে সরল সুদের সূত্র কোনটি?", options: ["I = Pnr", "I = P(1+r)^n", "I = P / nr", "I = Pr / n"], ans: 0, level: "primary" }
         ]
     },
     affiliate: {
@@ -785,10 +1000,21 @@ const QUESTION_DATABASE = {
             { q: "কুকি ট্র্যাকিং (Cookie Tracking) এর সুবিধা কী?", options: ["ইউজারের রেফারেল হিস্ট্রি ট্র্যাক করে কমিশন নিশ্চিত করা", "কম্পিউটার ফাস্ট করা", "ওয়েবসাইট ডিলিট করা", "পাসওয়ার্ড চুরি করা"], ans: 0, level: "executive" },
             { q: "CPA মার্কেটিং এর পূর্ণ অর্থ কী?", options: ["Cost Per Action", "Click Per Amount", "Commission Per Account", "Cost Per Ad"], ans: 0, level: "mid" },
             { q: "massbd.org প্ল্যাটফর্মে অর্জিত ব্যালেন্স উত্তোলনের সঠিক মাধ্যম কোনটি?", options: ["বিকাশ, নগদ ও রকেট", "শুধুমাত্র পেপাল", "ক্যাশ ডেলিভারি", "আন্তর্জাতিক ব্যাংক"], ans: 0, level: "primary" }
-        ],
-        set2: [
-            { q: "SEO এর পূর্ণরূপ কী যা অ্যাফিলিয়েট ট্রাফিকের জন্য অপরিহার্য?", options: ["Search Engine Optimization", "Social Engine Order", "Sales Earning Operation", "Search Electronic Output"], ans: 0, level: "mid" },
-            { q: "একটি অ্যাফিলিয়েট রেফারেল লিংকের মূল উপাদান কোনটি?", options: ["ইউনিক ট্র্যাকিং আইডি", "সাধারণ হোমপেজ লিঙ্ক", "ফেসবুক আইডি", "ফোন নাম্বার"], ans: 0, level: "primary" }
+        ]
+    },
+    ielts: {
+        set1: [
+            { q: "What does 'Ubiquitous' mean in IELTS Academic Reading?", options: ["Present everywhere", "Very rare", "Harmful", "Ancient"], ans: 0, level: "executive" },
+            { q: "Choose the correct collocation: 'To ___ a conclusion.'", options: ["make", "draw", "do", "catch"], ans: 1, level: "mid" },
+            { q: "What is the synonym of 'Meticulous'?", options: ["Careless", "Thorough & careful", "Speedy", "Angry"], ans: 1, level: "mastery" },
+            { q: "Identify the linking word showing contrast:", options: ["Furthermore", "Nevertheless", "Consequently", "Moreover"], ans: 1, level: "mid" }
+        ]
+    },
+    admission: {
+        set1: [
+            { q: "মানবদেহের বৃহত্তম গ্রন্থি কোনটি?", options: ["যকৃত (Liver)", "অগ্ন্যাশয়", "থাইরয়েড", "পিটুইটারি"], ans: 0, level: "primary" },
+            { q: "মহাকর্ষীয় ধ্রুবক G এর মান কত?", options: ["6.673 x 10^-11 N m^2 kg^-2", "9.8 m s^-2", "3 x 10^8 m s^-1", "1.6 x 10^-19 C"], ans: 0, level: "mid" },
+            { q: "বেনজিনের পাই (π) ইলেকট্রন সংখ্যা কয়টি?", options: ["৩টি", "৬টি", "১২টি", "৪টি"], ans: 1, level: "executive" }
         ]
     },
     bcs: {
@@ -796,24 +1022,42 @@ const QUESTION_DATABASE = {
             { q: "বঙ্গবন্ধু স্যাটেলাইট-১ কোন দেশ থেকে উৎক্ষেপণ করা হয়?", options: ["যুক্তরাষ্ট্র (ফ্লোরিডা)", "রাশিয়া", "ফ্রান্স", "চীন"], ans: 0, level: "mid" },
             { q: "পদ্মা সেতুর দৈর্ঘ্য কত কিলোমিটার?", options: ["৬.১৫ কিমি", "৫.৮০ কিমি", "৭.২০ কিমি", "৬.৫০ কিমি"], ans: 0, level: "primary" },
             { q: "বাংলা সাহিত্যের প্রাচীনতম নিদর্শন কোনটি?", options: ["চর্যাপদ", "শ্রীকৃষ্ণকীর্তন", "মঙ্গলকাব্য", "বৈষ্ণব পদাবলী"], ans: 0, level: "primary" }
-        ],
-        set2: [
-            { q: "কম্পিউটারের মস্তিষ্ক হিসেবে পরিচিত কোনটি?", options: ["CPU", "RAM", "Hard Disk", "Monitor"], ans: 0, level: "primary" }
+        ]
+    },
+    freelancing: {
+        set1: [
+            { q: "ফ্রিল্যান্সিংয়ে বায়ার রিকোয়েস্টে প্রধানত কী উল্লেখ করতে হয়?", options: ["কাজের সমাধান ও অভিজ্ঞতা", "ব্যক্তিগত পরিচয়", "টাকার পরিমাণ প্রথমে", "পরিবারের বিবরণ"], ans: 0, level: "primary" },
+            { q: "মার্কেটপ্লেসে রেটিং কমে গেলে কী ক্ষতি হয়?", options: ["গিগ র‍্যাংক পিছিয়ে পড়ে", "অ্যাকাউন্ট ভেরিফাই হয়", "টাকা বাড়ে", "কোনো প্রভাব নেই"], ans: 0, level: "mid" }
+        ]
+    },
+    software: {
+        set1: [
+            { q: "SaaS এর পূর্ণরূপ কী?", options: ["Software as a Service", "System and Application Software", "Secure access as Service", "Server and Storage"], ans: 0, level: "mid" },
+            { q: "ওয়েব ডেভেলপমেন্টে ফ্রন্ট-এন্ড টেকনোলজি কোনটি?", options: ["HTML, CSS, JavaScript", "MySQL", "PHP Core", "Linux Shell"], ans: 0, level: "primary" }
+        ]
+    },
+    school: {
+        set1: [
+            { q: "ত্রিভুজের তিন কোণের সমষ্টি কত ডিগ্রি?", options: ["১৮০°", "৩৬০°", "৯০°", "২৭০°"], ans: 0, level: "primary" },
+            { q: "উদ্ভিদ সালোকসংশ্লেষণের জন্য কোন গ্যাস গ্রহণ করে?", options: ["কার্বন ডাই-অক্সাইড", "অক্সিজেন", "নাইট্রোজেন", "মিথেন"], ans: 0, level: "primary" }
+        ]
+    },
+    brain: {
+        set1: [
+            { q: "সিরিজটি পূর্ণ করুন: ২, ৪, ৮, ১৬, ___?", options: ["৩২", "২৪", "২০", "৩৬"], ans: 0, level: "primary" },
+            { q: "যদি CAT = 24 হয়, তবে BAT = কত?", options: ["23", "25", "22", "26"], ans: 0, level: "mid" }
         ]
     }
 };
 
-// --- Active Quiz State ---
 let selectedGameKey = '';
 let activeQuizQuestions = [];
 let currentQuestionIndex = 0;
 let userScorePoints = 0;
 let userScoreTaka = 0.0;
 let timerInterval = null;
-let timeLeft = 28; // STRICT 28 SECONDS
+let timeLeft = 28;
 let isDemoMode = true;
-
-// Stats for Result Card
 let countCorrect = 0;
 let countWrong = 0;
 let countTimeout = 0;
@@ -848,7 +1092,6 @@ function launchQuizFromSelection() {
 
     closeSelectionModal();
 
-    // Prepare Questions
     const gameData = QUESTION_DATABASE[selectedGameKey] || QUESTION_DATABASE['grammar'];
     const setQuestions = (setNum == 2 && gameData.set2) ? gameData.set2 : gameData.set1;
 
@@ -859,10 +1102,8 @@ function launchQuizFromSelection() {
         activeQuizQuestions = filtered.length > 0 ? filtered : [...setQuestions];
     }
 
-    // Shuffle
     activeQuizQuestions.sort(() => Math.random() - 0.5);
 
-    // Reset Quiz Variables
     currentQuestionIndex = 0;
     userScorePoints = 0;
     userScoreTaka = 0.0;
@@ -871,7 +1112,6 @@ function launchQuizFromSelection() {
     countTimeout = 0;
     updateScoreDisplay();
 
-    // Open Quiz Modal
     document.getElementById('quizModal').style.display = 'flex';
     document.getElementById('questionContainer').style.display = 'block';
     document.getElementById('quizResultView').style.display = 'none';
@@ -908,10 +1148,7 @@ function renderCurrentQuestion() {
         optContainer.appendChild(div);
     });
 
-    // Record question render timestamp for anti-bot speed check
     questionRenderTime = Date.now();
-
-    // STRICT 28 SECONDS TIMER (NO SKIP)
     timeLeft = 28;
     document.getElementById('timerSec').innerText = timeLeft;
     timerInterval = setInterval(() => {
@@ -931,13 +1168,11 @@ function renderCurrentQuestion() {
 }
 
 function handleAnswerClick(e, selectedIdx, correctIdx, optionEl) {
-    // ANTI-BOT CHECK 1: Ensure click is trusted by real user
     if (e && !e.isTrusted) {
         alert('🛡️ অ্যান্টি-বট অ্যালার্ট: অননুমোদিত অটোমেশন স্ক্রিপ্ট ব্লক করা হয়েছে!');
         return;
     }
 
-    // ANTI-BOT CHECK 2: Reflex speed threshold (Human reaction > 700ms)
     const timeTaken = Date.now() - questionRenderTime;
     if (timeTaken < 700) {
         alert('🛡️ অ্যান্টি-বট অ্যালার্ট: অতি দ্রুত ক্লিক শনাক্ত হয়েছে! স্বাভাবিকভাবে পড়ে উত্তর দিন।');
@@ -945,8 +1180,6 @@ function handleAnswerClick(e, selectedIdx, correctIdx, optionEl) {
     }
 
     clearInterval(timerInterval);
-
-    // Disable all options
     const allOptions = document.querySelectorAll('.option-item');
     allOptions.forEach(el => el.onclick = null);
 
@@ -969,7 +1202,6 @@ function handleAnswerClick(e, selectedIdx, correctIdx, optionEl) {
 
     updateScoreDisplay();
 
-    // Next Question after delay
     setTimeout(() => {
         currentQuestionIndex++;
         renderCurrentQuestion();
@@ -981,7 +1213,6 @@ function finishQuiz() {
     document.getElementById('questionContainer').style.display = 'none';
     document.getElementById('quizResultView').style.display = 'block';
 
-    // Update Student Total Balance
     let totalPointsDisplay = 0;
     if (isDemoMode) {
         let currentDemo = parseInt(document.getElementById('demoPoints').innerText) || 0;
@@ -995,7 +1226,6 @@ function finishQuiz() {
         totalPointsDisplay = "৳" + newReal.toFixed(2) + " (Real)";
     }
 
-    // Populate Detailed Scorecard
     document.getElementById('resTotalQ').innerText = activeQuizQuestions.length;
     document.getElementById('resCorrect').innerText = `${countCorrect} টি (+${countCorrect * 5} Pts / +৳${(countCorrect * 0.25).toFixed(2)})`;
     document.getElementById('resWrong').innerText = `${countWrong} টি (-${countWrong * 10} Pts / -৳${(countWrong * 0.50).toFixed(2)})`;
@@ -1004,7 +1234,6 @@ function finishQuiz() {
     document.getElementById('resNetTaka').innerText = (userScoreTaka >= 0 ? "+৳" : "-৳") + Math.abs(userScoreTaka).toFixed(2);
     document.getElementById('resCurrentTotal').innerText = totalPointsDisplay;
 
-    // Check Balance for "Play Next Game"
     const nextGameBox = document.getElementById('nextGameActionButtons');
     const noticeEl = document.getElementById('nextGameBalanceNotice');
     nextGameBox.innerHTML = '';
@@ -1029,24 +1258,17 @@ function finishQuiz() {
         btnNext.className = 'btn-play';
         btnNext.style.background = '#10b981';
         btnNext.innerHTML = '▶️ হ্যাঁ, পরবর্তী গেম খেলুন (Play Next Game)';
-        btnNext.onclick = function() {
-            // Re-launch with opposite set or reshuffle
-            launchQuizFromSelection();
-        };
+        btnNext.onclick = function() { launchQuizFromSelection(); };
         nextGameBox.appendChild(btnNext);
     } else {
         const btnDep = document.createElement('button');
         btnDep.className = 'btn-play';
         btnDep.style.background = '#f59e0b';
         btnDep.innerHTML = '💳 ব্যালেন্স নেই - ডিপোজিট করুন';
-        btnDep.onclick = function() {
-            exitQuiz();
-            switchView('deposit_view');
-        };
+        btnDep.onclick = function() { exitQuiz(); switchView('deposit_view'); };
         nextGameBox.appendChild(btnDep);
     }
 
-    // Save record to Local Storage
     const history = JSON.parse(localStorage.getItem('edu_quiz_records') || '[]');
     history.push({
         user: "User_" + Math.floor(Math.random() * 9000 + 1000),
@@ -1063,7 +1285,6 @@ function exitQuiz() {
     document.getElementById('quizModal').style.display = 'none';
 }
 
-// --- Deposit Submission ---
 function submitDeposit() {
     const phone = document.getElementById('depPhone').value.trim();
     const trx = document.getElementById('depTrx').value.trim();
@@ -1077,7 +1298,6 @@ function submitDeposit() {
     switchView('game_arena');
 }
 
-// --- Admin Panel Reporting & CSV Export ---
 function renderAdminHistory() {
     const history = JSON.parse(localStorage.getItem('edu_quiz_records') || '[]');
     const tbody = document.getElementById('quizHistoryBody');
@@ -1117,6 +1337,10 @@ function downloadQuizReportCSV() {
     link.click();
     document.body.removeChild(link);
 }
+
+window.onload = function() {
+    renderGlobalLeaderboard();
+};
 </script>
 </body>
 </html>
