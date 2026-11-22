@@ -198,6 +198,7 @@
             justify-content: space-between;
             gap: 12px;
             transition: transform 0.2s, border-color 0.2s;
+            position: relative;
         }
 
         .game-card:hover {
@@ -216,6 +217,17 @@
             align-self: flex-start;
         }
 
+        .play-limit-tag {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+        .tag-available { background: #064e3b; color: #34d399; }
+        .tag-cooldown { background: #78350f; color: #fde047; }
+        .tag-exhausted { background: #7f1d1d; color: #fca5a5; }
+
         .btn-play {
             background-color: var(--primary);
             color: #fff;
@@ -233,6 +245,12 @@
 
         .btn-play:hover {
             background-color: var(--primary-hover);
+        }
+
+        .btn-play.disabled {
+            background-color: #374151 !important;
+            color: #9ca3af !important;
+            cursor: not-allowed !important;
         }
 
         /* Leaderboard Table */
@@ -261,9 +279,7 @@
             font-size: 0.9rem;
         }
 
-        .leaderboard-table tr:hover {
-            background: #182238;
-        }
+        .leaderboard-table tr:hover { background: #182238; }
 
         .rank-badge {
             font-weight: 700;
@@ -422,16 +438,16 @@
         <ul class="nav-menu">
             <div class="nav-divider">Games Arena</div>
             <li class="nav-item active" id="nav_arena" onclick="switchView('game_arena')">🎮 All Games Arena</li>
-            <li class="nav-item" id="nav_grammar" onclick="openGameSelection('Basic Grammar Master Game', 'grammar')">📖 Basic Grammar Game</li>
-            <li class="nav-item" id="nav_banker" onclick="openGameSelection('Game For Bankers', 'banker')">🏦 Game For Bankers</li>
-            <li class="nav-item" id="nav_affiliate" onclick="openGameSelection('MassBD Affiliate Game', 'affiliate')">💼 MassBD Affiliate</li>
-            <li class="nav-item" id="nav_ielts" onclick="openGameSelection('IELTS Master Game', 'ielts')">✈️ IELTS Game</li>
-            <li class="nav-item" id="nav_admission" onclick="openGameSelection('University & Medical Admission Game', 'admission')">🎓 Admission Arena</li>
-            <li class="nav-item" id="nav_bcs" onclick="openGameSelection('BCS & Govt Job Arena', 'bcs')">🏛️ BCS & Govt Job</li>
+            <li class="nav-item" id="nav_grammar" onclick="tryPlayGame('Basic Grammar Master Game', 'grammar')">📖 Basic Grammar Game</li>
+            <li class="nav-item" id="nav_banker" onclick="tryPlayGame('Game For Bankers', 'banker')">🏦 Game For Bankers</li>
+            <li class="nav-item" id="nav_affiliate" onclick="tryPlayGame('MassBD Affiliate Game', 'affiliate')">💼 MassBD Affiliate</li>
+            <li class="nav-item" id="nav_ielts" onclick="tryPlayGame('IELTS Master Game', 'ielts')">✈️ IELTS Game</li>
+            <li class="nav-item" id="nav_admission" onclick="tryPlayGame('University & Medical Admission Game', 'admission')">🎓 Admission Arena</li>
+            <li class="nav-item" id="nav_bcs" onclick="tryPlayGame('BCS & Govt Job Arena', 'bcs')">🏛️ BCS & Govt Job</li>
             
             <div class="nav-divider">User & Leaderboard</div>
             <li class="nav-item" id="nav_global" onclick="switchView('global_position')">🌍 Global Position (Top 20)</li>
-            <li class="nav-item" id="nav_portal" onclick="switchView('user_portal')">👤 User Portal</li>
+            <li class="nav-item" id="nav_portal" onclick="switchView('user_portal')">👤 User Portal & Limit</li>
             <li class="nav-item" id="nav_report" onclick="switchView('my_report')">📊 My Report</li>
             <li class="nav-item" id="nav_deposit" onclick="switchView('deposit_view')">💳 Deposit / Payment</li>
             <li class="nav-item" id="nav_admin" onclick="switchView('admin_panel')">🛡️ Admin Panel</li>
@@ -447,7 +463,7 @@
         <header class="topbar">
             <button class="mobile-menu-btn" onclick="toggleSidebar()">☰ মেনু</button>
             <div class="wallet-badges">
-                <span class="bot-shield-pill">🛡️ Anti-Bot Active (28s)</span>
+                <span class="bot-shield-pill">🛡️ 4h Cooldown / 3 Plays Limit Active</span>
                 <div class="wallet-pill">🎮 Demo: <span id="demoPoints" style="color:#60a5fa;">100 Pts</span></div>
                 <div class="wallet-pill">💰 Real: <span id="realBalance" style="color:#34d399;">৳00.00</span></div>
             </div>
@@ -456,113 +472,18 @@
         <section class="content-area">
             <!-- View: Game Arena (All 10 Games) -->
             <div id="view_game_arena">
-                <div style="margin-bottom: 20px;">
-                    <h2>🎯 Educational Exam & Tournament Arena (All Games)</h2>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">
-                        ⏱️ প্রতি প্রশ্ন: ২৮ সেকেন্ড | নো স্কিপ | সঠিক উত্তর: +৫ পয়েন্ট (+০.২৫৳) | ভুল উত্তর: -১০ পয়েন্ট (-০.৫০৳)
-                    </p>
+                <div style="margin-bottom: 20px; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:10px;">
+                    <div>
+                        <h2>🎯 Educational Exam & Tournament Arena (All Games)</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">
+                            ⏱️ নিয়ম: ১টি গেম প্রতি ৪ ঘণ্টায় মাত্র ১ বার | লাইফটাইমে মোট ৩ বার | আপডেট করলে পুনরায় ৩ বার সুযোগ।
+                        </p>
+                    </div>
+                    <button class="btn-play" onclick="resetUserLimitsForDemo()" style="background:#4f46e5; font-size:0.85rem; padding:6px 14px;">🔄 অ্যাকাউন্ট আপডেট / লিমিট রিনিউ</button>
                 </div>
 
-                <div class="grid-cards">
-                    <!-- 1. Basic Grammar Game -->
-                    <div class="game-card">
-                        <div>
-                            <span class="card-header-badge">English & Grammar</span>
-                            <h3 style="margin: 8px 0 4px 0;">Basic Grammar Master Game</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem;">Articles, Prepositions, Tenses, Subjunctive Mood, Voice & Idioms (Official 25 Questions Included).</p>
-                        </div>
-                        <button class="btn-play" onclick="openGameSelection('Basic Grammar Master Game', 'grammar')">🚀 Play Grammar Challenge</button>
-                    </div>
-
-                    <!-- 2. Game For Bankers -->
-                    <div class="game-card">
-                        <div>
-                            <span class="card-header-badge">Finance & Banking</span>
-                            <h3 style="margin: 8px 0 4px 0;">Game For Bankers</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem;">Bank Math, CRR, SLR, General Banking, LC, Forex, CAMELS Rating & Financial Analysis.</p>
-                        </div>
-                        <button class="btn-play" onclick="openGameSelection('Game For Bankers', 'banker')">🚀 Play Banker's Challenge</button>
-                    </div>
-
-                    <!-- 3. MassBD Affiliate Game -->
-                    <div class="game-card">
-                        <div>
-                            <span class="card-header-badge">Digital Sales & SEO</span>
-                            <h3 style="margin: 8px 0 4px 0;">MassBD Affiliate Game</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem;">CPA, Cookie tracking, Referral link, CTR, SEO, কমিশন ও ডিজিটাল সেলিং (massbd.org)।</p>
-                        </div>
-                        <button class="btn-play" onclick="openGameSelection('MassBD Affiliate Game', 'affiliate')">🚀 Play Affiliate Game</button>
-                    </div>
-
-                    <!-- 4. IELTS Master Game -->
-                    <div class="game-card">
-                        <div>
-                            <span class="card-header-badge">Language Proficiency</span>
-                            <h3 style="margin: 8px 0 4px 0;">IELTS Master Game</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem;">Academic & General Training Vocabulary, Collocations, Reading Tricks & Grammar.</p>
-                        </div>
-                        <button class="btn-play" onclick="openGameSelection('IELTS Master Game', 'ielts')">🚀 Play IELTS Challenge</button>
-                    </div>
-
-                    <!-- 5. University & Medical Admission -->
-                    <div class="game-card">
-                        <div>
-                            <span class="card-header-badge">Higher Education</span>
-                            <h3 style="margin: 8px 0 4px 0;">University & Medical Admission</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem;">Physics, Chemistry, Biology, Higher Math & Medical-Engineering admission test model.</p>
-                        </div>
-                        <button class="btn-play" onclick="openGameSelection('University & Medical Admission Game', 'admission')">🚀 Play Admission Test</button>
-                    </div>
-
-                    <!-- 6. BCS & Govt Job Arena -->
-                    <div class="game-card">
-                        <div>
-                            <span class="card-header-badge">Competitive Exam</span>
-                            <h3 style="margin: 8px 0 4px 0;">BCS & Govt Job Arena</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem;">Bangladesh Affairs, International Relations, Math, Science & BCS Preliminary Model.</p>
-                        </div>
-                        <button class="btn-play" onclick="openGameSelection('BCS & Govt Job Arena', 'bcs')">🚀 Play Job Prep Game</button>
-                    </div>
-
-                    <!-- 7. MassBD Online Income & Freelancing -->
-                    <div class="game-card">
-                        <div>
-                            <span class="card-header-badge">Freelancing Skills</span>
-                            <h3 style="margin: 8px 0 4px 0;">Online Income & Freelancing</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem;">Marketplace rules, Client handling, CPA strategies, Remote work & Sales conversion.</p>
-                        </div>
-                        <button class="btn-play" onclick="openGameSelection('Online Income & Freelancing Game', 'freelancing')">🚀 Play Freelancing Game</button>
-                    </div>
-
-                    <!-- 8. Digital Skills & Software Selling -->
-                    <div class="game-card">
-                        <div>
-                            <span class="card-header-badge">IT & Tech</span>
-                            <h3 style="margin: 8px 0 4px 0;">Skills & Software Selling</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem;">Software licenses, SaaS sales, Tech support, CMS & Website management fundamentals.</p>
-                        </div>
-                        <button class="btn-play" onclick="openGameSelection('Skills & Software Selling Game', 'software')">🚀 Play Software Sales Game</button>
-                    </div>
-
-                    <!-- 9. Primary & High School Foundation -->
-                    <div class="game-card">
-                        <div>
-                            <span class="card-header-badge">School Level</span>
-                            <h3 style="margin: 8px 0 4px 0;">School Foundation (Class 1-10)</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem;">Basic Arithmetic, Elementary Science, General Knowledge & Kids IQ Development.</p>
-                        </div>
-                        <button class="btn-play" onclick="openGameSelection('School Foundation Game', 'school')">🚀 Play School Game</button>
-                    </div>
-
-                    <!-- 10. General Knowledge & Brain Booster -->
-                    <div class="game-card">
-                        <div>
-                            <span class="card-header-badge">IQ & Brain Booster</span>
-                            <h3 style="margin: 8px 0 4px 0;">Brain Booster & Quick IQ</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem;">Mental Math, Pattern Recognition, Analytical Reasoning & Quick Cognitive Puzzles.</p>
-                        </div>
-                        <button class="btn-play" onclick="openGameSelection('Brain Booster & Quick IQ', 'brain')">🚀 Play IQ Booster</button>
-                    </div>
+                <div class="grid-cards" id="arenaGridContainer">
+                    <!-- Cards will be populated with dynamic live status badges -->
                 </div>
             </div>
 
@@ -596,14 +517,20 @@
                 </div>
             </div>
 
-            <!-- View: User Portal -->
+            <!-- View: User Portal & Limits -->
             <div id="view_user_portal" style="display: none;">
-                <h2>👤 User Portal & Candidate Profile</h2>
+                <h2>👤 User Portal & Lifetime Quota Status</h2>
                 <div style="background:var(--bg-card); padding:24px; border-radius:12px; border:1px solid var(--border-color); max-width:650px; margin-top:15px;">
                     <p><strong>Candidate Name:</strong> Md. Student Account</p>
                     <p><strong>Phone:</strong> 017XXXXXXXX</p>
-                    <p><strong>Account Status:</strong> <span style="color:#34d399;">Active (Demo/Practice)</span></p>
-                    <p><strong>Real Game Status:</strong> <span style="color:#fbbf24;">Pending Deposit Approval</span></p>
+                    <p><strong>Account Tier:</strong> <span id="portalAccountTier" style="color:#60a5fa; font-weight:700;">Standard User</span></p>
+                    <p><strong>কুইজ খেলার নিয়ম:</strong> প্রতি ৪ ঘণ্টায় ১ বার এবং লাইফটাইমে মোট ৩ বার।</p>
+                    <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
+                    <h4 style="margin-bottom:10px; color:#fde047;">🔄 অ্যাকাউন্ট আপডেট অপশন:</h4>
+                    <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:15px;">
+                        আপনার ৩ বারের লিমিট শেষ হয়ে গেলে অথবা নতুন সাইকেল শুরু করতে নিচে ক্লিক করে অ্যাকাউন্ট আপডেট করুন।
+                    </p>
+                    <button class="btn-play" onclick="resetUserLimitsForDemo()" style="background:#10b981;">🔄 অ্যাকাউন্ট আপডেট করুন (Reset 3-Plays Quota)</button>
                 </div>
             </div>
 
@@ -639,8 +566,9 @@
             <!-- View: Admin Panel -->
             <div id="view_admin" style="display: none;">
                 <h2>🛡️ এডমিন ম্যানেজমেন্ট প্যানেল</h2>
-                <div style="margin: 20px 0;">
-                    <button class="btn-play" onclick="downloadQuizReportCSV()">📥 কুইজ রিপোর্ট CSV ডাউনলোড করুন</button>
+                <div style="margin: 20px 0; display:flex; gap:10px; flex-wrap:wrap;">
+                    <button class="btn-play" onclick="downloadQuizReportCSV()">📥 কুইজ রিপোর্ট CSV ডাউনলোড</button>
+                    <button class="btn-play" onclick="resetUserLimitsForDemo()" style="background:#ef4444;">⚡ অল ইউজার লিমিট রিসেট (Admin)</button>
                 </div>
                 <div id="adminHistoryTable" style="margin-top:15px; overflow-x:auto;">
                     <table style="width:100%; border-collapse:collapse; text-align:left;">
@@ -779,7 +707,143 @@
 </div>
 
 <script>
-// --- Web Audio API Synthesizer (No MP3 Files Required) ---
+// --- GAME LIMIT & 4-HOUR COOLDOWN SYSTEM ---
+const COOLDOWN_HOURS = 4;
+const MAX_LIFETIME_PLAYS = 3;
+
+function getGameTracker() {
+    const defaultData = {
+        isUpdatedUser: false,
+        games: {}
+    };
+    try {
+        const stored = localStorage.getItem('edu_game_play_tracker');
+        return stored ? JSON.parse(stored) : defaultData;
+    } catch(e) {
+        return defaultData;
+    }
+}
+
+function saveGameTracker(tracker) {
+    localStorage.setItem('edu_game_play_tracker', JSON.stringify(tracker));
+    renderArenaCards();
+}
+
+function checkGamePlayEligibility(gameKey) {
+    const tracker = getGameTracker();
+    const gameStat = tracker.games[gameKey] || { playCount: 0, lastPlayed: 0 };
+    const now = Date.now();
+
+    // Check lifetime plays
+    if (gameStat.playCount >= MAX_LIFETIME_PLAYS) {
+        return {
+            allowed: false,
+            reason: 'exhausted',
+            message: `🚫 লিমিট শেষ: আপনি এই গেমটি সর্বোচ্চ ${MAX_LIFETIME_PLAYS} বার খেলেছেন! পুনরায় খেলতে আপনার অ্যাকাউন্ট আপডেট করুন।`
+        };
+    }
+
+    // Check 4-hour cooldown
+    if (gameStat.lastPlayed > 0) {
+        const diffMs = now - gameStat.lastPlayed;
+        const requiredMs = COOLDOWN_HOURS * 60 * 60 * 1000;
+        if (diffMs < requiredMs) {
+            const remainingMs = requiredMs - diffMs;
+            const hours = Math.floor(remainingMs / (1000 * 60 * 60));
+            const mins = Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
+            return {
+                allowed: false,
+                reason: 'cooldown',
+                message: `⏳ ৪ ঘণ্টার কুলডাউন সক্রিয়! আপনি এই গেমটি ৪ ঘণ্টায় মাত্র ১ বার খেলতে পারবেন।\n\nপরবর্তী সুযোগ পাবেন: ${hours} ঘণ্টা ${mins} মিনিট পর।`
+            };
+        }
+    }
+
+    return { allowed: true, count: gameStat.playCount };
+}
+
+function recordGamePlayed(gameKey) {
+    const tracker = getGameTracker();
+    if (!tracker.games[gameKey]) {
+        tracker.games[gameKey] = { playCount: 0, lastPlayed: 0 };
+    }
+    tracker.games[gameKey].playCount += 1;
+    tracker.games[gameKey].lastPlayed = Date.now();
+    saveGameTracker(tracker);
+}
+
+function resetUserLimitsForDemo() {
+    const tracker = getGameTracker();
+    tracker.isUpdatedUser = true;
+    tracker.games = {}; // Reset counts
+    saveGameTracker(tracker);
+    alert('✅ আপনার অ্যাকাউন্ট সফলভাবে আপডেট করা হয়েছে!\nসকল গেমের খেলার সুযোগ পুনরায় রিসেট করা হলো (৪ ঘণ্টায় ১ বার ও মোট ৩ বার)।');
+    document.getElementById('portalAccountTier').innerText = "Premium Updated (Active)";
+    document.getElementById('portalAccountTier').style.color = "#34d399";
+}
+
+// --- All 10 Games Meta List ---
+const GAMES_CATALOG = [
+    { key: "grammar", title: "Basic Grammar Master Game", category: "English & Grammar", desc: "Articles, Prepositions, Tenses, Subjunctive Mood, Voice & Idioms (Official 25 Questions)." },
+    { key: "banker", title: "Game For Bankers", category: "Finance & Banking", desc: "Bank Math, CRR, SLR, General Banking, LC, Forex, CAMELS Rating & Financial Analysis." },
+    { key: "affiliate", title: "MassBD Affiliate Game", category: "Digital Sales & SEO", desc: "CPA, Cookie tracking, Referral link, CTR, SEO, কমিশন ও ডিজিটাল সেলিং (massbd.org)।" },
+    { key: "ielts", title: "IELTS Master Game", category: "Language Proficiency", desc: "Academic & General Training Vocabulary, Collocations, Reading Tricks & Grammar." },
+    { key: "admission", title: "University & Medical Admission", category: "Higher Education", desc: "Physics, Chemistry, Biology, Higher Math & Medical-Engineering admission test model." },
+    { key: "bcs", title: "BCS & Govt Job Arena", category: "Competitive Exam", desc: "Bangladesh Affairs, International Relations, Math, Science & BCS Preliminary Model." },
+    { key: "freelancing", title: "Online Income & Freelancing", category: "Freelancing Skills", desc: "Marketplace rules, Client handling, CPA strategies, Remote work & Sales conversion." },
+    { key: "software", title: "Skills & Software Selling", category: "IT & Tech", desc: "Software licenses, SaaS sales, Tech support, CMS & Website management fundamentals." },
+    { key: "school", title: "School Foundation (Class 1-10)", category: "School Level", desc: "Basic Arithmetic, Elementary Science, General Knowledge & Kids IQ Development." },
+    { key: "brain", title: "Brain Booster & Quick IQ", category: "IQ & Brain Booster", desc: "Mental Math, Pattern Recognition, Analytical Reasoning & Quick Cognitive Puzzles." }
+];
+
+function renderArenaCards() {
+    const container = document.getElementById('arenaGridContainer');
+    if (!container) return;
+    const tracker = getGameTracker();
+
+    container.innerHTML = GAMES_CATALOG.map(g => {
+        const check = checkGamePlayEligibility(g.key);
+        const playedCount = tracker.games[g.key] ? tracker.games[g.key].playCount : 0;
+        
+        let tagHtml = `<span class="play-limit-tag tag-available">🎯 খেলা হয়েছে: ${playedCount}/${MAX_LIFETIME_PLAYS}</span>`;
+        let btnDisabledClass = '';
+        if (check.reason === 'exhausted') {
+            tagHtml = `<span class="play-limit-tag tag-exhausted">🔒 ৩/৩ লিমিট শেষ (আপডেট করুন)</span>`;
+            btnDisabledClass = 'disabled';
+        } else if (check.reason === 'cooldown') {
+            tagHtml = `<span class="play-limit-tag tag-cooldown">⏳ ৪ ঘণ্টার কুলডাউন</span>`;
+            btnDisabledClass = 'disabled';
+        }
+
+        return `
+            <div class="game-card">
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="card-header-badge">${g.category}</span>
+                        ${tagHtml}
+                    </div>
+                    <h3 style="margin: 10px 0 4px 0;">${g.title}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">${g.desc}</p>
+                </div>
+                <button class="btn-play ${btnDisabledClass}" onclick="tryPlayGame('${g.title}', '${g.key}')">🚀 Play Game</button>
+            </div>
+        `;
+    }).join('');
+}
+
+function tryPlayGame(title, key) {
+    const check = checkGamePlayEligibility(key);
+    if (!check.allowed) {
+        alert(check.message);
+        if (check.reason === 'exhausted') {
+            switchView('user_portal');
+        }
+        return;
+    }
+    openGameSelection(title, key);
+}
+
+// --- Web Audio API Synthesizer ---
 const AudioContextClass = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
 
@@ -925,6 +989,7 @@ function switchView(viewName) {
     if (viewName === 'game_arena') {
         document.getElementById('view_game_arena').style.display = 'block';
         document.getElementById('nav_arena').classList.add('active');
+        renderArenaCards();
     } else if (viewName === 'global_position') {
         document.getElementById('view_global_position').style.display = 'block';
         document.getElementById('nav_global').classList.add('active');
@@ -948,7 +1013,7 @@ function switchView(viewName) {
     document.getElementById('backdrop').classList.remove('active');
 }
 
-// --- Comprehensive Question Bank for All 10 Games ---
+// --- Question Bank ---
 const QUESTION_DATABASE = {
     grammar: {
         set1: [
@@ -1006,46 +1071,39 @@ const QUESTION_DATABASE = {
         set1: [
             { q: "What does 'Ubiquitous' mean in IELTS Academic Reading?", options: ["Present everywhere", "Very rare", "Harmful", "Ancient"], ans: 0, level: "executive" },
             { q: "Choose the correct collocation: 'To ___ a conclusion.'", options: ["make", "draw", "do", "catch"], ans: 1, level: "mid" },
-            { q: "What is the synonym of 'Meticulous'?", options: ["Careless", "Thorough & careful", "Speedy", "Angry"], ans: 1, level: "mastery" },
-            { q: "Identify the linking word showing contrast:", options: ["Furthermore", "Nevertheless", "Consequently", "Moreover"], ans: 1, level: "mid" }
+            { q: "What is the synonym of 'Meticulous'?", options: ["Careless", "Thorough & careful", "Speedy", "Angry"], ans: 1, level: "mastery" }
         ]
     },
     admission: {
         set1: [
             { q: "মানবদেহের বৃহত্তম গ্রন্থি কোনটি?", options: ["যকৃত (Liver)", "অগ্ন্যাশয়", "থাইরয়েড", "পিটুইটারি"], ans: 0, level: "primary" },
-            { q: "মহাকর্ষীয় ধ্রুবক G এর মান কত?", options: ["6.673 x 10^-11 N m^2 kg^-2", "9.8 m s^-2", "3 x 10^8 m s^-1", "1.6 x 10^-19 C"], ans: 0, level: "mid" },
-            { q: "বেনজিনের পাই (π) ইলেকট্রন সংখ্যা কয়টি?", options: ["৩টি", "৬টি", "১২টি", "৪টি"], ans: 1, level: "executive" }
+            { q: "মহাকর্ষীয় ধ্রুবক G এর মান কত?", options: ["6.673 x 10^-11 N m^2 kg^-2", "9.8 m s^-2", "3 x 10^8 m s^-1", "1.6 x 10^-19 C"], ans: 0, level: "mid" }
         ]
     },
     bcs: {
         set1: [
             { q: "বঙ্গবন্ধু স্যাটেলাইট-১ কোন দেশ থেকে উৎক্ষেপণ করা হয়?", options: ["যুক্তরাষ্ট্র (ফ্লোরিডা)", "রাশিয়া", "ফ্রান্স", "চীন"], ans: 0, level: "mid" },
-            { q: "পদ্মা সেতুর দৈর্ঘ্য কত কিলোমিটার?", options: ["৬.১৫ কিমি", "৫.৮০ কিমি", "৭.২০ কিমি", "৬.৫০ কিমি"], ans: 0, level: "primary" },
-            { q: "বাংলা সাহিত্যের প্রাচীনতম নিদর্শন কোনটি?", options: ["চর্যাপদ", "শ্রীকৃষ্ণকীর্তন", "মঙ্গলকাব্য", "বৈষ্ণব পদাবলী"], ans: 0, level: "primary" }
+            { q: "পদ্মা সেতুর দৈর্ঘ্য কত কিলোমিটার?", options: ["৬.১৫ কিমি", "৫.৮০ কিমি", "৭.২০ কিমি", "৬.৫০ কিমি"], ans: 0, level: "primary" }
         ]
     },
     freelancing: {
         set1: [
-            { q: "ফ্রিল্যান্সিংয়ে বায়ার রিকোয়েস্টে প্রধানত কী উল্লেখ করতে হয়?", options: ["কাজের সমাধান ও অভিজ্ঞতা", "ব্যক্তিগত পরিচয়", "টাকার পরিমাণ প্রথমে", "পরিবারের বিবরণ"], ans: 0, level: "primary" },
-            { q: "মার্কেটপ্লেসে রেটিং কমে গেলে কী ক্ষতি হয়?", options: ["গিগ র‍্যাংক পিছিয়ে পড়ে", "অ্যাকাউন্ট ভেরিফাই হয়", "টাকা বাড়ে", "কোনো প্রভাব নেই"], ans: 0, level: "mid" }
+            { q: "ফ্রিল্যান্সিংয়ে বায়ার রিকোয়েস্টে প্রধানত কী উল্লেখ করতে হয়?", options: ["কাজের সমাধান ও অভিজ্ঞতা", "ব্যক্তিগত পরিচয়", "টাকার পরিমাণ প্রথমে", "পরিবারের বিবরণ"], ans: 0, level: "primary" }
         ]
     },
     software: {
         set1: [
-            { q: "SaaS এর পূর্ণরূপ কী?", options: ["Software as a Service", "System and Application Software", "Secure access as Service", "Server and Storage"], ans: 0, level: "mid" },
-            { q: "ওয়েব ডেভেলপমেন্টে ফ্রন্ট-এন্ড টেকনোলজি কোনটি?", options: ["HTML, CSS, JavaScript", "MySQL", "PHP Core", "Linux Shell"], ans: 0, level: "primary" }
+            { q: "SaaS এর পূর্ণরূপ কী?", options: ["Software as a Service", "System and Application Software", "Secure access as Service", "Server and Storage"], ans: 0, level: "mid" }
         ]
     },
     school: {
         set1: [
-            { q: "ত্রিভুজের তিন কোণের সমষ্টি কত ডিগ্রি?", options: ["১৮০°", "৩৬০°", "৯০°", "২৭০°"], ans: 0, level: "primary" },
-            { q: "উদ্ভিদ সালোকসংশ্লেষণের জন্য কোন গ্যাস গ্রহণ করে?", options: ["কার্বন ডাই-অক্সাইড", "অক্সিজেন", "নাইট্রোজেন", "মিথেন"], ans: 0, level: "primary" }
+            { q: "ত্রিভুজের তিন কোণের সমষ্টি কত ডিগ্রি?", options: ["১৮০°", "৩৬০°", "৯০°", "২৭০°"], ans: 0, level: "primary" }
         ]
     },
     brain: {
         set1: [
-            { q: "সিরিজটি পূর্ণ করুন: ২, ৪, ৮, ১৬, ___?", options: ["৩২", "২৪", "২০", "৩৬"], ans: 0, level: "primary" },
-            { q: "যদি CAT = 24 হয়, তবে BAT = কত?", options: ["23", "25", "22", "26"], ans: 0, level: "mid" }
+            { q: "সিরিজটি পূর্ণ করুন: ২, ৪, ৮, ১৬, ___?", options: ["৩২", "২৪", "২০", "৩৬"], ans: 0, level: "primary" }
         ]
     }
 };
@@ -1073,6 +1131,15 @@ function closeSelectionModal() {
 }
 
 function launchQuizFromSelection() {
+    // Check 4-hour and 3-play rules
+    const check = checkGamePlayEligibility(selectedGameKey);
+    if (!check.allowed) {
+        alert(check.message);
+        closeSelectionModal();
+        if (check.reason === 'exhausted') switchView('user_portal');
+        return;
+    }
+
     const setNum = document.getElementById('selSet').value;
     const level = document.getElementById('selLevel').value;
     const mode = document.getElementById('selMode').value;
@@ -1089,6 +1156,9 @@ function launchQuizFromSelection() {
     } else {
         isDemoMode = true;
     }
+
+    // Record game play usage immediately
+    recordGamePlayed(selectedGameKey);
 
     closeSelectionModal();
 
@@ -1258,7 +1328,10 @@ function finishQuiz() {
         btnNext.className = 'btn-play';
         btnNext.style.background = '#10b981';
         btnNext.innerHTML = '▶️ হ্যাঁ, পরবর্তী গেম খেলুন (Play Next Game)';
-        btnNext.onclick = function() { launchQuizFromSelection(); };
+        btnNext.onclick = function() {
+            exitQuiz();
+            switchView('game_arena');
+        };
         nextGameBox.appendChild(btnNext);
     } else {
         const btnDep = document.createElement('button');
@@ -1278,11 +1351,14 @@ function finishQuiz() {
         date: new Date().toLocaleDateString('bn-BD')
     });
     localStorage.setItem('edu_quiz_records', JSON.stringify(history));
+
+    renderArenaCards();
 }
 
 function exitQuiz() {
     clearInterval(timerInterval);
     document.getElementById('quizModal').style.display = 'none';
+    renderArenaCards();
 }
 
 function submitDeposit() {
@@ -1340,6 +1416,7 @@ function downloadQuizReportCSV() {
 
 window.onload = function() {
     renderGlobalLeaderboard();
+    renderArenaCards();
 };
 </script>
 </body>
