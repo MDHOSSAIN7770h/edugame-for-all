@@ -358,6 +358,84 @@
       background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px;
       max-width: 560px; width: 100%; padding: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
+      /* 📱 MOBILE SLIDE-OUT DRAWER SIDEBAR */
+    .mobile-menu-toggle-btn {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      background: rgba(79, 70, 229, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(79, 70, 229, 0.4);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .sidebar-overlay-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 99998;
+    }
+
+    .mobile-close-sidebar-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 10px;
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 860px) {
+      .sidebar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 285px !important;
+        height: 100vh !important;
+        z-index: 99999 !important;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: 10px 0 40px rgba(0,0,0,0.6) !important;
+      }
+
+      .sidebar.sidebar-open {
+        transform: translateX(0) !important;
+      }
+
+      .mobile-menu-toggle-btn {
+        display: inline-flex !important;
+      }
+
+      .mobile-close-sidebar-btn {
+        display: flex !important;
+      }
+
+      .sidebar-overlay-backdrop.active {
+        display: block !important;
+      }
+
+      .main-wrap {
+        width: 100% !important;
+        flex: 1 !important;
+      }
+    }
   </style>
 </head>
 <body class="protected-user">
@@ -1615,6 +1693,22 @@
         switchAuthTab('login');
       }
     });
+      function openMobileSidebar() {
+      document.getElementById('appSidebar').classList.add('sidebar-open');
+      document.getElementById('sidebarBackdrop').classList.add('active');
+    }
+
+    function closeMobileSidebar() {
+      document.getElementById('appSidebar').classList.remove('sidebar-open');
+      document.getElementById('sidebarBackdrop').classList.remove('active');
+    }
+
+    // অটো-ক্লোজ যখন কোনো ভিউ সুইচ হবে
+    const originalSwitchView = switchView;
+    switchView = function(viewId) {
+      originalSwitchView(viewId);
+      closeMobileSidebar();
+    };
   </script>
 </body>
 </html>
