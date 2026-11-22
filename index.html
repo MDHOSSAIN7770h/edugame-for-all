@@ -1,1714 +1,1122 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EDU GAME FOR ALL - Comprehensive Exam & Game Platform</title>
-  <link rel="icon" href="app_icon.ico" type="image/x-icon">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-dark: #0b0f19;
-      --card-bg: #111827;
-      --card-border: #1f2937;
-      --accent: #6366f1;
-      --accent-hover: #4f46e5;
-      --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
-      --gold: #f59e0b;
-      --green: #10b981;
-      --red: #ef4444;
-      --text: #f9fafb;
-      --text-muted: #9ca3af;
-      --sidebar-width: 280px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDU GAME FOR ALL - OFFICIAL WORKSPACE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-card: #151b2b;
+            --sidebar-bg: #101626;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --accent: #f59e0b;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #242f48;
+        }
 
-    body.protected-user {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
+        /* Anti-Copy and Security Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
 
-    body.light-theme {
-      --bg-dark: #f8fafc;
-      --card-bg: #ffffff;
-      --card-border: #e2e8f0;
-      --text: #0f172a;
-      --text-muted: #64748b;
-    }
-    body.light-theme .sidebar { background: #f1f5f9; border-right-color: #cbd5e1; }
-    body.light-theme .topbar, body.light-theme .game-card, 
-    body.light-theme .payment-submission-box, body.light-theme .table-card,
-    body.light-theme .read-more-banner {
-      background: #ffffff; border-color: #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    }
-    body.light-theme .nav-btn { color: #475569; }
-    body.light-theme .nav-btn:hover { background: #e2e8f0; color: #0f172a; }
-    body.light-theme .nav-sub-btn { color: #64748b; }
-    body.light-theme .nav-sub-btn:hover { background: #e2e8f0; color: #4f46e5; }
+        body {
+            font-family: 'Poppins', 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-      transition: background-color 0.25s, color 0.25s;
-    }
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
 
-    @keyframes blinkWarning {
-      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 16px rgba(239, 68, 68, 0.9); }
-      50% { opacity: 0.35; transform: scale(0.98); box-shadow: 0 0 4px rgba(239, 68, 68, 0.2); }
-    }
-    .blink-freeze {
-      animation: blinkWarning 1.2s infinite ease-in-out;
-      background: linear-gradient(135deg, #dc2626, #ef4444) !important;
-      color: #fff !important;
-      font-weight: 800 !important;
-      cursor: pointer;
-    }
+        /* Sidebar Drawer */
+        .sidebar {
+            width: 290px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
 
-    #authOverlay {
-      position: fixed; inset: 0;
-      background: rgba(11, 15, 25, 0.96);
-      backdrop-filter: blur(12px);
-      z-index: 99999;
-      display: flex; align-items: center; justify-content: center;
-      padding: 24px;
-    }
-    .auth-card-wide {
-      background: #ffffff;
-      color: #0f172a;
-      width: 100%;
-      max-width: 960px;
-      border-radius: 24px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-    @media (max-width: 768px) {
-      .auth-card-wide { grid-template-columns: 1fr; max-width: 480px; }
-      .auth-banner { display: none; }
-    }
-    .auth-banner {
-      background: linear-gradient(135deg, #4f46e5, #7c3aed, #db2777);
-      padding: 48px 36px;
-      color: #fff;
-      display: flex; flex-direction: column; justify-content: space-between;
-    }
-    .auth-form-side {
-      padding: 40px;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-    .auth-tabs {
-      display: flex; background: #f1f5f9; border-radius: 12px; padding: 4px; margin-bottom: 24px;
-    }
-    .auth-tab-btn {
-      flex: 1; padding: 10px; border: none; background: transparent; font-weight: 700;
-      border-radius: 8px; cursor: pointer; color: #64748b; transition: all 0.2s;
-    }
-    .auth-tab-btn.active {
-      background: #4f46e5; color: #fff; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
-    }
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #334155; }
-    .form-group input, .form-group select {
-      width: 100%; padding: 12px 14px; border: 1.5px solid #e2e8f0; border-radius: 10px;
-      font-size: 14px; color: #0f172a; background: #f8fafc; outline: none; transition: 0.2s;
-    }
-    .form-group input:focus, .form-group select:focus {
-      border-color: #6366f1; background: #fff; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
-    }
-    .btn-auth-primary {
-      width: 100%; padding: 14px; background: linear-gradient(135deg, #4f46e5, #7c3aed);
-      color: #fff; font-weight: 700; font-size: 15px; border: none; border-radius: 12px;
-      cursor: pointer; transition: 0.2s; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
-    }
-    .btn-auth-primary:hover { opacity: 0.95; transform: translateY(-1px); }
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
 
-    .app-container { display: flex; min-height: 100vh; }
-    .sidebar {
-      width: var(--sidebar-width);
-      background: #0d1322;
-      border-right: 1px solid var(--card-border);
-      display: flex; flex-direction: column;
-      position: sticky; top: 0; height: 100vh;
-      padding: 18px 12px;
-      z-index: 100;
-      overflow-y: auto;
-    }
-    .brand-logo {
-      display: flex; align-items: center; gap: 12px; padding: 6px 10px 18px 10px;
-      border-bottom: 1px solid #1e293b; margin-bottom: 14px;
-    }
-    .brand-logo h1 { font-size: 17px; font-weight: 800; letter-spacing: -0.5px; }
-    .brand-logo h1 span { color: #818cf8; }
-    
-    .nav-btn {
-      display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 11px 14px;
-      border-radius: 12px; border: none; background: transparent; color: #94a3b8;
-      font-weight: 600; font-size: 13.5px; cursor: pointer; text-align: left;
-      margin-bottom: 4px; transition: 0.2s;
-    }
-    .nav-btn:hover { background: #1e293b; color: #fff; }
-    .nav-btn.active { background: #4f46e5; color: #fff; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+        .brand-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .nav-sub-group {
-      display: flex; flex-direction: column; padding-left: 18px; margin-bottom: 6px;
-      border-left: 2px solid #334155; margin-left: 14px; gap: 2px;
-    }
-    .nav-sub-btn {
-      padding: 8px 12px; font-size: 12.5px; font-weight: 600; color: #94a3b8;
-      background: transparent; border: none; border-radius: 8px; text-align: left;
-      cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px;
-    }
-    .nav-sub-btn:hover { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
-    .nav-sub-btn.active { background: #3b82f6; color: #fff; font-weight: 700; }
+        .close-drawer-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
 
-    .main-content { flex: 1; padding: 24px 32px; overflow-y: auto; }
-    
-    .topbar {
-      display: flex; justify-content: space-between; align-items: center;
-      background: #111827; border: 1px solid #1f2937; border-radius: 16px;
-      padding: 12px 20px; margin-bottom: 24px; gap: 16px; flex-wrap: wrap;
-    }
-    
-    .account-switcher-box {
-      display: inline-flex; background: rgba(0,0,0,0.35); padding: 4px; border-radius: 12px;
-      border: 1.5px solid #374151; gap: 4px;
-    }
-    .btn-acc-toggle {
-      border: none; background: transparent; color: #94a3b8; font-weight: 700;
-      font-size: 13px; padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.2s;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .btn-acc-toggle.active-demo {
-      background: #2563eb; color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,0.4);
-    }
-    .btn-acc-toggle.active-real {
-      background: #059669; color: #fff; box-shadow: 0 2px 8px rgba(5,150,105,0.4);
-    }
+        .nav-menu {
+            list-style: none;
+            padding: 15px 10px;
+            flex: 1;
+            overflow-y: auto;
+        }
 
-    .balance-display-badge {
-      display: flex; align-items: center; gap: 12px; padding: 6px 14px;
-      border-radius: 12px; font-weight: 800; font-size: 15px; border: 1.5px solid;
-    }
-    .bal-demo-theme { background: rgba(37, 99, 235, 0.15); color: #60a5fa; border-color: rgba(37, 99, 235, 0.4); }
-    .bal-real-theme { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.4); }
+        .nav-item {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
 
-    .btn-bal-adjust {
-      background: rgba(255,255,255,0.15); border: none; color: inherit; font-size: 12px;
-      font-weight: 700; padding: 4px 8px; border-radius: 6px; cursor: pointer;
-    }
-    .btn-bal-adjust:hover { background: rgba(255,255,255,0.3); }
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--primary);
+            color: #fff;
+            font-weight: 600;
+        }
 
-    .topbar-actions {
-      display: flex; align-items: center; gap: 10px;
-    }
-    .btn-top-action {
-      background: #1e293b; border: 1px solid #334155; color: #f1f5f9; padding: 8px 14px;
-      border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer;
-      display: flex; align-items: center; gap: 6px; transition: 0.2s; position: relative;
-    }
-    .btn-top-action:hover { background: #334155; border-color: #64748b; }
-    .btn-top-action:active { transform: scale(0.96); }
+        /* Main Body */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
 
-    .btn-refresh-active { animation: spin 0.7s linear infinite; }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
+        .topbar {
+            background-color: var(--sidebar-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .notif-badge-count {
-      position: absolute; top: -6px; right: -6px; background: #ef4444; color: #fff;
-      font-size: 11px; font-weight: 800; border-radius: 10px; padding: 2px 6px;
-      border: 2px solid #0b0f19;
-    }
+        .mobile-menu-btn {
+            display: none;
+            background: #1f293d;
+            border: 1px solid var(--border-color);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
 
-    /* 3D Read More Banner & Button Styling */
-    .read-more-banner {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95));
-      border: 1.5px solid rgba(99, 102, 241, 0.35);
-      border-radius: 18px;
-      padding: 18px 24px;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-    }
-    .btn-3d-readmore {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899);
-      color: #ffffff !important;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 15px;
-      font-weight: 800;
-      text-decoration: none;
-      padding: 14px 32px;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 6px 0 #312e81, 0 12px 24px rgba(79, 70, 229, 0.45);
-      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-      cursor: pointer;
-      transition: all 0.15s ease-in-out;
-      letter-spacing: 0.6px;
-      outline: none;
-    }
-    .btn-3d-readmore:hover {
-      background: linear-gradient(135deg, #4338ca, #6d28d9, #db2777);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 0 #312e81, 0 16px 28px rgba(79, 70, 229, 0.55);
-    }
-    .btn-3d-readmore:active {
-      transform: translateY(4px);
-      box-shadow: 0 2px 0 #312e81, 0 4px 10px rgba(0,0,0,0.3);
-    }
+        .wallet-badges {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-    .view-panel { display: none; }
-    .view-panel.active { display: block; animation: fadeIn 0.25s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        .wallet-pill {
+            background: #1e293b;
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .section-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
-    .section-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
-    
-    .game-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px;
-    }
-    .game-card {
-      background: #111827; border: 1px solid #1f2937; border-radius: 18px;
-      padding: 22px; cursor: pointer; transition: 0.25s; position: relative; overflow: hidden;
-    }
-    .game-card:hover { transform: translateY(-4px); border-color: #6366f1; box-shadow: 0 12px 24px rgba(99, 102, 241, 0.15); }
-    .game-card-icon {
-      width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
-      font-size: 24px; margin-bottom: 14px;
-    }
-    .game-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
-    .game-card p { font-size: 13px; color: var(--text-muted); line-height: 1.4; margin-bottom: 14px; }
-    .game-card-btn {
-      width: 100%; padding: 10px; background: #1e293b; color: #fff; font-weight: 600;
-      border: none; border-radius: 10px; cursor: pointer; transition: 0.2s;
-    }
-    .game-card:hover .game-card-btn { background: #4f46e5; }
+        .bot-shield-pill {
+            background: #1e1b4b;
+            border: 1px solid #4338ca;
+            color: #a5b4fc;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
 
-    .payment-gateways-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-bottom: 26px;
-    }
-    .gateway-card {
-      padding: 20px; border-radius: 16px; border: 1px solid;
-    }
-    .bkash-card { background: rgba(226, 19, 110, 0.08); border-color: rgba(226, 19, 110, 0.3); }
-    .nagad-card { background: rgba(247, 148, 29, 0.08); border-color: rgba(247, 148, 29, 0.3); }
-    .rocket-card { background: rgba(140, 43, 143, 0.08); border-color: rgba(140, 43, 143, 0.3); }
+        .content-area {
+            padding: 24px;
+            flex: 1;
+        }
 
-    .payment-submission-box {
-      background: #111827; border: 1px solid #1f2937; border-radius: 20px;
-      padding: 28px; margin-bottom: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-    }
-    .payment-form-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin-bottom: 20px;
-    }
-    .p-input-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 8px; color: #cbd5e1; }
-    body.light-theme .p-input-group label { color: #334155; }
-    .p-input-group input, .p-input-group select {
-      width: 100%; padding: 12px 14px; background: #0f172a; border: 1.5px solid #334155;
-      border-radius: 10px; color: #fff; font-size: 14px; outline: none; transition: 0.2s;
-    }
-    body.light-theme .p-input-group input, body.light-theme .p-input-group select {
-      background: #f8fafc; border-color: #cbd5e1; color: #0f172a;
-    }
-    .p-input-group input:focus, .p-input-group select:focus {
-      border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-    }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
 
-    .btn-submit-payment {
-      width: 100%; padding: 15px; background: linear-gradient(135deg, #10b981, #059669);
-      color: #fff; font-weight: 800; font-size: 16px; border: none; border-radius: 12px;
-      cursor: pointer; transition: 0.2s; box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
-    }
-    .btn-submit-payment:hover { opacity: 0.95; transform: translateY(-1px); }
+        .game-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
 
-    .table-card {
-      background: #111827; border: 1px solid #1f2937; border-radius: 18px;
-      overflow-x: auto; padding: 16px; margin-bottom: 30px;
-    }
-    table { width: 100%; border-collapse: collapse; text-align: left; }
-    th { padding: 14px 18px; font-size: 13px; font-weight: 700; color: #94a3b8; border-bottom: 1px solid #1f2937; }
-    td { padding: 14px 18px; font-size: 14px; border-bottom: 1px solid #1f2937; }
-    tr:last-child td { border-bottom: none; }
-    .badge-status {
-      padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; display: inline-block;
-    }
-    .badge-pending { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .badge-approved { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .badge-rejected { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .game-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
 
-    .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(6px);
-      z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;
-    }
-    .modal-box {
-      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px;
-      max-width: 560px; width: 100%; padding: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    }
-      /* 📱 MOBILE SLIDE-OUT DRAWER SIDEBAR */
-    .mobile-menu-toggle-btn {
-      display: none;
-      align-items: center;
-      gap: 6px;
-      background: rgba(79, 70, 229, 0.15);
-      color: var(--primary);
-      border: 1px solid rgba(79, 70, 229, 0.4);
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-    }
+        .card-header-badge {
+            display: inline-block;
+            background: #23314f;
+            color: #60a5fa;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            align-self: flex-start;
+        }
 
-    .sidebar-overlay-backdrop {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
-      z-index: 99998;
-    }
+        .btn-play {
+            background-color: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
 
-    .mobile-close-sidebar-btn {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      width: 100%;
-      padding: 10px;
-      background: #ef4444;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-bottom: 10px;
-    }
+        .btn-play:hover {
+            background-color: var(--primary-hover);
+        }
 
-    @media (max-width: 860px) {
-      .sidebar {
-        position: fixed !important;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: 285px !important;
-        height: 100vh !important;
-        z-index: 99999 !important;
-        transform: translateX(-100%);
-        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        box-shadow: 10px 0 40px rgba(0,0,0,0.6) !important;
-      }
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 15px;
+        }
 
-      .sidebar.sidebar-open {
-        transform: translateX(0) !important;
-      }
+        .modal-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 680px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 25px;
+            position: relative;
+        }
 
-      .mobile-menu-toggle-btn {
-        display: inline-flex !important;
-      }
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
 
-      .mobile-close-sidebar-btn {
-        display: flex !important;
-      }
+        .quiz-timer-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #111827;
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            border: 1px solid var(--border-color);
+        }
 
-      .sidebar-overlay-backdrop.active {
-        display: block !important;
-      }
+        .timer-badge {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #2b1f09;
+            padding: 4px 12px;
+            border-radius: 8px;
+            border: 1px solid #78350f;
+        }
 
-      .main-wrap {
-        width: 100% !important;
-        flex: 1 !important;
-      }
-    }
-  </style>
+        .option-item {
+            background: #1a233a;
+            border: 1px solid var(--border-color);
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+        }
+
+        .option-item:hover {
+            background: #243052;
+            border-color: var(--primary);
+        }
+
+        .option-item.correct {
+            background: #064e3b !important;
+            border-color: var(--accent-green) !important;
+            color: #34d399 !important;
+        }
+
+        .option-item.wrong {
+            background: #7f1d1d !important;
+            border-color: var(--accent-red) !important;
+            color: #f87171 !important;
+        }
+
+        /* Result Card */
+        .result-card-box {
+            background: #111827;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 18px 0;
+            text-align: left;
+        }
+
+        .result-stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #1f293d;
+            font-size: 0.95rem;
+        }
+
+        .result-stat-row:last-child {
+            border-bottom: none;
+        }
+
+        /* Mobile Backdrop */
+        .mobile-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 999;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+            .close-drawer-btn { display: block; }
+            .sidebar {
+                position: fixed;
+                top: 0; left: 0; bottom: 0;
+                transform: translateX(-100%);
+            }
+            .sidebar.open { transform: translateX(0); }
+            .mobile-backdrop.active { display: block; }
+        }
+    </style>
 </head>
-<body class="protected-user">
+<body>
 
-  <!-- Auth Overlay -->
-  <div id="authOverlay">
-    <div class="auth-card-wide">
-      <div class="auth-banner">
-        <div>
-          <h2 style="font-size: 26px; font-weight: 800; margin-bottom: 12px;">EDU GAME FOR ALL</h2>
-          <p style="opacity: 0.9; font-size: 15px; line-height: 1.5;">Welcome to Bangladesh's premier comprehensive exam preparation and interactive educational gaming network.</p>
+<div class="mobile-backdrop" id="backdrop" onclick="toggleSidebar()"></div>
+
+<div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-title">⚡ EDU GAME FOR ALL</div>
+            <button class="close-drawer-btn" onclick="toggleSidebar()">✕</button>
         </div>
-        <div style="background: rgba(255,255,255,0.15); padding: 16px; border-radius: 12px; font-size: 13px;">
-          ⭐ <strong>Super Admin Support:</strong><br>
-          Anwar (01955375501)<br>
-          Full Control Panel & Gateway Verifications.
+        <ul class="nav-menu">
+            <li class="nav-item active" onclick="switchView('game_arena')">🎮 Game Arena</li>
+            <li class="nav-item" onclick="switchView('bankers_game')">🏦 Game For Bankers</li>
+            <li class="nav-item" onclick="switchView('affiliate_game')">💼 MassBD Affiliate</li>
+            <li class="nav-item" onclick="switchView('grammar_game')">📖 Basic Grammar Game</li>
+            <li class="nav-item" onclick="switchView('user_portal')">👤 User Portal</li>
+            <li class="nav-item" onclick="switchView('deposit_view')">💳 Deposit / Payment</li>
+            <li class="nav-item" onclick="switchView('admin_panel')">🛡️ Admin Panel</li>
+        </ul>
+        <div style="padding: 15px 20px; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
+            <div><strong>Admin:</strong> Anwar</div>
+            <div style="font-size: 0.75rem;">Super Authority Verified</div>
         </div>
-      </div>
-      <div class="auth-form-side">
-        <div class="auth-tabs">
-          <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')">Sign In</button>
-          <button class="auth-tab-btn" id="tabRegBtn" onclick="switchAuthTab('register')">Register Free</button>
-        </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <main class="main-wrapper">
+        <header class="topbar">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">☰ মেনু</button>
+            <div class="wallet-badges">
+                <span class="bot-shield-pill">🛡️ Anti-Bot Active (28s)</span>
+                <div class="wallet-pill">🎮 Demo: <span id="demoPoints" style="color:#60a5fa;">100 Pts</span></div>
+                <div class="wallet-pill">💰 Real: <span id="realBalance" style="color:#34d399;">৳00.00</span></div>
+            </div>
+        </header>
+
+        <section class="content-area">
+            <!-- View: Game Arena -->
+            <div id="view_game_arena">
+                <div style="margin-bottom: 20px;">
+                    <h2>🎯 Educational Exam & Tournament Arena</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">
+                        ⏱️ প্রতি প্রশ্ন: ২৮ সেকেন্ড | নো স্কিপ | সঠিক উত্তর: +৫ পয়েন্ট (+০.২৫৳) | ভুল উত্তর: -১০ পয়েন্ট (-০.৫০৳)
+                    </p>
+                </div>
+
+                <div class="grid-2">
+                    <!-- Basic Grammar Game -->
+                    <div class="game-card">
+                        <span class="card-header-badge">English & Grammar</span>
+                        <h3>Basic Grammar Master Game</h3>
+                        <p style="color: var(--text-muted); font-size: 0.88rem;">Articles, Prepositions, Tenses, Subjunctive Mood, Voice & Idioms.</p>
+                        <button class="btn-play" onclick="openGameSelection('Basic Grammar Game', 'grammar')">🚀 Play Grammar Challenge</button>
+                    </div>
+
+                    <!-- Game For Bankers -->
+                    <div class="game-card">
+                        <span class="card-header-badge">Finance & Banking</span>
+                        <h3>Game For Bankers</h3>
+                        <p style="color: var(--text-muted); font-size: 0.88rem;">Bank Math, CRR, SLR, General Banking, LC, Forex & Financial Analysis.</p>
+                        <button class="btn-play" onclick="openGameSelection('Game For Bankers', 'banker')">🚀 Play Banker's Challenge</button>
+                    </div>
+
+                    <!-- MassBD Affiliate Game -->
+                    <div class="game-card">
+                        <span class="card-header-badge">Digital Sales & SEO</span>
+                        <h3>MassBD Affiliate Game</h3>
+                        <p style="color: var(--text-muted); font-size: 0.88rem;">CPA, Cookie tracking, Referral link, CTR, SEO, কমিশন ও ডিজিটাল সেলিং (massbd.org)।</p>
+                        <button class="btn-play" onclick="openGameSelection('MassBD Affiliate Game', 'affiliate')">🚀 Play Affiliate Game</button>
+                    </div>
+
+                    <!-- Job Prep Game -->
+                    <div class="game-card">
+                        <span class="card-header-badge">Competitive Exam</span>
+                        <h3>BCS & Govt Job Arena</h3>
+                        <p style="color: var(--text-muted); font-size: 0.88rem;">General Knowledge, Math, Science & Bangladesh Affairs.</p>
+                        <button class="btn-play" onclick="openGameSelection('BCS & Govt Job Arena', 'bcs')">🚀 Play Job Prep Game</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View: Deposit -->
+            <div id="view_deposit" style="display: none;">
+                <h2>💳 রিয়েল টুর্নামেন্ট ডিপোজিট ফর্ম</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">রিয়েল ব্যালেন্স আনলক করতে নিচের অফিসিয়াল নাম্বারে সেন্ড মানি করুন।</p>
+                <div style="background:var(--bg-card); padding:22px; border-radius:12px; border:1px solid var(--border-color); max-width:600px;">
+                    <p><strong>বিকাশ (Personal):</strong> 01955375501</p>
+                    <p><strong>নগদ (Personal):</strong> 01758871568</p>
+                    <p><strong>রকেট (Personal):</strong> 01854550184-4</p>
+                    <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
+                    <div style="margin-bottom:12px;">
+                        <label>আপনার মোবাইল নাম্বার:</label>
+                        <input type="text" id="depPhone" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
+                    </div>
+                    <div style="margin-bottom:12px;">
+                        <label>ট্রানজেকশন আইডি (TrxID):</label>
+                        <input type="text" id="depTrx" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
+                    </div>
+                    <button class="btn-play" onclick="submitDeposit()" style="width:100%;">ডিপোজিট সাবমিট করুন</button>
+                </div>
+            </div>
+
+            <!-- View: Admin Panel -->
+            <div id="view_admin" style="display: none;">
+                <h2>🛡️ এডমিন ম্যানেজমেন্ট প্যানেল</h2>
+                <div style="margin: 20px 0;">
+                    <button class="btn-play" onclick="downloadQuizReportCSV()">📥 কুইজ রিপোর্ট CSV ডাউনলোড করুন</button>
+                </div>
+                <div id="adminHistoryTable" style="margin-top:15px; overflow-x:auto;">
+                    <table style="width:100%; border-collapse:collapse; text-align:left;">
+                        <thead>
+                            <tr style="background:#1e293b; color:#93c5fd;">
+                                <th style="padding:10px; border:1px solid var(--border-color);">User</th>
+                                <th style="padding:10px; border:1px solid var(--border-color);">Game</th>
+                                <th style="padding:10px; border:1px solid var(--border-color);">Score</th>
+                                <th style="padding:10px; border:1px solid var(--border-color);">Taka</th>
+                                <th style="padding:10px; border:1px solid var(--border-color);">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quizHistoryBody">
+                            <tr><td colspan="5" style="padding:15px; text-align:center;">এখনও কোনো কুইজ রেকর্ড নেই।</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Game Selection Modal -->
+<div class="modal-overlay" id="selectionModal">
+    <div class="modal-container">
+        <button class="modal-close-btn" onclick="closeSelectionModal()">✕</button>
+        <h3 id="selModalTitle" style="margin-bottom: 15px;">গেম সেট ও লেভেল নির্বাচন করুন</h3>
         
-        <form id="authForm" onsubmit="handleAuthSubmit(event)">
-          <div class="form-group" id="fullNameGroup" style="display: none;">
-            <label>Full Legal Name</label>
-            <input type="text" id="authName" placeholder="Enter full name">
-          </div>
-          <div class="form-group">
-            <label>Mobile Number (Account ID)</label>
-            <input type="text" id="authMobile" placeholder="e.g. 01955375501" required>
-          </div>
-          <div class="form-group">
-            <label>Password</label>
-            <input type="password" id="authPass" placeholder="Enter secure password" required>
-          </div>
-          <div class="form-group" id="accountTypeGroup">
-            <label>Account Role</label>
-            <select id="authRole">
-              <option value="student">Student / Player</option>
-              <option value="admin">Administrator / Super Admin</option>
+        <div style="margin-bottom: 15px;">
+            <label style="color:var(--text-muted); font-size:0.9rem;">সেট নির্বাচন (Set):</label>
+            <select id="selSet" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
+                <option value="1">Set 01 (Official 25-30 Questions)</option>
+                <option value="2">Set 02 (Comprehensive Practice Set)</option>
             </select>
-          </div>
-          <button type="submit" class="btn-auth-primary" id="authSubmitBtn">Sign In to Platform</button>
-        </form>
-        <div id="authError" style="color: #ef4444; font-size: 13px; font-weight: 700; margin-top: 14px; text-align: center; display: none;"></div>
-      </div>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="color:var(--text-muted); font-size:0.9rem;">লেভেল নির্বাচন (7 Tiers):</label>
+            <select id="selLevel" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
+                <option value="all">🌟 All Levels (Easy + Medium + Hard Randomly)</option>
+                <option value="primary">🔰 Primary Level</option>
+                <option value="basic1">📘 Basic Level 01</option>
+                <option value="basic2">📗 Basic Level 02</option>
+                <option value="basic3">📙 Basic Level 03</option>
+                <option value="mid">🎖️ Level 01: MID LEVEL</option>
+                <option value="executive">💼 Level 02: EXECUTIVE LEVEL</option>
+                <option value="mastery">👑 Level 03: MASTERY LEVEL</option>
+            </select>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="color:var(--text-muted); font-size:0.9rem;">মোড নির্বাচন:</label>
+            <select id="selMode" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
+                <option value="demo">🎮 Practice Demo Mode (ফ্রি প্র্যাকটিস)</option>
+                <option value="real">💰 Real Tournament Mode (আসল টাকা)</option>
+            </select>
+        </div>
+
+        <button class="btn-play" onclick="launchQuizFromSelection()" style="width:100%; padding:12px; font-size:1.05rem;">
+            🚀 কুইজ শুরু করুন (Strict 28s / No Skip)
+        </button>
     </div>
-  </div>
+</div>
 
-  <!-- Notification Modal -->
-  <div class="modal-backdrop" id="notifModal">
-    <div class="modal-box">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h3 style="font-size: 20px; font-weight: 800;">🔔 Platform Notifications</h3>
-        <button onclick="closeNotifModal()" style="background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer;">&times;</button>
-      </div>
-      <div id="notifListContainer" style="max-height: 340px; overflow-y: auto; margin-bottom: 20px;">
-      </div>
-      <button onclick="closeNotifModal()" style="width: 100%; padding: 12px; background: #334155; color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer;">Close</button>
-    </div>
-  </div>
-
-  <!-- Main Application -->
-  <div class="app-container">
-    <!-- Left Sidebar -->
-    <div class="sidebar">
-      <div class="brand-logo">
-        <div style="font-size: 26px;">⚡</div>
-        <div>
-          <h1>EDU GAME <span>FOR ALL</span></h1>
-          <p style="font-size: 10.5px; color: #94a3b8; font-weight: 600;">OFFICIAL WORKSPACE</p>
-        </div>
-      </div>
-
-      <nav style="flex: 1;">
-        <button class="nav-btn active" onclick="switchView('arenaView', this)"><span>🎮 Game Arena</span></button>
-        
-        <!-- MASSBD AFFILIATE (Main Button + Collapsible Sub-Buttons) -->
-        <div style="margin-bottom: 4px;">
-          <button class="nav-btn" onclick="toggleAffiliateSubmenu(this)">
-            <span>🤝 MASSBD AFFILIATE</span>
-            <span id="affiliateArrow" style="font-size: 11px;">▼</span>
-          </button>
-          <div class="nav-sub-group" id="affiliateSubGroup">
-            <button class="nav-sub-btn" onclick="openAffiliateSub('onlineIncome', this)">💰 Online Income</button>
-            <button class="nav-sub-btn" onclick="openAffiliateSub('business', this)">💼 Business</button>
-            <button class="nav-sub-btn" onclick="openAffiliateSub('skillsSelling', this)">🛠️ Skills Selling</button>
-            <button class="nav-sub-btn" onclick="openAffiliateSub('training', this)">🎓 Training</button>
-            <button class="nav-sub-btn" onclick="openAffiliateSub('softwareSelling', this)">💻 Software Selling</button>
-            <button class="nav-sub-btn" onclick="openAffiliateSub('website', this)">🌐 Website</button>
-          </div>
-        </div>
-
-        <button class="nav-btn" onclick="switchView('portalView', this)"><span>👤 User Portal</span></button>
-        <button class="nav-btn" onclick="switchView('reportView', this)"><span>📊 My Report</span></button>
-        <button class="nav-btn" onclick="switchView('globalPositionView', this)"><span>🌍 Global Position</span></button>
-        <button class="nav-btn" onclick="switchView('depositView', this)"><span>💳 Deposit</span></button>
-        <button class="nav-btn" onclick="switchView('paymentFormView', this)"><span>📜 Payment Form</span></button>
-        <button class="nav-btn" onclick="switchView('downloadsView', this)"><span>📥 Downloads</span></button>
-        <button class="nav-btn" id="adminNavBtn" onclick="switchView('adminView', this)" style="display: none; color: #f59e0b;"><span>🛡️ Admin Panel</span></button>
-      </nav>
-
-      <div style="padding-top: 14px; border-top: 1px solid #1e293b; margin-top: 10px;">
-        <div style="font-size: 13px; font-weight: 700;" id="userProfileName">Logged In</div>
-        <div style="font-size: 11.5px; color: #94a3b8; margin-bottom: 10px;" id="userProfileRole">Student</div>
-        <button onclick="logout()" style="width: 100%; padding: 9px; background: #1e293b; color: #f87171; border: none; border-radius: 10px; font-weight: 700; cursor: pointer;">🚪 Sign Out</button>
-      </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-      <div class="topbar">
-        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-          <div class="account-switcher-box">
-            <button class="btn-acc-toggle active-demo" id="btnModeDemo" onclick="setAccountMode('demo')">🎮 Demo Account</button>
-            <button class="btn-acc-toggle" id="btnModeReal" onclick="setAccountMode('real')">💳 Real Account</button>
-          </div>
-
-          <div class="balance-display-badge bal-demo-theme" id="balanceDisplayBadge">
-            <span id="balLabel">Demo Balance:</span>
-            <span id="balAmount" style="font-size: 18px;">৳500.00</span>
-            <span id="demoAdjustBtns" style="display: inline-flex; gap: 4px;">
-              <button class="btn-bal-adjust" onclick="adjustDemoBalance(500)" title="Add BDT 500">+500</button>
-              <button class="btn-bal-adjust" onclick="adjustDemoBalance(-500)" title="Less BDT 500">-500</button>
-            </span>
-          </div>
-
-          <span id="realPendingBadge" style="display: none; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700;">
-            ⏳ Deposit pending admin approval
-          </span>
-        </div>
-
-        <div class="topbar-actions">
-          <button class="btn-top-action" id="btnManualRefresh" onclick="manualRefresh()" title="Sync & Refresh All Balances">
-            <span id="refreshIcon">🔄</span> <span>Refresh</span>
-          </button>
-          
-          <button class="btn-top-action" onclick="toggleTheme()" title="Switch Light/Dark Mode">
-            <span id="themeIcon">🌓</span> <span>Theme</span>
-          </button>
-
-          <button class="btn-top-action" onclick="openNotifModal()" title="View Notifications">
-            <span>🔔</span> <span>Alerts</span>
-            <span class="notif-badge-count" id="notifBadge">0</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- VIEW: Game Arena (With 3D READ MORE Button Banner) -->
-      <div class="view-panel active" id="arenaView">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; flex-wrap: wrap; gap: 14px;">
-          <div>
-            <h2 class="section-title">🎮 Comprehensive Game & Exam Arena</h2>
-            <p class="section-subtitle" style="margin-bottom: 16px;">Select your academic track, competitive exam prep, or language booster module to compete.</p>
-          </div>
-        </div>
-
-        <!-- 🌟 3D READ MORE BANNER ON THE BODY -->
-        <div class="read-more-banner">
-          <div>
-            <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 4px; color: #f1f5f9; display: flex; align-items: center; gap: 8px;">
-              📚 Complete Exam Guides, Syllabus & Detailed Instructions
-            </h3>
-            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.4;">
-              Visit the official EDU GAME guide page to view comprehensive syllabus rules, scoring breakdown & reward schemes.
-            </p>
-          </div>
-          <div>
-            <a href="https://sites.google.com/view/eudgame-deatials/home" target="_blank" rel="noopener noreferrer" class="btn-3d-readmore">
-              <span>📖 READ MORE</span>
-              <span style="font-size: 16px;">➔</span>
-            </a>
-          </div>
-        </div>
-        
-        <div class="game-grid">
-          <div class="game-card" onclick="launchGame('IELTS Game')">
-            <div class="game-card-icon" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">🇬🇧</div>
-            <h3>IELTS Game</h3>
-            <p>Master Band 8+ academic modules: Reading, Writing, Speaking & Listening mock drills.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('Job Preparation Game')">
-            <div class="game-card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">💼</div>
-            <h3>Job Preparation Game</h3>
-            <p>BCS, Bank, Primary & Govt competitive job preliminary exam simulator quizzes.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('Affiliate Game')">
-            <div class="game-card-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">🤝</div>
-            <h3>Affiliate Game</h3>
-            <p>Earn commissions, expand education networks & climb top affiliate tiers.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('PTE Game')">
-            <div class="game-card-icon" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">🎓</div>
-            <h3>PTE Game</h3>
-            <p>Master Pearson Test of English modules: Speaking, Reading & Listening.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('HSC Game')">
-            <div class="game-card-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">📚</div>
-            <h3>HSC Game</h3>
-            <p>Higher Secondary Certificate test prep with model tests and board questions.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('SSC Game')">
-            <div class="game-card-icon" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">🎒</div>
-            <h3>SSC Game</h3>
-            <p>Secondary School Certificate exam quizzes across Science, Arts & Commerce.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('O Level Game')">
-            <div class="game-card-icon" style="background: rgba(236, 72, 153, 0.15); color: #f472b6;">🇬🇧</div>
-            <h3>O LEVEL Game</h3>
-            <p>Cambridge & Edexcel International GCSE syllabus simulations and drills.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('A Level Game')">
-            <div class="game-card-icon" style="background: rgba(139, 92, 246, 0.15); color: #a78bfa;">🏛️</div>
-            <h3>A LEVEL Game</h3>
-            <p>Advanced Level mock challenges for University entrance qualifiers.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('NU Game')">
-            <div class="game-card-icon" style="background: rgba(14, 165, 233, 0.15); color: #38bdf8;">🏛️</div>
-            <h3>NU Game</h3>
-            <p>National University degree course question banks and rapid assessments.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('Grammar Game')">
-            <div class="game-card-icon" style="background: rgba(234, 179, 8, 0.15); color: #facc15;">✍️</div>
-            <h3>Grammar Game</h3>
-            <p>High-speed syntactic tests, tense challenges and sentence structuring.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('Writing Game')">
-            <div class="game-card-icon" style="background: rgba(239, 68, 68, 0.15); color: #f87171;">📝</div>
-            <h3>Writing Game</h3>
-            <p>Essay composition, paragraph formulation and rapid vocabulary evaluation.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('Vocab Game')">
-            <div class="game-card-icon" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">📖</div>
-            <h3>Vocab Game</h3>
-            <p>Expand high-frequency academic vocabulary with flash quizzes.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('Speaking Game')">
-            <div class="game-card-icon" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf;">🗣️</div>
-            <h3>Speaking Game</h3>
-            <p>Fluency and pronunciation training with interactive time trials.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-
-          <div class="game-card" onclick="launchGame('Listening Game')">
-            <div class="game-card-icon" style="background: rgba(249, 115, 22, 0.15); color: #fb923c;">🎧</div>
-            <h3>Listening Game</h3>
-            <p>Acoustic comprehension drills, audio dialogue questions & summaries.</p>
-            <button class="game-card-btn">Play Now</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- VIEW: MASSBD AFFILIATE -->
-      <div class="view-panel" id="massbdAffiliateView">
-        <h2 class="section-title">🤝 MASSBD AFFILIATE PROGRAM</h2>
-        <p class="section-subtitle">Earn sustainable commissions across Online Income, Business Solutions, Skills, Training, Software and Websites.</p>
-        
-        <div class="game-grid">
-          <div class="game-card" onclick="alert('Entering Online Income Affiliate Portal...')">
-            <div class="game-card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">💰</div>
-            <h3>ONLINE INCOME</h3>
-            <p>High-yield digital referral links, daily task income, and direct wallet payouts.</p>
-            <button class="game-card-btn">Open Income Stream</button>
-          </div>
-
-          <div class="game-card" onclick="alert('Entering Business Partnership Portal...')">
-            <div class="game-card-icon" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">💼</div>
-            <h3>BUSINESS</h3>
-            <p>B2B business development, enterprise corporate tie-ups and partner commission.</p>
-            <button class="game-card-btn">Business Dashboard</button>
-          </div>
-
-          <div class="game-card" onclick="alert('Entering Skills Selling Portal...')">
-            <div class="game-card-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">🛠️</div>
-            <h3>SKILLS SELLING</h3>
-            <p>Market freelancing services, graphic design, writing and programming skills.</p>
-            <button class="game-card-btn">Sell Skills Now</button>
-          </div>
-
-          <div class="game-card" onclick="alert('Entering Training Affiliate Portal...')">
-            <div class="game-card-icon" style="background: rgba(139, 92, 246, 0.15); color: #a78bfa;">🎓</div>
-            <h3>TRAINING</h3>
-            <p>Promote certified professional IT courses, live masterclasses and exam coaching.</p>
-            <button class="game-card-btn">Training Affiliate</button>
-          </div>
-
-          <div class="game-card" onclick="alert('Entering Software Selling Portal...')">
-            <div class="game-card-icon" style="background: rgba(236, 72, 153, 0.15); color: #f472b6;">💻</div>
-            <h3>SOFTWARE SELLING</h3>
-            <p>Sell business ERP, POS, educational desktop software & digital tools for high margin.</p>
-            <button class="game-card-btn">Software Catalog</button>
-          </div>
-
-          <div class="game-card" onclick="alert('Entering Website Affiliate Portal...')">
-            <div class="game-card-icon" style="background: rgba(14, 165, 233, 0.15); color: #38bdf8;">🌐</div>
-            <h3>WEBSITE</h3>
-            <p>Custom web design, domain registration, cloud hosting and ecommerce web affiliate.</p>
-            <button class="game-card-btn">Website Services</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- VIEW: User Portal with Profile Form -->
-      <div class="view-panel" id="portalView">
-        <h2 class="section-title">👤 User Portal & Candidate Profile</h2>
-        <p class="section-subtitle">Update your personal credentials, contact details, date of joining and mobile banking payout accounts.</p>
-        
-        <div class="payment-submission-box" style="margin-bottom: 24px;">
-          <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 18px; color: #818cf8;">📋 Candidate Profile & Mobile Banking Information</h3>
-          <form onsubmit="handleProfileUpdate(event)">
-            <div class="payment-form-grid">
-              <div class="p-input-group">
-                <label>Full Legal Name</label>
-                <input type="text" id="profName" placeholder="Enter full name" required>
-              </div>
-              <div class="p-input-group">
-                <label>Email Address</label>
-                <input type="email" id="profEmail" placeholder="e.g. candidate@gmail.com" required>
-              </div>
-              <div class="p-input-group">
-                <label>Profession / Occupation</label>
-                <input type="text" id="profProfession" placeholder="e.g. Student / Job Seeker / Teacher">
-              </div>
-              <div class="p-input-group">
-                <label>Date of Joining</label>
-                <input type="date" id="profDoj" required>
-              </div>
-              <div class="p-input-group">
-                <label>bKash Mobile Number</label>
-                <input type="text" id="profBkash" placeholder="e.g. 017xxxxxxxx">
-              </div>
-              <div class="p-input-group">
-                <label>Nagad Mobile Number</label>
-                <input type="text" id="profNagad" placeholder="e.g. 018xxxxxxxx">
-              </div>
-              <div class="p-input-group">
-                <label>Dutch-Bangla Rocket Number</label>
-                <input type="text" id="profRocket" placeholder="e.g. 01854550184-4">
-              </div>
+<!-- Active Quiz Modal -->
+<div class="modal-overlay" id="quizModal">
+    <div class="modal-container">
+        <button class="modal-close-btn" onclick="exitQuiz()">✕</button>
+        <div class="quiz-timer-bar">
+            <div>
+                <span id="quizGameTitle" style="font-weight:700; color:#60a5fa;">Game</span>
+                <span id="quizProgress" style="font-size:0.85rem; color:var(--text-muted); margin-left:10px;">Q 1/25</span>
             </div>
-            <button type="submit" class="btn-submit-payment" style="background: linear-gradient(135deg, #4f46e5, #7c3aed);">💾 Save & Update Profile</button>
-          </form>
+            <div class="timer-badge">⏱️ <span id="timerSec">28</span>s</div>
         </div>
 
-        <div class="table-card">
-          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 14px;">📄 Account Status Overview</h3>
-          <p style="margin-bottom: 10px;"><strong>Current Account Mode:</strong> <span id="portalAccMode">Demo Account</span></p>
-          <p style="margin-bottom: 10px;"><strong>Real Account Status:</strong> <span id="portalRealStatus">00.00 BDT</span></p>
-          <p style="margin-bottom: 10px;"><strong>Primary Account ID (Mobile):</strong> <span id="portalMobile">01700000000</span></p>
-        </div>
-      </div>
-
-      <!-- VIEW: Deposit / Payment Form -->
-      <div class="view-panel" id="depositView">
-        <h2 class="section-title">💳 Official Payment & Deposit Gateways</h2>
-        <p class="section-subtitle">Transfer your deposit amount via the official merchant numbers below and fill in the verification form.</p>
-        
-        <div class="payment-gateways-grid">
-          <div class="gateway-card bkash-card">
-            <div style="font-size: 20px; font-weight: 800; color: #e2136e; margin-bottom: 6px;">bKash Dial *247#</div>
-            <p style="font-size: 14px; margin-bottom: 8px;">Send Money to Official Number:</p>
-            <div style="font-size: 18px; font-weight: 800; letter-spacing: 0.5px;">01955375501</div>
-            <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Copy Transaction ID (TrxID) after payment.</p>
-          </div>
-
-          <div class="gateway-card nagad-card">
-            <div style="font-size: 20px; font-weight: 800; color: #f7941d; margin-bottom: 6px;">Nagad Dial *167#</div>
-            <p style="font-size: 14px; margin-bottom: 8px;">Send Money to Official Number:</p>
-            <div style="font-size: 18px; font-weight: 800; letter-spacing: 0.5px;">01758871568</div>
-            <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Copy Transaction ID (TrxID) after payment.</p>
-          </div>
-
-          <div class="gateway-card rocket-card">
-            <div style="font-size: 20px; font-weight: 800; color: #8c2b8f; margin-bottom: 6px;">Dutch-Bangla Rocket Dial *322#</div>
-            <p style="font-size: 14px; margin-bottom: 8px;">Send Money to Mobile Number:</p>
-            <div style="font-size: 18px; font-weight: 800; letter-spacing: 0.5px;">01854550184-4</div>
-            <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Copy Txn ID from SMS verification.</p>
-          </div>
+        <div id="quizScoreBar" style="display:flex; justify-content:space-between; margin-bottom:15px; font-size:0.9rem;">
+            <span>স্কোর: <strong id="curPoints" style="color:#38bdf8;">0 Pts</strong></span>
+            <span>অর্জন: <strong id="curTaka" style="color:#34d399;">৳0.00</strong></span>
         </div>
 
-        <div class="payment-submission-box">
-          <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 20px;">📝 Submit Payment Verification Form</h3>
-          <form onsubmit="handlePaymentSubmit(event)">
-            <div class="payment-form-grid">
-              <div class="p-input-group">
-                <label>Applicant Full Name</label>
-                <input type="text" id="payName" placeholder="Enter sender name" required>
-              </div>
-              <div class="p-input-group">
-                <label>Mobile Number (Sender)</label>
-                <input type="text" id="payMobile" placeholder="e.g. 017xxxxxxxx" required>
-              </div>
-              <div class="p-input-group">
-                <label>Deposit Amount (BDT)</label>
-                <input type="number" id="payAmount" min="50" placeholder="e.g. 500" required>
-              </div>
-              <div class="p-input-group">
-                <label>Payment For</label>
-                <select id="payPurpose">
-                  <option value="Game">Game Arena Entry</option>
-                  <option value="Training">Training / Course</option>
-                  <option value="Others">Others</option>
-                </select>
-              </div>
-              <div class="p-input-group">
-                <label>Payment Gateway</label>
-                <select id="payGateway">
-                  <option value="bKash (01955375501)">bKash (01955375501)</option>
-                  <option value="Nagad (01758871568)">Nagad (01758871568)</option>
-                  <option value="Dutch Bangla (01854550184-4)">Dutch-Bangla Rocket (01854550184-4)</option>
-                </select>
-              </div>
-              <div class="p-input-group">
-                <label>Transaction ID (TrxID)</label>
-                <input type="text" id="payTrxId" placeholder="e.g. 9J47KLE90P" required>
-              </div>
+        <!-- Question View -->
+        <div id="questionContainer">
+            <h4 id="questionText" style="font-size:1.1rem; line-height:1.5; margin-bottom:18px;">Question text will appear here</h4>
+            <div id="optionsList"></div>
+            <p style="font-size: 0.8rem; color: #ef4444; margin-top: 10px; text-align: center;">🚫 নো স্কিপ অপশন: প্রতি প্রশ্নের উত্তর বাধ্যতামূলক অথবা ২৮ সেকেন্ডে স্বয়ংক্রিয় মাইনাস পয়েন্ট হবে।</p>
+        </div>
+
+        <!-- Result Card View -->
+        <div id="quizResultView" style="display:none; text-align:center; padding:10px 0;">
+            <h3 style="color:#34d399; margin-bottom:8px;">🎉 গেম সমাপ্ত! আপনার রেজাল্ট কার্ড</h3>
+            
+            <div class="result-card-box">
+                <div class="result-stat-row">
+                    <span>মোট প্রশ্ন:</span>
+                    <strong id="resTotalQ">0</strong>
+                </div>
+                <div class="result-stat-row">
+                    <span>✅ সঠিক উত্তর (+৫ পয়েন্ট / +০.২৫৳):</span>
+                    <strong id="resCorrect" style="color:#34d399;">0</strong>
+                </div>
+                <div class="result-stat-row">
+                    <span>❌ ভুল উত্তর (-১০ পয়েন্ট / -০.৫০৳):</span>
+                    <strong id="resWrong" style="color:#f87171;">0</strong>
+                </div>
+                <div class="result-stat-row">
+                    <span>⏱️ টাইমআউট (২৮ সে.):</span>
+                    <strong id="resTimeout" style="color:#fbbf24;">0</strong>
+                </div>
+                <div class="result-stat-row" style="font-size:1.05rem; padding-top:12px; border-top:1px dashed var(--border-color);">
+                    <span>🎯 এই খেলায় অর্জিত মোট পয়েন্ট:</span>
+                    <strong id="resNetPoints" style="color:#38bdf8;">0 Pts</strong>
+                </div>
+                <div class="result-stat-row" style="font-size:1.05rem;">
+                    <span>💰 এই খেলায় অর্জিত টাকা:</span>
+                    <strong id="resNetTaka" style="color:#34d399;">৳0.00</strong>
+                </div>
+                <div class="result-stat-row" style="font-size:1.1rem; background:#1e293b; padding:10px; border-radius:8px; margin-top:8px;">
+                    <span>🏆 আপনার বর্তমান ব্যালেন্স:</span>
+                    <strong id="resCurrentTotal" style="color:#f59e0b;">0 Pts</strong>
+                </div>
             </div>
-            <button type="submit" class="btn-submit-payment">🚀 Submit Deposit for Verification</button>
-          </form>
+
+            <!-- Play Next Game Confirmation -->
+            <div style="background: #1e1b4b; border: 1px solid #4338ca; padding: 18px; border-radius: 12px; margin-bottom: 18px;">
+                <h4 style="color: #c7d2fe; margin-bottom: 8px;">❓ আপনি কি পরবর্তী গেম খেলতে চান?</h4>
+                <p id="nextGameBalanceNotice" style="font-size: 0.85rem; color: #a5b4fc; margin-bottom: 14px;">
+                    আপনার ব্যালেন্স চেক করা হচ্ছে...
+                </p>
+                <div id="nextGameActionButtons" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <!-- Injected dynamically based on balance -->
+                </div>
+            </div>
+
+            <button class="btn-play" onclick="exitQuiz()" style="margin: 0 auto; background: #374151;">🏠 গেম এরিনায় ফিরুন</button>
         </div>
-
-        <div class="table-card">
-          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 14px;">📜 Your Deposit History</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Date & Time</th>
-                <th>Gateway</th>
-                <th>Trx ID</th>
-                <th>Purpose</th>
-                <th>Amount (BDT)</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="userDepositHistoryTable">
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- VIEW: Payment Form Standalone -->
-      <div class="view-panel" id="paymentFormView">
-        <h2 class="section-title">📜 Payment Form & Transaction Records</h2>
-        <p class="section-subtitle">Official mobile banking transfer guidelines and your complete deposit/withdrawal record history:</p>
-        
-        <div class="payment-gateways-grid">
-          <div class="gateway-card bkash-card">
-            <div style="font-size: 17px; font-weight: 800; color: #e2136e; margin-bottom: 6px;">bKash Dial *247#</div>
-            <div style="font-size: 13px; line-height: 1.5;">Send Money &rarr; <strong>01955375501</strong> &rarr; Enter Amount &rarr; Copy TrxID</div>
-          </div>
-          <div class="gateway-card nagad-card">
-            <div style="font-size: 17px; font-weight: 800; color: #f7941d; margin-bottom: 6px;">Nagad Dial *167#</div>
-            <div style="font-size: 13px; line-height: 1.5;">Send Money &rarr; <strong>01758871568</strong> &rarr; Enter Amount &rarr; Copy TrxID</div>
-          </div>
-          <div class="gateway-card rocket-card">
-            <div style="font-size: 17px; font-weight: 800; color: #8c2b8f; margin-bottom: 6px;">Rocket Dial *322#</div>
-            <div style="font-size: 13px; line-height: 1.5;">Send Money &rarr; <strong>01854550184-4</strong> &rarr; Enter Amount &rarr; Copy Txn ID</div>
-          </div>
-        </div>
-
-        <div class="table-card">
-          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 14px;">📋 Your Payment History (Deposits & Withdrawals)</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Gateway</th>
-                <th>Account / TrxID</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="userFullPaymentHistoryTable">
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- VIEW: My Report -->
-      <div class="view-panel" id="reportView">
-        <h2 class="section-title">📊 My Exam & Performance Report</h2>
-        <p class="section-subtitle">Detailed breakdown of speed, accuracy, score metrics, and percentile ranking.</p>
-        <div class="table-card">
-          <table>
-            <thead>
-              <tr><th>Exam/Game</th><th>Attempts</th><th>Best Score</th><th>Accuracy</th><th>Rating</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>IELTS Game</td><td>6</td><td>Band 8.5</td><td>95%</td><td><span class="badge-status badge-approved">Master</span></td></tr>
-              <tr><td>Job Preparation Game</td><td>18</td><td>92.0%</td><td>91%</td><td><span class="badge-status badge-approved">Pro</span></td></tr>
-              <tr><td>Affiliate Game</td><td>12</td><td>98.5%</td><td>96%</td><td><span class="badge-status badge-approved">Grandmaster</span></td></tr>
-              <tr><td>PTE Game</td><td>8</td><td>89 / 90</td><td>94%</td><td><span class="badge-status badge-approved">Expert</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- VIEW: Global Position -->
-      <div class="view-panel" id="globalPositionView">
-        <h2 class="section-title">🌍 Global Position & Leaderboard</h2>
-        <p class="section-subtitle">National competitive rankings across all universities and divisions.</p>
-        <div class="table-card">
-          <table>
-            <thead><tr><th>Rank</th><th>Candidate</th><th>Division</th><th>Points</th><th>Badge</th></tr></thead>
-            <tbody>
-              <tr><td>#1</td><td>Anwar (Admin)</td><td>Rajshahi</td><td>99,950</td><td>👑 Champion</td></tr>
-              <tr><td>#2</td><td>Sadia Rahman</td><td>Dhaka</td><td>94,200</td><td>🥈 Elite</td></tr>
-              <tr><td>#3</td><td>Tanzil Ahmed</td><td>Chittagong</td><td>91,400</td><td>🥉 Master</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- VIEW: Downloads -->
-      <div class="view-panel" id="downloadsView">
-        <h2 class="section-title">📥 Downloads & Resource Center</h2>
-        <p class="section-subtitle">Download offline syllabus PDFs, question banks, and audio mock files.</p>
-        <div class="table-card">
-          <p style="margin-bottom: 14px;">📄 <strong>IELTS Official Cambridge Practice Test Books 1-19 (PDF):</strong> <button class="btn-bal-adjust" onclick="alert('Download started...')">Download PDF (65 MB)</button></p>
-          <p style="margin-bottom: 14px;">📄 <strong>Job Preparation BCS Question Bank & Solved Papers:</strong> <button class="btn-bal-adjust" onclick="alert('Download started...')">Download PDF (40 MB)</button></p>
-          <p style="margin-bottom: 14px;">📄 <strong>PTE Speaking & Listening Official Audio Guide (ZIP):</strong> <button class="btn-bal-adjust" onclick="alert('Download started...')">Download (45 MB)</button></p>
-          <p>📄 <strong>HSC & SSC All Board Solved Papers 2020-2025:</strong> <button class="btn-bal-adjust" onclick="alert('Download started...')">Download PDF (18 MB)</button></p>
-        </div>
-      </div>
-
-      <!-- VIEW: Admin Panel -->
-      <div class="view-panel" id="adminView">
-        <h2 class="section-title" style="color: #f59e0b;">🛡️ Super Admin Control Center</h2>
-        <p class="section-subtitle">Verify user deposits, approve Real Account balance additions, freeze accounts, and broadcast notifications.</p>
-
-        <div class="payment-submission-box" style="margin-bottom: 24px;">
-          <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 12px;">📢 Send Instant Broadcast Notification</h3>
-          <div style="display: flex; gap: 12px;">
-            <input type="text" id="adminBroadcastInput" placeholder="Enter broadcast message to all users..." style="flex: 1; padding: 12px; background: #0f172a; border: 1.5px solid #334155; border-radius: 10px; color: #fff; outline: none;">
-            <button onclick="sendAdminBroadcast()" style="padding: 12px 20px; background: #6366f1; color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer;">Send Alert</button>
-          </div>
-        </div>
-
-        <div class="table-card">
-          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 14px;">💰 Pending Deposit Approvals (Adds Real Account Balance)</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Candidate</th>
-                <th>Mobile</th>
-                <th>Gateway</th>
-                <th>Trx ID</th>
-                <th>Amount</th>
-                <th>Purpose</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="adminDepositsTable">
-            </tbody>
-          </table>
-        </div>
-
-        <div class="table-card" style="margin-top: 24px;">
-          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 14px;">👥 Platform Registered Users & Account Controls</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Mobile</th>
-                <th>Profession</th>
-                <th>bKash/Nagad/Rocket</th>
-                <th>Real Balance</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="adminUsersTable">
-            </tbody>
-          </table>
-        </div>
-      </div>
-
     </div>
-  </div>
+</div>
 
-  <script>
-    const DEFAULT_ADMIN = {
-      name: "Anwar",
-      mobile: "01955375501",
-      pass: "Z@rajshahi4512",
-      role: "admin",
-      email: "admin@edugame.com",
-      profession: "Super Administrator",
-      doj: "2024-01-01",
-      bkash: "01955375501",
-      nagad: "01758871568",
-      rocket: "01854550184-4",
-      realBal: 0.00,
-      demoBal: 500.00,
-      isFrozen: false
-    };
+<script>
+// --- Web Audio API Synthesizer (No MP3 Files Required) ---
+const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
 
-    let users = JSON.parse(localStorage.getItem('edu_users')) || [DEFAULT_ADMIN];
-    let deposits = JSON.parse(localStorage.getItem('edu_deposits')) || [];
-    let notifications = JSON.parse(localStorage.getItem('edu_notifs')) || [
-      { id: 1, text: "Welcome to EDU GAME FOR ALL! 3D Read More details guide added.", date: "Today" },
-      { id: 2, text: "Official Payment Numbers: bKash 01955375501, Nagad 01758871568, Rocket 01854550184-4.", date: "Notice" }
-    ];
-
-    let currentUser = JSON.parse(localStorage.getItem('edu_current_user')) || null;
-    let currentAccountMode = localStorage.getItem('edu_acc_mode') || 'demo';
-
-    // STRICT REAL BALANCE: ONLY APPROVED DEPOSITS COUNT TOWARDS REAL BALANCE
-    function getStrictRealBalance(userMobile) {
-      if (!deposits || deposits.length === 0) return 0.00;
-      return deposits
-        .filter(d => d.userMobile === userMobile && d.status === 'Approved')
-        .reduce((sum, d) => sum + (parseFloat(d.amount) || 0), 0);
+function initAudio() {
+    if (!audioCtx) {
+        audioCtx = new AudioContextClass();
     }
-
-    // Sanitize users
-    users.forEach(u => {
-      u.realBal = getStrictRealBalance(u.mobile);
-      if (u.demoBal === undefined) u.demoBal = 500.00;
-    });
-    if (currentUser) {
-      currentUser.realBal = getStrictRealBalance(currentUser.mobile);
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
     }
+}
 
-    function isSuperAdmin() {
-      return currentUser && currentUser.role === 'admin';
+function playSuccessSound() {
+    try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        const now = audioCtx.currentTime;
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.1);
+        osc.frequency.setValueAtTime(783.99, now + 0.2);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+    } catch(e) {}
+}
+
+function playErrorSound() {
+    try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sawtooth';
+        const now = audioCtx.currentTime;
+        osc.frequency.setValueAtTime(160, now);
+        osc.frequency.setValueAtTime(100, now + 0.15);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+    } catch(e) {}
+}
+
+// --- Anti-Bot & Anti-Cheating System ---
+let isSuperAdmin = false;
+let questionRenderTime = 0;
+let userSwitchedTabsCount = 0;
+
+// 1. Detect Tab Switch / Minimize during exam
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden && document.getElementById('quizModal').style.display === 'flex') {
+        userSwitchedTabsCount++;
+        alert('⚠️ অ্যান্টি-বট সতর্কতা: পরীক্ষা চলাকালীন ট্যাব পরিবর্তন বা অন্য অ্যাপে যাওয়া নিষিদ্ধ! আপনার অ্যাকশন রেকর্ড করা হচ্ছে।');
     }
+});
 
-    // Security: Right Click, Copy, Cut, Shortcuts
-    document.addEventListener('contextmenu', function(e) {
-      if (!isSuperAdmin()) { e.preventDefault(); return false; }
-    });
-    document.addEventListener('copy', function(e) {
-      if (!isSuperAdmin()) { e.preventDefault(); return false; }
-    });
-    document.addEventListener('cut', function(e) {
-      if (!isSuperAdmin()) { e.preventDefault(); return false; }
-    });
-    document.addEventListener('keydown', function(e) {
-      if (isSuperAdmin()) return true;
-      if ((e.metaKey || e.ctrlKey) && (e.key === 'r' || e.key === 'R')) { e.preventDefault(); return false; }
-      if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) { e.preventDefault(); return false; }
-      if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) { e.preventDefault(); return false; }
-      if (e.ctrlKey && (e.key === 's' || e.key === 'S')) { e.preventDefault(); return false; }
-      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j'))) {
-        e.preventDefault(); return false;
-      }
-    });
+// 2. Disable Right-click, Copy, Selection
+document.addEventListener('contextmenu', function(e) {
+    if (!isSuperAdmin) { e.preventDefault(); return false; }
+});
+document.addEventListener('copy', function(e) { if (!isSuperAdmin) e.preventDefault(); });
+document.addEventListener('cut', function(e) { if (!isSuperAdmin) e.preventDefault(); });
+document.addEventListener('selectstart', function(e) { if (!isSuperAdmin) e.preventDefault(); });
 
-    function applySecurityMode() {
-      if (isSuperAdmin()) {
-        document.body.classList.remove('protected-user');
-      } else {
-        document.body.classList.add('protected-user');
-      }
+// 3. Block Shortcuts & DevTools
+window.addEventListener('keydown', function(e) {
+    if (isSuperAdmin) return;
+    if (e.key === 'F12' || 
+        (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.key === 'c' || e.key === 'C')) ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+        e.key === 'PrintScreen') {
+        e.preventDefault();
+        alert('⚠️ নিরাপত্তা সতর্কবার্তা: কনটেন্ট কপি বা সোর্স কোড দেখা সম্পূর্ণ নিষিদ্ধ!');
+        return false;
     }
+});
 
-    function saveState() {
-      localStorage.setItem('edu_users', JSON.stringify(users));
-      localStorage.setItem('edu_deposits', JSON.stringify(deposits));
-      localStorage.setItem('edu_notifs', JSON.stringify(notifications));
-      if (currentUser) {
-        localStorage.setItem('edu_current_user', JSON.stringify(currentUser));
-      } else {
-        localStorage.removeItem('edu_current_user');
-      }
-      localStorage.setItem('edu_acc_mode', currentAccountMode);
+// --- UI Navigation ---
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('backdrop');
+    sidebar.classList.toggle('open');
+    backdrop.classList.toggle('active');
+}
+
+function switchView(viewName) {
+    const views = ['game_arena', 'deposit', 'admin'];
+    views.forEach(v => {
+        const el = document.getElementById('view_' + v);
+        if (el) el.style.display = 'none';
+    });
+    
+    if (viewName === 'game_arena' || viewName === 'bankers_game' || viewName === 'affiliate_game' || viewName === 'grammar_game') {
+        document.getElementById('view_game_arena').style.display = 'block';
+    } else if (viewName === 'deposit_view') {
+        document.getElementById('view_deposit').style.display = 'block';
+    } else if (viewName === 'admin_panel') {
+        document.getElementById('view_admin').style.display = 'block';
+        renderAdminHistory();
     }
+    
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('backdrop').classList.remove('active');
+}
 
-    function syncRealtimeState() {
-      const storedUsers = localStorage.getItem('edu_users');
-      if (storedUsers) users = JSON.parse(storedUsers);
-      
-      const storedDeposits = localStorage.getItem('edu_deposits');
-      if (storedDeposits) deposits = JSON.parse(storedDeposits);
+// --- Question Bank (User Specified 25 Questions + Bankers + MassBD) ---
+const QUESTION_DATABASE = {
+    grammar: {
+        set1: [
+            // Part 1: Primary / Easy Level (Questions 1–8)
+            { q: "Choose the correct article: \"She is ___ honest girl.\"", options: ["a", "an", "the", "no article"], ans: 1, level: "primary" },
+            { q: "Which word is a verb in the sentence: \"The cat sleeps on the sofa.\"", options: ["cat", "sleeps", "on", "sofa"], ans: 1, level: "primary" },
+            { q: "What is the plural form of \"Child\"?", options: ["Childs", "Childrens", "Children", "Childes"], ans: 2, level: "primary" },
+            { q: "Choose the correct pronoun: \"___ are going to the market.\"", options: ["He", "She", "They", "It"], ans: 2, level: "primary" },
+            { q: "Fill in the blank with the correct preposition: \"The book is ___ the table.\"", options: ["in", "on", "at", "into"], ans: 1, level: "primary" },
+            { q: "What is the opposite (antonym) of \"Brave\"?", options: ["Bold", "Coward", "Strong", "Happy"], ans: 1, level: "primary" },
+            { q: "Choose the correct spelling:", options: ["Recieve", "Receive", "Recive", "Receeve"], ans: 1, level: "primary" },
+            { q: "Identify the adjective in the sentence: \"He bought a red car.\"", options: ["He", "bought", "red", "car"], ans: 2, level: "primary" },
+            // Part 2: Medium Level (Questions 9–17)
+            { q: "Fill in the blank: \"She ___ to school every day.\"", options: ["go", "goes", "going", "gone"], ans: 1, level: "mid" },
+            { q: "Choose the correct preposition: \"He is good ___ mathematics.\"", options: ["in", "on", "at", "with"], ans: 2, level: "mid" },
+            { q: "Identify the tense: \"I have finished my homework.\"", options: ["Simple Past", "Past Continuous", "Present Perfect", "Future Perfect"], ans: 2, level: "mid" },
+            { q: "Change into passive voice: \"He writes a letter.\"", options: ["A letter was written by him.", "A letter is written by him.", "A letter is being written by him.", "A letter has been written by him."], ans: 1, level: "mid" },
+            { q: "Fill in the blank: \"Neither of the boys ___ present today.\"", options: ["are", "were", "is", "have"], ans: 2, level: "mid" },
+            { q: "Choose the correct conjunction: \"Work hard ___ you will fail.\"", options: ["and", "but", "or", "so"], ans: 2, level: "mid" },
+            { q: "What is the synonym of \"Abandon\"?", options: ["Keep", "Forsake", "Adopt", "Continue"], ans: 1, level: "mid" },
+            { q: "Choose the correct question tag: \"You don't like coffee, ___?\"", options: ["do you", "don't you", "are you", "did you"], ans: 0, level: "mid" },
+            { q: "Fill in the blank: \"She has been living here ___ 2015.\"", options: ["for", "from", "since", "by"], ans: 2, level: "mid" },
+            // Part 3: Very Hard Level (Questions 18–25)
+            { q: "Fill in the blank: \"Scarcely had he reached the station ___ the train left.\"", options: ["than", "when", "then", "after"], ans: 1, level: "mastery" },
+            { q: "Choose the grammatically correct sentence:", options: ["One of my friend is a doctor.", "One of my friends are a doctor.", "One of my friends is a doctor.", "One of my friend are doctors."], ans: 2, level: "mastery" },
+            { q: "Fill in the blank using the subjunctive mood: \"If I ___ a bird, I would fly in the sky.\"", options: ["was", "am", "were", "had been"], ans: 2, level: "mastery" },
+            { q: "Choose the correct preposition: \"He died ___ overwork, while his brother died ___ cholera.\"", options: ["of, from", "from, of", "by, of", "with, from"], ans: 1, level: "mastery" },
+            { q: "Identify the correct indirect speech: He said to me, \"Let us go for a walk.\"", options: ["He told me that let us go for a walk.", "He proposed to me that we should go for a walk.", "He asked me to go for a walk.", "He ordered me that we might go for a walk."], ans: 1, level: "mastery" },
+            { q: "Fill in the blank: \"The jury ___ divided in their opinions.\"", options: ["was", "were", "has", "is"], ans: 1, level: "mastery" },
+            { q: "What is the meaning of the idiom \"To beat around the bush\"?", options: ["To clean the garden", "To avoid coming to the main point", "To fight aggressively", "To search for something lost"], ans: 1, level: "mastery" },
+            { q: "Choose the correct sentence:", options: ["I look forward to meet you.", "I look forward to meeting you.", "I am looking forward to met you.", "I look forward for meeting you."], ans: 1, level: "mastery" }
+        ],
+        set2: [
+            { q: "Choose the correct form: 'Each of the students ___ done their work.'", options: ["have", "has", "are", "were"], ans: 1, level: "mid" },
+            { q: "Identify the part of speech of 'Fast' in 'He runs fast.'", options: ["Noun", "Verb", "Adverb", "Adjective"], ans: 2, level: "primary" },
+            { q: "What is the plural of 'Criterion'?", options: ["Criterions", "Criteria", "Criterias", "Criterium"], ans: 1, level: "mastery" },
+            { q: "'Call it a day' idiom-এর অর্থ কী?", options: ["Start working", "Stop working on something", "Call someone", "Enjoy a sunny day"], ans: 1, level: "mid" },
+            { q: "No sooner had I reached ___ he came.", options: ["when", "than", "then", "before"], ans: 1, level: "executive" }
+        ]
+    },
+    banker: {
+        set1: [
+            { q: "বাংলাদেশে ব্যাংক রেট (Bank Rate) কে নির্ধারণ করে?", options: ["অর্থ মন্ত্রণালয়", "বাংলাদেশ ব্যাংক", "এনবিআর", "বাণিজ্যিক ব্যাংক"], ans: 1, level: "mid" },
+            { q: "ব্যাংকিং পরিভাষায় 'CRR' এর পূর্ণরূপ কী?", options: ["Cash Reserve Ratio", "Credit Return Rate", "Current Ratio Reserve", "Central Revenue Rate"], ans: 0, level: "primary" },
+            { q: "Letter of Credit (LC) প্রধানত কোন বাণিজ্যে ব্যবহৃত হয়?", options: ["অভ্যন্তরীণ খুচরা বিক্রয়", "আন্তর্জাতিক আমদানি-রপ্তানি", "অনলাইন শপিং", "মাইক্রো ক্রেডিট"], ans: 1, level: "executive" },
+            { q: "চেকের মেয়াদ সাধারণত ইস্যু তারিখ থেকে কত মাস বৈধ থাকে?", options: ["৩ মাস", "৬ মাস", "১ বছর", "অনির্দিষ্ট"], ans: 1, level: "mid" },
+            { q: "CAMELS রেটিং এ 'C' অক্ষরটি কী নির্দেশ করে?", options: ["Credit", "Capital Adequacy", "Cash", "Customer"], ans: 1, level: "mastery" }
+        ],
+        set2: [
+            { q: "ব্যাংকের জন্য গ্রাহকের আমানত কী হিসেবে গণ্য হয়?", options: ["Asset (সম্পদ)", "Liability (দায়)", "Income", "Expense"], ans: 1, level: "primary" },
+            { q: "SLR এর পূর্ণরূপ কী?", options: ["Statutory Liquidity Ratio", "Standard Loan Rate", "System Liquid Reserve", "Secured Loan Ratio"], ans: 0, level: "mid" },
+            { q: "ব্যাংকিং অংকে সরল সুদের সূত্র কোনটি?", options: ["I = Pnr", "I = P(1+r)^n", "I = P / nr", "I = Pr / n"], ans: 0, level: "primary" }
+        ]
+    },
+    affiliate: {
+        set1: [
+            { q: "massbd.org এ অ্যাফিলিয়েট পার্টনারদের প্রধান কাজ কী?", options: ["কোর্স ও সার্ভিস প্রমোট করে কমিশন অর্জন", "শুধুমাত্র ভিডিও দেখা", "সফটওয়্যার তৈরি করা", "সার্ভে পূরণ করা"], ans: 0, level: "primary" },
+            { q: "অ্যাফিলিয়েট মার্কেটিং এ 'CTR' এর পূর্ণরূপ কী?", options: ["Click Through Rate", "Cost To Return", "Commission Track Ratio", "Customer Target Rate"], ans: 0, level: "mid" },
+            { q: "কুকি ট্র্যাকিং (Cookie Tracking) এর সুবিধা কী?", options: ["ইউজারের রেফারেল হিস্ট্রি ট্র্যাক করে কমিশন নিশ্চিত করা", "কম্পিউটার ফাস্ট করা", "ওয়েবসাইট ডিলিট করা", "পাসওয়ার্ড চুরি করা"], ans: 0, level: "executive" },
+            { q: "CPA মার্কেটিং এর পূর্ণ অর্থ কী?", options: ["Cost Per Action", "Click Per Amount", "Commission Per Account", "Cost Per Ad"], ans: 0, level: "mid" },
+            { q: "massbd.org প্ল্যাটফর্মে অর্জিত ব্যালেন্স উত্তোলনের সঠিক মাধ্যম কোনটি?", options: ["বিকাশ, নগদ ও রকেট", "শুধুমাত্র পেপাল", "ক্যাশ ডেলিভারি", "আন্তর্জাতিক ব্যাংক"], ans: 0, level: "primary" }
+        ],
+        set2: [
+            { q: "SEO এর পূর্ণরূপ কী যা অ্যাফিলিয়েট ট্রাফিকের জন্য অপরিহার্য?", options: ["Search Engine Optimization", "Social Engine Order", "Sales Earning Operation", "Search Electronic Output"], ans: 0, level: "mid" },
+            { q: "একটি অ্যাফিলিয়েট রেফারেল লিংকের মূল উপাদান কোনটি?", options: ["ইউনিক ট্র্যাকিং আইডি", "সাধারণ হোমপেজ লিঙ্ক", "ফেসবুক আইডি", "ফোন নাম্বার"], ans: 0, level: "primary" }
+        ]
+    },
+    bcs: {
+        set1: [
+            { q: "বঙ্গবন্ধু স্যাটেলাইট-১ কোন দেশ থেকে উৎক্ষেপণ করা হয়?", options: ["যুক্তরাষ্ট্র (ফ্লোরিডা)", "রাশিয়া", "ফ্রান্স", "চীন"], ans: 0, level: "mid" },
+            { q: "পদ্মা সেতুর দৈর্ঘ্য কত কিলোমিটার?", options: ["৬.১৫ কিমি", "৫.৮০ কিমি", "৭.২০ কিমি", "৬.৫০ কিমি"], ans: 0, level: "primary" },
+            { q: "বাংলা সাহিত্যের প্রাচীনতম নিদর্শন কোনটি?", options: ["চর্যাপদ", "শ্রীকৃষ্ণকীর্তন", "মঙ্গলকাব্য", "বৈষ্ণব পদাবলী"], ans: 0, level: "primary" }
+        ],
+        set2: [
+            { q: "কম্পিউটারের মস্তিষ্ক হিসেবে পরিচিত কোনটি?", options: ["CPU", "RAM", "Hard Disk", "Monitor"], ans: 0, level: "primary" }
+        ]
+    }
+};
 
-      const storedNotifs = localStorage.getItem('edu_notifs');
-      if (storedNotifs) notifications = JSON.parse(storedNotifs);
+// --- Active Quiz State ---
+let selectedGameKey = '';
+let activeQuizQuestions = [];
+let currentQuestionIndex = 0;
+let userScorePoints = 0;
+let userScoreTaka = 0.0;
+let timerInterval = null;
+let timeLeft = 28; // STRICT 28 SECONDS
+let isDemoMode = true;
 
-      if (currentUser) {
-        const found = users.find(u => u.mobile === currentUser.mobile);
-        if (found) {
-          currentUser = found;
-          currentUser.realBal = getStrictRealBalance(currentUser.mobile);
-          localStorage.setItem('edu_current_user', JSON.stringify(currentUser));
+// Stats for Result Card
+let countCorrect = 0;
+let countWrong = 0;
+let countTimeout = 0;
+
+function openGameSelection(gameTitle, gameKey) {
+    selectedGameKey = gameKey;
+    document.getElementById('selModalTitle').innerText = gameTitle + " - সেট ও লেভেল নির্বাচন";
+    document.getElementById('selectionModal').style.display = 'flex';
+}
+
+function closeSelectionModal() {
+    document.getElementById('selectionModal').style.display = 'none';
+}
+
+function launchQuizFromSelection() {
+    const setNum = document.getElementById('selSet').value;
+    const level = document.getElementById('selLevel').value;
+    const mode = document.getElementById('selMode').value;
+
+    if (mode === 'real') {
+        const approvedBalance = parseFloat(document.getElementById('realBalance').innerText.replace('৳', '')) || 0;
+        if (approvedBalance <= 0) {
+            alert('⚠️ রিয়েল টুর্নামেন্ট খেলতে অনুমোদিত রিয়েল ব্যালেন্স প্রয়োজন!\n\nঅনুগ্রহ করে ডিপোজিট সেকশন থেকে ডিপোজিট রিকোয়েস্ট পাঠান।');
+            closeSelectionModal();
+            switchView('deposit_view');
+            return;
         }
-      }
-      applySecurityMode();
-      updateBalanceUI();
-      renderDepositTables();
-      if (currentUser && currentUser.role === 'admin') {
-        renderAdminTables();
-      }
+        isDemoMode = false;
+    } else {
+        isDemoMode = true;
     }
 
-    window.addEventListener('storage', () => {
-      syncRealtimeState();
-    });
+    closeSelectionModal();
 
-    setInterval(syncRealtimeState, 1200);
+    // Prepare Questions
+    const gameData = QUESTION_DATABASE[selectedGameKey] || QUESTION_DATABASE['grammar'];
+    const setQuestions = (setNum == 2 && gameData.set2) ? gameData.set2 : gameData.set1;
 
-    function manualRefresh() {
-      const icon = document.getElementById('refreshIcon');
-      if (icon) icon.classList.add('btn-refresh-active');
-      syncRealtimeState();
-      setTimeout(() => {
-        if (icon) icon.classList.remove('btn-refresh-active');
-      }, 600);
+    if (level === 'all') {
+        activeQuizQuestions = [...setQuestions];
+    } else {
+        const filtered = setQuestions.filter(q => q.level === level);
+        activeQuizQuestions = filtered.length > 0 ? filtered : [...setQuestions];
     }
 
-    function setAccountMode(mode) {
-      currentAccountMode = mode;
-      localStorage.setItem('edu_acc_mode', mode);
+    // Shuffle
+    activeQuizQuestions.sort(() => Math.random() - 0.5);
 
-      const btnDemo = document.getElementById('btnModeDemo');
-      const btnReal = document.getElementById('btnModeReal');
+    // Reset Quiz Variables
+    currentQuestionIndex = 0;
+    userScorePoints = 0;
+    userScoreTaka = 0.0;
+    countCorrect = 0;
+    countWrong = 0;
+    countTimeout = 0;
+    updateScoreDisplay();
 
-      if (mode === 'demo') {
-        btnDemo.className = "btn-acc-toggle active-demo";
-        btnReal.className = "btn-acc-toggle";
-      } else {
-        btnDemo.className = "btn-acc-toggle";
-        btnReal.className = "btn-acc-toggle active-real";
-      }
+    // Open Quiz Modal
+    document.getElementById('quizModal').style.display = 'flex';
+    document.getElementById('questionContainer').style.display = 'block';
+    document.getElementById('quizResultView').style.display = 'none';
+    document.getElementById('quizGameTitle').innerText = (isDemoMode ? "🎮 [Demo] " : "💰 [Real] ") + selectedGameKey.toUpperCase();
 
-      updateBalanceUI();
-    }
+    renderCurrentQuestion();
+}
 
-    function adjustDemoBalance(amount) {
-      if (!currentUser) return;
-      if (currentUser.demoBal === undefined) currentUser.demoBal = 500;
-      currentUser.demoBal = Math.max(0, currentUser.demoBal + amount);
-      updateUserInDb(currentUser);
-      updateBalanceUI();
-    }
+function updateScoreDisplay() {
+    document.getElementById('curPoints').innerText = userScorePoints + " Pts";
+    document.getElementById('curTaka').innerText = "৳" + userScoreTaka.toFixed(2);
+}
 
-    function updateUserInDb(u) {
-      const idx = users.findIndex(x => x.mobile === u.mobile);
-      if (idx !== -1) {
-        users[idx] = u;
-        saveState();
-      }
-    }
+function renderCurrentQuestion() {
+    clearInterval(timerInterval);
 
-    function formatBDT(val) {
-      const num = parseFloat(val) || 0;
-      if (num === 0) return "৳00.00";
-      return "৳" + num.toFixed(2);
-    }
-
-    function updateBalanceUI() {
-      if (!currentUser) return;
-
-      const badge = document.getElementById('balanceDisplayBadge');
-      const label = document.getElementById('balLabel');
-      const amount = document.getElementById('balAmount');
-      const demoBtns = document.getElementById('demoAdjustBtns');
-      const pendingBadge = document.getElementById('realPendingBadge');
-
-      if (currentAccountMode === 'demo') {
-        badge.className = "balance-display-badge bal-demo-theme";
-        label.innerText = "Demo Balance:";
-        amount.innerText = formatBDT(currentUser.demoBal !== undefined ? currentUser.demoBal : 500);
-        demoBtns.style.display = "inline-flex";
-        pendingBadge.style.display = "none";
-      } else {
-        badge.className = "balance-display-badge bal-real-theme";
-        label.innerText = "Real Balance:";
-        const real = getStrictRealBalance(currentUser.mobile);
-        currentUser.realBal = real;
-        amount.innerText = formatBDT(real);
-        demoBtns.style.display = "none";
-
-        const hasPending = deposits.some(d => d.userMobile === currentUser.mobile && d.status === 'Pending');
-        if (hasPending) {
-          pendingBadge.style.display = "inline-block";
-        } else {
-          pendingBadge.style.display = "none";
-        }
-      }
-
-      document.getElementById('userProfileName').innerText = currentUser.name;
-      document.getElementById('userProfileRole').innerText = (currentUser.role === 'admin' ? "Super Admin" : "Student");
-      document.getElementById('portalMobile').innerText = currentUser.mobile;
-      document.getElementById('portalAccMode').innerText = (currentAccountMode === 'demo' ? "Demo Account (Practice)" : "Real Account (Live)");
-      document.getElementById('portalRealStatus').innerText = (currentUser.realBal > 0 ? "Active (৳" + currentUser.realBal.toFixed(2) + ")" : "00.00 BDT (Unfunded - Waiting for deposit approval)");
-
-      // Populate User Portal Profile Form Inputs
-      const pName = document.getElementById('profName');
-      const pEmail = document.getElementById('profEmail');
-      const pProf = document.getElementById('profProfession');
-      const pDoj = document.getElementById('profDoj');
-      const pBkash = document.getElementById('profBkash');
-      const pNagad = document.getElementById('profNagad');
-      const pRocket = document.getElementById('profRocket');
-
-      if (pName && document.activeElement !== pName) pName.value = currentUser.name || "";
-      if (pEmail && document.activeElement !== pEmail) pEmail.value = currentUser.email || "";
-      if (pProf && document.activeElement !== pProf) pProf.value = currentUser.profession || "";
-      if (pDoj && document.activeElement !== pDoj) pDoj.value = currentUser.doj || new Date().toISOString().split('T')[0];
-      if (pBkash && document.activeElement !== pBkash) pBkash.value = currentUser.bkash || "";
-      if (pNagad && document.activeElement !== pNagad) pNagad.value = currentUser.nagad || "";
-      if (pRocket && document.activeElement !== pRocket) pRocket.value = currentUser.rocket || "";
-
-      document.getElementById('notifBadge').innerText = notifications.length;
-    }
-
-    let affiliateSubmenuOpen = true;
-    function toggleAffiliateSubmenu(btnElement) {
-      const sub = document.getElementById('affiliateSubGroup');
-      const arrow = document.getElementById('affiliateArrow');
-      affiliateSubmenuOpen = !affiliateSubmenuOpen;
-      if (affiliateSubmenuOpen) {
-        sub.style.display = 'flex';
-        arrow.innerText = '▼';
-      } else {
-        sub.style.display = 'none';
-        arrow.innerText = '▶';
-      }
-      switchView('massbdAffiliateView', btnElement);
-    }
-
-    function openAffiliateSub(subType, btnElement) {
-      document.querySelectorAll('.nav-sub-btn').forEach(b => b.classList.remove('active'));
-      if (btnElement) btnElement.classList.add('active');
-      switchView('massbdAffiliateView', null);
-    }
-
-    function handleProfileUpdate(e) {
-      e.preventDefault();
-      if (!currentUser) return;
-
-      currentUser.name = document.getElementById('profName').value.trim();
-      currentUser.email = document.getElementById('profEmail').value.trim();
-      currentUser.profession = document.getElementById('profProfession').value.trim();
-      currentUser.doj = document.getElementById('profDoj').value;
-      currentUser.bkash = document.getElementById('profBkash').value.trim();
-      currentUser.nagad = document.getElementById('profNagad').value.trim();
-      currentUser.rocket = document.getElementById('profRocket').value.trim();
-
-      updateUserInDb(currentUser);
-      updateBalanceUI();
-      alert("✅ Profile updated successfully!\nYour contact & mobile banking details are saved.");
-    }
-
-    function switchView(viewId, btnElement) {
-      document.querySelectorAll('.view-panel').forEach(v => v.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-
-      const target = document.getElementById(viewId);
-      if (target) target.classList.add('active');
-      if (btnElement) btnElement.classList.add('active');
-
-      if (viewId === 'depositView' || viewId === 'paymentFormView') {
-        renderDepositTables();
-      }
-      if (viewId === 'adminView') {
-        renderAdminTables();
-      }
-    }
-
-    function launchGame(gameName) {
-      if (currentUser && currentUser.isFrozen) {
-        alert("⚠️ YOUR ACCOUNT IS FROZEN! Please contact administration at 01955375501.");
+    if (currentQuestionIndex >= activeQuizQuestions.length) {
+        finishQuiz();
         return;
-      }
-      if (currentAccountMode === 'real') {
-        const currentReal = getStrictRealBalance(currentUser.mobile);
-        if (currentReal <= 0) {
-          alert("💳 Real Account Balance is 00.00 BDT!\nPlease make a deposit and wait for admin approval to enter " + gameName + " with real funds, or switch to [🎮 Demo Account].");
-          switchView('depositView', document.querySelector("button[onclick*='depositView']"));
-          return;
-        }
-      }
-      alert("🚀 Starting " + gameName + " in " + (currentAccountMode === 'demo' ? "DEMO MODE (Practice)" : "REAL MODE") + "! Good luck!");
     }
 
-    function handlePaymentSubmit(e) {
-      e.preventDefault();
-      if (!currentUser) return;
+    const currentQ = activeQuizQuestions[currentQuestionIndex];
+    document.getElementById('quizProgress').innerText = `Q ${currentQuestionIndex + 1}/${activeQuizQuestions.length}`;
+    document.getElementById('questionText').innerText = currentQ.q;
 
-      const name = document.getElementById('payName').value.trim();
-      const mobile = document.getElementById('payMobile').value.trim();
-      const amount = parseFloat(document.getElementById('payAmount').value);
-      const purpose = document.getElementById('payPurpose').value;
-      const gateway = document.getElementById('payGateway').value;
-      const trxId = document.getElementById('payTrxId').value.trim().toUpperCase();
+    const optContainer = document.getElementById('optionsList');
+    optContainer.innerHTML = '';
 
-      if (!name || !mobile || !amount || !trxId) {
-        alert("Please fill in all payment details!");
+    currentQ.options.forEach((opt, idx) => {
+        const div = document.createElement('div');
+        div.className = 'option-item';
+        div.innerText = `${String.fromCharCode(65 + idx)}) ${opt}`;
+        div.onclick = function(e) { handleAnswerClick(e, idx, currentQ.ans, div); };
+        optContainer.appendChild(div);
+    });
+
+    // Record question render timestamp for anti-bot speed check
+    questionRenderTime = Date.now();
+
+    // STRICT 28 SECONDS TIMER (NO SKIP)
+    timeLeft = 28;
+    document.getElementById('timerSec').innerText = timeLeft;
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timerSec').innerText = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            countTimeout++;
+            playErrorSound();
+            userScorePoints -= 10;
+            userScoreTaka -= 0.50;
+            updateScoreDisplay();
+            currentQuestionIndex++;
+            renderCurrentQuestion();
+        }
+    }, 1000);
+}
+
+function handleAnswerClick(e, selectedIdx, correctIdx, optionEl) {
+    // ANTI-BOT CHECK 1: Ensure click is trusted by real user
+    if (e && !e.isTrusted) {
+        alert('🛡️ অ্যান্টি-বট অ্যালার্ট: অননুমোদিত অটোমেশন স্ক্রিপ্ট ব্লক করা হয়েছে!');
         return;
-      }
-
-      const newDeposit = {
-        id: Date.now(),
-        userMobile: currentUser.mobile,
-        userName: currentUser.name,
-        senderName: name,
-        mobile: mobile,
-        amount: amount,
-        purpose: purpose,
-        gateway: gateway,
-        trxId: trxId,
-        date: new Date().toLocaleString(),
-        status: "Pending"
-      };
-
-      deposits.unshift(newDeposit);
-      saveState();
-
-      document.getElementById('payAmount').value = '';
-      document.getElementById('payTrxId').value = '';
-
-      alert("✅ Payment submitted successfully!\nStatus: 'Pending Approval'.\nOnce Admin Anwar (01955375501) verifies it, ৳" + amount + " will be credited to your Real Account!");
-
-      renderDepositTables();
-      updateBalanceUI();
     }
 
-    function renderDepositTables() {
-      if (!currentUser) return;
-
-      const userDeps = deposits.filter(d => d.userMobile === currentUser.mobile);
-      const userDepBody = document.getElementById('userDepositHistoryTable');
-      const userFullBody = document.getElementById('userFullPaymentHistoryTable');
-
-      let html = "";
-      if (userDeps.length === 0) {
-        html = `<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 20px;">No deposit records submitted yet.</td></tr>`;
-      } else {
-        userDeps.forEach(d => {
-          let badgeClass = d.status === 'Approved' ? 'badge-approved' : (d.status === 'Rejected' ? 'badge-rejected' : 'badge-pending');
-          html += `
-            <tr>
-              <td>${d.date}</td>
-              <td>${d.gateway}</td>
-              <td><strong>${d.trxId}</strong></td>
-              <td>${d.purpose}</td>
-              <td style="font-weight: 800; color: #10b981;">৳${d.amount.toFixed(2)}</td>
-              <td><span class="badge-status ${badgeClass}">${d.status}</span></td>
-            </tr>
-          `;
-        });
-      }
-
-      if (userDepBody) userDepBody.innerHTML = html;
-
-      let fullHtml = "";
-      if (userDeps.length === 0) {
-        fullHtml = `<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 20px;">No payment or deposit records yet.</td></tr>`;
-      } else {
-        userDeps.forEach(d => {
-          let badgeClass = d.status === 'Approved' ? 'badge-approved' : (d.status === 'Rejected' ? 'badge-rejected' : 'badge-pending');
-          fullHtml += `
-            <tr>
-              <td>Deposit</td>
-              <td>${d.gateway.split(' ')[0]}</td>
-              <td>${d.mobile} / <strong>${d.trxId}</strong></td>
-              <td>${d.date}</td>
-              <td style="font-weight: 800; color: #10b981;">+৳${d.amount.toFixed(2)}</td>
-              <td><span class="badge-status ${badgeClass}">${d.status}</span></td>
-            </tr>
-          `;
-        });
-      }
-      if (userFullBody) userFullBody.innerHTML = fullHtml;
+    // ANTI-BOT CHECK 2: Reflex speed threshold (Human reaction > 700ms)
+    const timeTaken = Date.now() - questionRenderTime;
+    if (timeTaken < 700) {
+        alert('🛡️ অ্যান্টি-বট অ্যালার্ট: অতি দ্রুত ক্লিক শনাক্ত হয়েছে! স্বাভাবিকভাবে পড়ে উত্তর দিন।');
+        return;
     }
 
-    function renderAdminTables() {
-      if (!currentUser || currentUser.role !== 'admin') return;
+    clearInterval(timerInterval);
 
-      const adminDepBody = document.getElementById('adminDepositsTable');
-      let depHtml = "";
-      const pendingList = deposits.filter(d => d.status === 'Pending');
+    // Disable all options
+    const allOptions = document.querySelectorAll('.option-item');
+    allOptions.forEach(el => el.onclick = null);
 
-      if (pendingList.length === 0) {
-        depHtml = `<tr><td colspan="7" style="text-align: center; color: #94a3b8; padding: 20px;">No pending deposits to verify.</td></tr>`;
-      } else {
-        pendingList.forEach(d => {
-          depHtml += `
-            <tr>
-              <td>${d.senderName} (${d.userName})</td>
-              <td>${d.mobile}</td>
-              <td>${d.gateway}</td>
-              <td><strong>${d.trxId}</strong></td>
-              <td style="font-weight: 800; color: #10b981;">৳${d.amount.toFixed(2)}</td>
-              <td>${d.purpose}</td>
-              <td>
-                <button onclick="approveDeposit(${d.id})" style="padding: 6px 12px; background: #10b981; color: #fff; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; margin-right: 6px;">Approve</button>
-                <button onclick="rejectDeposit(${d.id})" style="padding: 6px 12px; background: #ef4444; color: #fff; border: none; border-radius: 6px; font-weight: 700; cursor: pointer;">Reject</button>
-              </td>
-            </tr>
-          `;
-        });
-      }
-      if (adminDepBody) adminDepBody.innerHTML = depHtml;
-
-      const adminUserBody = document.getElementById('adminUsersTable');
-      let userHtml = "";
-      users.forEach(u => {
-        const isMe = u.mobile === currentUser.mobile;
-        const actualBal = getStrictRealBalance(u.mobile);
-        const mAccounts = [u.bkash ? 'bK:'+u.bkash : '', u.nagad ? 'Ng:'+u.nagad : '', u.rocket ? 'Rk:'+u.rocket : ''].filter(Boolean).join(' | ') || 'None';
-        const freezeBtn = u.isFrozen 
-          ? `<button onclick="toggleFreeze('${u.mobile}')" style="padding: 6px 10px; background: #10b981; color: #fff; border: none; border-radius: 6px; font-weight: 700; cursor: pointer;">Unfreeze</button>`
-          : `<button onclick="toggleFreeze('${u.mobile}')" ${isMe ? 'disabled style="opacity:0.4; padding:6px 10px;"' : 'style="padding: 6px 10px; background: #ef4444; color: #fff; border: none; border-radius: 6px; font-weight: 700; cursor: pointer;"'}>Freeze</button>`;
-
-        userHtml += `
-          <tr>
-            <td><strong>${u.name}</strong></td>
-            <td>${u.mobile}</td>
-            <td>${u.profession || 'Candidate'}</td>
-            <td style="font-size: 12px; color: #94a3b8;">${mAccounts}</td>
-            <td style="font-weight: 800; color: #34d399;">${formatBDT(actualBal)}</td>
-            <td>${u.isFrozen ? '<span class="badge-status badge-rejected blink-freeze">FROZEN</span>' : '<span class="badge-status badge-approved">Active</span>'}</td>
-            <td>${freezeBtn}</td>
-          </tr>
-        `;
-      });
-      if (adminUserBody) adminUserBody.innerHTML = userHtml;
-    }
-
-    function approveDeposit(depId) {
-      const dep = deposits.find(d => d.id === depId);
-      if (!dep) return;
-
-      dep.status = "Approved";
-
-      notifications.unshift({
-        id: Date.now(),
-        text: `Deposit Approved! ৳${dep.amount.toFixed(2)} credited to Real Account (TrxID: ${dep.trxId}).`,
-        date: "Just now"
-      });
-
-      saveState();
-      syncRealtimeState();
-      alert("✅ Deposit of ৳" + dep.amount + " approved! Real Balance added to user account.");
-    }
-
-    function rejectDeposit(depId) {
-      const dep = deposits.find(d => d.id === depId);
-      if (!dep) return;
-      dep.status = "Rejected";
-
-      notifications.unshift({
-        id: Date.now(),
-        text: `Deposit verification failed for TrxID: ${dep.trxId}. Contact support at 01955375501.`,
-        date: "Just now"
-      });
-
-      saveState();
-      syncRealtimeState();
-      alert("❌ Deposit marked as Rejected.");
-    }
-
-    function toggleFreeze(mobile) {
-      const target = users.find(u => u.mobile === mobile);
-      if (!target) return;
-      target.isFrozen = !target.isFrozen;
-      saveState();
-      syncRealtimeState();
-    }
-
-    function sendAdminBroadcast() {
-      const input = document.getElementById('adminBroadcastInput');
-      const text = input.value.trim();
-      if (!text) return;
-
-      notifications.unshift({
-        id: Date.now(),
-        text: "📢 [ADMIN NOTICE]: " + text,
-        date: "Just now"
-      });
-      input.value = "";
-      saveState();
-      syncRealtimeState();
-      alert("Broadcast alert sent to all members!");
-    }
-
-    function openNotifModal() {
-      const modal = document.getElementById('notifModal');
-      const list = document.getElementById('notifListContainer');
-
-      let html = "";
-      if (notifications.length === 0) {
-        html = "<p style='color: #94a3b8; text-align: center; padding: 20px;'>No new notifications.</p>";
-      } else {
-        notifications.forEach(n => {
-          html += `
-            <div style="background: rgba(255,255,255,0.06); padding: 14px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid #6366f1;">
-              <div style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">${n.text}</div>
-              <div style="font-size: 11px; color: #94a3b8;">${n.date}</div>
-            </div>
-          `;
-        });
-      }
-      list.innerHTML = html;
-      modal.style.display = "flex";
-    }
-
-    function closeNotifModal() {
-      document.getElementById('notifModal').style.display = "none";
-    }
-
-    function toggleTheme() {
-      document.body.classList.toggle('light-theme');
-      const isLight = document.body.classList.contains('light-theme');
-      localStorage.setItem('edu_theme', isLight ? 'light' : 'dark');
-      document.getElementById('themeIcon').innerText = isLight ? "☀️" : "🌓";
-    }
-
-    if (localStorage.getItem('edu_theme') === 'light') {
-      document.body.classList.add('light-theme');
-    }
-
-    let currentAuthTab = 'login';
-    function switchAuthTab(tab) {
-      currentAuthTab = tab;
-      const btnLog = document.getElementById('tabLoginBtn');
-      const btnReg = document.getElementById('tabRegBtn');
-      const nameGroup = document.getElementById('fullNameGroup');
-      const submitBtn = document.getElementById('authSubmitBtn');
-      const roleGroup = document.getElementById('accountTypeGroup');
-
-      if (tab === 'login') {
-        btnLog.className = 'auth-tab-btn active';
-        btnReg.className = 'auth-tab-btn';
-        nameGroup.style.display = 'none';
-        roleGroup.style.display = 'none';
-        submitBtn.innerText = "Sign In to Platform";
-      } else {
-        btnReg.className = 'auth-tab-btn active';
-        btnLog.className = 'auth-tab-btn';
-        nameGroup.style.display = 'block';
-        roleGroup.style.display = 'block';
-        submitBtn.innerText = "Create Free Account";
-      }
-      document.getElementById('authError').style.display = 'none';
-    }
-
-    function handleAuthSubmit(e) {
-      e.preventDefault();
-      const mobile = document.getElementById('authMobile').value.trim();
-      const pass = document.getElementById('authPass').value.trim();
-      const errBox = document.getElementById('authError');
-
-      if (currentAuthTab === 'login') {
-        const found = users.find(u => u.mobile === mobile && u.pass === pass);
-        if (!found) {
-          errBox.innerText = "Invalid Mobile Number or Password!";
-          errBox.style.display = 'block';
-          return;
+    if (selectedIdx === correctIdx) {
+        optionEl.classList.add('correct');
+        playSuccessSound();
+        countCorrect++;
+        userScorePoints += 5;
+        userScoreTaka += 0.25;
+    } else {
+        optionEl.classList.add('wrong');
+        playErrorSound();
+        countWrong++;
+        userScorePoints -= 10;
+        userScoreTaka -= 0.50;
+        if (allOptions[correctIdx]) {
+            allOptions[correctIdx].classList.add('correct');
         }
-        currentUser = found;
-        postAuthLogin();
-      } else {
-        const name = document.getElementById('authName').value.trim();
-        const role = document.getElementById('authRole').value;
-        if (!name) {
-          errBox.innerText = "Please enter your full name!";
-          errBox.style.display = 'block';
-          return;
-        }
-        if (users.some(u => u.mobile === mobile)) {
-          errBox.innerText = "Mobile number is already registered!";
-          errBox.style.display = 'block';
-          return;
-        }
+    }
 
-        const newUser = {
-          name: name,
-          mobile: mobile,
-          pass: pass,
-          role: role,
-          email: "",
-          profession: "Student",
-          doj: new Date().toISOString().split('T')[0],
-          bkash: "",
-          nagad: "",
-          rocket: "",
-          demoBal: 500.00,
-          realBal: 0.00,
-          isFrozen: false
+    updateScoreDisplay();
+
+    // Next Question after delay
+    setTimeout(() => {
+        currentQuestionIndex++;
+        renderCurrentQuestion();
+    }, 1100);
+}
+
+function finishQuiz() {
+    clearInterval(timerInterval);
+    document.getElementById('questionContainer').style.display = 'none';
+    document.getElementById('quizResultView').style.display = 'block';
+
+    // Update Student Total Balance
+    let totalPointsDisplay = 0;
+    if (isDemoMode) {
+        let currentDemo = parseInt(document.getElementById('demoPoints').innerText) || 0;
+        let newDemo = Math.max(0, currentDemo + userScorePoints);
+        document.getElementById('demoPoints').innerText = newDemo + " Pts";
+        totalPointsDisplay = newDemo + " Pts (Demo)";
+    } else {
+        let currentReal = parseFloat(document.getElementById('realBalance').innerText.replace('৳', '')) || 0;
+        let newReal = Math.max(0, currentReal + userScoreTaka);
+        document.getElementById('realBalance').innerText = "৳" + newReal.toFixed(2);
+        totalPointsDisplay = "৳" + newReal.toFixed(2) + " (Real)";
+    }
+
+    // Populate Detailed Scorecard
+    document.getElementById('resTotalQ').innerText = activeQuizQuestions.length;
+    document.getElementById('resCorrect').innerText = `${countCorrect} টি (+${countCorrect * 5} Pts / +৳${(countCorrect * 0.25).toFixed(2)})`;
+    document.getElementById('resWrong').innerText = `${countWrong} টি (-${countWrong * 10} Pts / -৳${(countWrong * 0.50).toFixed(2)})`;
+    document.getElementById('resTimeout').innerText = `${countTimeout} টি (-${countTimeout * 10} Pts)`;
+    document.getElementById('resNetPoints').innerText = (userScorePoints >= 0 ? "+" : "") + userScorePoints + " Pts";
+    document.getElementById('resNetTaka').innerText = (userScoreTaka >= 0 ? "+৳" : "-৳") + Math.abs(userScoreTaka).toFixed(2);
+    document.getElementById('resCurrentTotal').innerText = totalPointsDisplay;
+
+    // Check Balance for "Play Next Game"
+    const nextGameBox = document.getElementById('nextGameActionButtons');
+    const noticeEl = document.getElementById('nextGameBalanceNotice');
+    nextGameBox.innerHTML = '';
+
+    let canPlayNext = false;
+    if (isDemoMode) {
+        const demoPts = parseInt(document.getElementById('demoPoints').innerText) || 0;
+        canPlayNext = demoPts >= 10;
+        noticeEl.innerHTML = canPlayNext ? 
+            `✅ আপনার প্র্যাকটিস ব্যালেন্স: <strong>${demoPts} Pts</strong> (পরবর্তী গেম খেলার জন্য পর্যাপ্ত)।` : 
+            `⚠️ আপনার প্র্যাকটিস ব্যালেন্স শেষ হয়ে গেছে।`;
+    } else {
+        const realBal = parseFloat(document.getElementById('realBalance').innerText.replace('৳', '')) || 0;
+        canPlayNext = realBal >= 10;
+        noticeEl.innerHTML = canPlayNext ? 
+            `✅ আপনার রিয়েল ব্যালেন্স: <strong>৳${realBal.toFixed(2)}</strong> (পরবর্তী গেম খেলার জন্য প্রস্তুত)।` : 
+            `❌ আপনার রিয়েল ব্যালেন্স অপ্রতুল। পরবর্তী গেম খেলতে ডিপোজিট প্রয়োজন।`;
+    }
+
+    if (canPlayNext) {
+        const btnNext = document.createElement('button');
+        btnNext.className = 'btn-play';
+        btnNext.style.background = '#10b981';
+        btnNext.innerHTML = '▶️ হ্যাঁ, পরবর্তী গেম খেলুন (Play Next Game)';
+        btnNext.onclick = function() {
+            // Re-launch with opposite set or reshuffle
+            launchQuizFromSelection();
         };
-        users.push(newUser);
-        currentUser = newUser;
-        saveState();
-        postAuthLogin();
-      }
+        nextGameBox.appendChild(btnNext);
+    } else {
+        const btnDep = document.createElement('button');
+        btnDep.className = 'btn-play';
+        btnDep.style.background = '#f59e0b';
+        btnDep.innerHTML = '💳 ব্যালেন্স নেই - ডিপোজিট করুন';
+        btnDep.onclick = function() {
+            exitQuiz();
+            switchView('deposit_view');
+        };
+        nextGameBox.appendChild(btnDep);
     }
 
-    function postAuthLogin() {
-      currentUser.realBal = getStrictRealBalance(currentUser.mobile);
-      if (currentUser.demoBal === undefined) currentUser.demoBal = 500.00;
-
-      saveState();
-
-      document.getElementById('authOverlay').style.display = 'none';
-      if (currentUser.role === 'admin') {
-        document.getElementById('adminNavBtn').style.display = 'flex';
-      } else {
-        document.getElementById('adminNavBtn').style.display = 'none';
-      }
-
-      applySecurityMode();
-      setAccountMode(currentAccountMode);
-      syncRealtimeState();
-    }
-
-    function logout() {
-      currentUser = null;
-      localStorage.removeItem('edu_current_user');
-      document.getElementById('authOverlay').style.display = 'flex';
-      applySecurityMode();
-      switchAuthTab('login');
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const savedUser = localStorage.getItem('edu_current_user');
-      if (savedUser) {
-        currentUser = JSON.parse(savedUser);
-        const existing = users.find(u => u.mobile === currentUser.mobile);
-        if (existing) currentUser = existing;
-        postAuthLogin();
-      } else {
-        document.getElementById('authOverlay').style.display = 'flex';
-        applySecurityMode();
-        switchAuthTab('login');
-      }
+    // Save record to Local Storage
+    const history = JSON.parse(localStorage.getItem('edu_quiz_records') || '[]');
+    history.push({
+        user: "User_" + Math.floor(Math.random() * 9000 + 1000),
+        game: selectedGameKey,
+        score: userScorePoints,
+        taka: userScoreTaka.toFixed(2),
+        date: new Date().toLocaleDateString('bn-BD')
     });
-      function openMobileSidebar() {
-      document.getElementById('appSidebar').classList.add('sidebar-open');
-      document.getElementById('sidebarBackdrop').classList.add('active');
+    localStorage.setItem('edu_quiz_records', JSON.stringify(history));
+}
+
+function exitQuiz() {
+    clearInterval(timerInterval);
+    document.getElementById('quizModal').style.display = 'none';
+}
+
+// --- Deposit Submission ---
+function submitDeposit() {
+    const phone = document.getElementById('depPhone').value.trim();
+    const trx = document.getElementById('depTrx').value.trim();
+    if (!phone || !trx) {
+        alert('অনুগ্রহ করে মোবাইল নাম্বার ও TrxID প্রদান করুন।');
+        return;
+    }
+    alert('✅ ডিপোজিট রিকোয়েস্ট সফলভাবে সাবমিট হয়েছে!\nএডমিন আনোয়ার কর্তৃক ভেরিফাই করার পর আপনার ব্যালেন্সে যুক্ত হবে।');
+    document.getElementById('depPhone').value = '';
+    document.getElementById('depTrx').value = '';
+    switchView('game_arena');
+}
+
+// --- Admin Panel Reporting & CSV Export ---
+function renderAdminHistory() {
+    const history = JSON.parse(localStorage.getItem('edu_quiz_records') || '[]');
+    const tbody = document.getElementById('quizHistoryBody');
+    if (history.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="padding:15px; text-align:center;">এখনও কোনো কুইজ রেকর্ড নেই।</td></tr>';
+        return;
     }
 
-    function closeMobileSidebar() {
-      document.getElementById('appSidebar').classList.remove('sidebar-open');
-      document.getElementById('sidebarBackdrop').classList.remove('active');
+    tbody.innerHTML = history.slice(-15).reverse().map(item => `
+        <tr>
+            <td style="padding:10px; border:1px solid var(--border-color);">${item.user}</td>
+            <td style="padding:10px; border:1px solid var(--border-color);">${item.game}</td>
+            <td style="padding:10px; border:1px solid var(--border-color); font-weight:600; color:#38bdf8;">${item.score}</td>
+            <td style="padding:10px; border:1px solid var(--border-color); font-weight:600; color:#34d399;">৳${item.taka}</td>
+            <td style="padding:10px; border:1px solid var(--border-color);">${item.date}</td>
+        </tr>
+    `).join('');
+}
+
+function downloadQuizReportCSV() {
+    const history = JSON.parse(localStorage.getItem('edu_quiz_records') || '[]');
+    if (history.length === 0) {
+        alert('ডাউনলোড করার মতো কোনো তথ্য নেই!');
+        return;
     }
 
-    // অটো-ক্লোজ যখন কোনো ভিউ সুইচ হবে
-    const originalSwitchView = switchView;
-    switchView = function(viewId) {
-      originalSwitchView(viewId);
-      closeMobileSidebar();
-    };
-  </script>
+    let csvContent = "data:text/csv;charset=utf-8,User,Game,Points,Earned_Taka,Date\n";
+    history.forEach(row => {
+        csvContent += `${row.user},${row.game},${row.score},${row.taka},${row.date}\n`;
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "edu_game_history_report.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+</script>
 </body>
 </html>
