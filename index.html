@@ -134,6 +134,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .mobile-menu-btn {
@@ -164,6 +166,26 @@
             display: flex;
             align-items: center;
             gap: 8px;
+        }
+
+        .lang-switch-btn {
+            background: #2563eb;
+            color: #fff;
+            border: 1px solid #60a5fa;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+
+        .lang-switch-btn:hover {
+            background: #1d4ed8;
+            transform: scale(1.03);
         }
 
         .bot-shield-pill {
@@ -436,21 +458,21 @@
             <button class="close-drawer-btn" onclick="toggleSidebar()">✕</button>
         </div>
         <ul class="nav-menu">
-            <div class="nav-divider">Games Arena</div>
-            <li class="nav-item active" id="nav_arena" onclick="switchView('game_arena')">🎮 All Games Arena</li>
-            <li class="nav-item" id="nav_grammar" onclick="tryPlayGame('Basic Grammar Master Game', 'grammar')">📖 Basic Grammar Game</li>
-            <li class="nav-item" id="nav_banker" onclick="tryPlayGame('Game For Bankers', 'banker')">🏦 Game For Bankers</li>
-            <li class="nav-item" id="nav_affiliate" onclick="tryPlayGame('MassBD Affiliate Game', 'affiliate')">💼 MassBD Affiliate</li>
-            <li class="nav-item" id="nav_ielts" onclick="tryPlayGame('IELTS Master Game', 'ielts')">✈️ IELTS Game</li>
-            <li class="nav-item" id="nav_admission" onclick="tryPlayGame('University & Medical Admission Game', 'admission')">🎓 Admission Arena</li>
-            <li class="nav-item" id="nav_bcs" onclick="tryPlayGame('BCS & Govt Job Arena', 'bcs')">🏛️ BCS & Govt Job</li>
+            <div class="nav-divider" data-i18n="nav_games_section">Games Arena</div>
+            <li class="nav-item active" id="nav_arena" onclick="switchView('game_arena')">🎮 <span data-i18n="nav_all_games">All Games Arena</span></li>
+            <li class="nav-item" id="nav_grammar" onclick="tryPlayGame('Basic Grammar Master Game', 'grammar')">📖 <span data-i18n="game_grammar">Basic Grammar Game</span></li>
+            <li class="nav-item" id="nav_banker" onclick="tryPlayGame('Game For Bankers', 'banker')">🏦 <span data-i18n="game_banker">Game For Bankers</span></li>
+            <li class="nav-item" id="nav_affiliate" onclick="tryPlayGame('MassBD Affiliate Game', 'affiliate')">💼 <span data-i18n="game_affiliate">MassBD Affiliate</span></li>
+            <li class="nav-item" id="nav_ielts" onclick="tryPlayGame('IELTS Master Game', 'ielts')">✈️ <span data-i18n="game_ielts">IELTS Game</span></li>
+            <li class="nav-item" id="nav_admission" onclick="tryPlayGame('University & Medical Admission Game', 'admission')">🎓 <span data-i18n="game_admission">Admission Arena</span></li>
+            <li class="nav-item" id="nav_bcs" onclick="tryPlayGame('BCS & Govt Job Arena', 'bcs')">🏛️ <span data-i18n="game_bcs">BCS & Govt Job</span></li>
             
-            <div class="nav-divider">User & Leaderboard</div>
-            <li class="nav-item" id="nav_global" onclick="switchView('global_position')">🌍 Global Position (Top 20)</li>
-            <li class="nav-item" id="nav_portal" onclick="switchView('user_portal')">👤 User Portal & Limit</li>
-            <li class="nav-item" id="nav_report" onclick="switchView('my_report')">📊 My Report</li>
-            <li class="nav-item" id="nav_deposit" onclick="switchView('deposit_view')">💳 Deposit / Payment</li>
-            <li class="nav-item" id="nav_admin" onclick="switchView('admin_panel')">🛡️ Admin Panel</li>
+            <div class="nav-divider" data-i18n="nav_user_section">User & Leaderboard</div>
+            <li class="nav-item" id="nav_global" onclick="switchView('global_position')">🌍 <span data-i18n="nav_global">Global Position (Top 20)</span></li>
+            <li class="nav-item" id="nav_portal" onclick="switchView('user_portal')">👤 <span data-i18n="nav_portal">User Portal & Limit</span></li>
+            <li class="nav-item" id="nav_report" onclick="switchView('my_report')">📊 <span data-i18n="nav_report">My Report</span></li>
+            <li class="nav-item" id="nav_deposit" onclick="switchView('deposit_view')">💳 <span data-i18n="nav_deposit">Deposit / Payment</span></li>
+            <li class="nav-item" id="nav_admin" onclick="switchView('admin_panel')">🛡️ <span data-i18n="nav_admin">Admin Panel</span></li>
         </ul>
         <div style="padding: 15px 20px; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
             <div><strong>Admin:</strong> Anwar</div>
@@ -461,38 +483,41 @@
     <!-- Main Wrapper -->
     <main class="main-wrapper">
         <header class="topbar">
-            <button class="mobile-menu-btn" onclick="toggleSidebar()">☰ মেনু</button>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">☰ মেনু</button>
+                <button class="lang-switch-btn" onclick="toggleLanguage()">
+                    🌐 <span id="langBtnText">বাংলা / English</span>
+                </button>
+            </div>
             <div class="wallet-badges">
-                <span class="bot-shield-pill">🛡️ 4h Cooldown / 3 Plays Limit Active</span>
+                <span class="bot-shield-pill" data-i18n="bot_shield_badge">🛡️ 4h Cooldown / 3 Plays Active</span>
                 <div class="wallet-pill">🎮 Demo: <span id="demoPoints" style="color:#60a5fa;">100 Pts</span></div>
                 <div class="wallet-pill">💰 Real: <span id="realBalance" style="color:#34d399;">৳00.00</span></div>
             </div>
         </header>
 
         <section class="content-area">
-            <!-- View: Game Arena (All 10 Games) -->
+            <!-- View: Game Arena -->
             <div id="view_game_arena">
                 <div style="margin-bottom: 20px; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:10px;">
                     <div>
-                        <h2>🎯 Educational Exam & Tournament Arena (All Games)</h2>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">
+                        <h2 data-i18n="arena_title">🎯 Educational Exam & Tournament Arena</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="arena_subtitle">
                             ⏱️ নিয়ম: ১টি গেম প্রতি ৪ ঘণ্টায় মাত্র ১ বার | লাইফটাইমে মোট ৩ বার | আপডেট করলে পুনরায় ৩ বার সুযোগ।
                         </p>
                     </div>
-                    <button class="btn-play" onclick="resetUserLimitsForDemo()" style="background:#4f46e5; font-size:0.85rem; padding:6px 14px;">🔄 অ্যাকাউন্ট আপডেট / লিমিট রিনিউ</button>
+                    <button class="btn-play" onclick="resetUserLimitsForDemo()" style="background:#4f46e5; font-size:0.85rem; padding:6px 14px;" data-i18n="btn_renew_limit">🔄 অ্যাকাউন্ট আপডেট / লিমিট রিনিউ</button>
                 </div>
 
-                <div class="grid-cards" id="arenaGridContainer">
-                    <!-- Cards will be populated with dynamic live status badges -->
-                </div>
+                <div class="grid-cards" id="arenaGridContainer"></div>
             </div>
 
-            <!-- View: Global Position (Top 20 Leaderboard) -->
+            <!-- View: Global Position -->
             <div id="view_global_position" style="display: none;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
                     <div>
-                        <h2>🌍 Global Position & Top 20 Candidates</h2>
-                        <p style="color: var(--text-muted); font-size:0.9rem;">বিশ্বজুড়ে শিক্ষার্থীদের লাইভ র‍্যাংকিং ও পয়েন্ট তালিকা (Top 20)</p>
+                        <h2 data-i18n="global_title">🌍 Global Position & Top 20 Candidates</h2>
+                        <p style="color: var(--text-muted); font-size:0.9rem;" data-i18n="global_subtitle">বিশ্বজুড়ে শিক্ষার্থীদের লাইভ র‍্যাংকিং ও পয়েন্ট তালিকা (Top 20)</p>
                     </div>
                     <div>
                         <input type="text" id="leaderSearch" onkeyup="filterLeaderboard()" placeholder="🔍 নাম বা জেলা খুঁজুন..." style="padding:8px 14px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:8px; font-size:0.9rem;">
@@ -503,13 +528,13 @@
                     <table class="leaderboard-table" id="leaderboardTable">
                         <thead>
                             <tr>
-                                <th>র‍্যাংক</th>
-                                <th>প্রতিযোগীর নাম</th>
-                                <th>জেলা / অঞ্চল</th>
-                                <th>লেভেল</th>
-                                <th>মোট পয়েন্ট</th>
-                                <th>অর্জিত টাকা (BDT)</th>
-                                <th>স্ট্যাটাস</th>
+                                <th data-i18n="th_rank">র‍্যাংক</th>
+                                <th data-i18n="th_name">প্রতিযোগীর নাম</th>
+                                <th data-i18n="th_district">জেলা / অঞ্চল</th>
+                                <th data-i18n="th_level">লেভেল</th>
+                                <th data-i18n="th_points">মোট পয়েন্ট</th>
+                                <th data-i18n="th_taka">অর্জিত টাকা (BDT)</th>
+                                <th data-i18n="th_status">স্ট্যাটাস</th>
                             </tr>
                         </thead>
                         <tbody id="leaderboardBody"></tbody>
@@ -519,56 +544,56 @@
 
             <!-- View: User Portal & Limits -->
             <div id="view_user_portal" style="display: none;">
-                <h2>👤 User Portal & Lifetime Quota Status</h2>
+                <h2 data-i18n="portal_title">👤 User Portal & Lifetime Quota Status</h2>
                 <div style="background:var(--bg-card); padding:24px; border-radius:12px; border:1px solid var(--border-color); max-width:650px; margin-top:15px;">
-                    <p><strong>Candidate Name:</strong> Md. Student Account</p>
-                    <p><strong>Phone:</strong> 017XXXXXXXX</p>
-                    <p><strong>Account Tier:</strong> <span id="portalAccountTier" style="color:#60a5fa; font-weight:700;">Standard User</span></p>
-                    <p><strong>কুইজ খেলার নিয়ম:</strong> প্রতি ৪ ঘণ্টায় ১ বার এবং লাইফটাইমে মোট ৩ বার।</p>
+                    <p><strong data-i18n="lbl_cand_name">Candidate Name:</strong> Md. Student Account</p>
+                    <p><strong data-i18n="lbl_cand_phone">Phone:</strong> 017XXXXXXXX</p>
+                    <p><strong data-i18n="lbl_cand_tier">Account Tier:</strong> <span id="portalAccountTier" style="color:#60a5fa; font-weight:700;">Standard User</span></p>
+                    <p data-i18n="lbl_quota_rules">কুইজ খেলার নিয়ম: প্রতি ৪ ঘণ্টায় ১ বার এবং লাইফটাইমে মোট ৩ বার।</p>
                     <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
-                    <h4 style="margin-bottom:10px; color:#fde047;">🔄 অ্যাকাউন্ট আপডেট অপশন:</h4>
-                    <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:15px;">
+                    <h4 style="margin-bottom:10px; color:#fde047;" data-i18n="lbl_upgrade_header">🔄 অ্যাকাউন্ট আপডেট অপশন:</h4>
+                    <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:15px;" data-i18n="lbl_upgrade_desc">
                         আপনার ৩ বারের লিমিট শেষ হয়ে গেলে অথবা নতুন সাইকেল শুরু করতে নিচে ক্লিক করে অ্যাকাউন্ট আপডেট করুন।
                     </p>
-                    <button class="btn-play" onclick="resetUserLimitsForDemo()" style="background:#10b981;">🔄 অ্যাকাউন্ট আপডেট করুন (Reset 3-Plays Quota)</button>
+                    <button class="btn-play" onclick="resetUserLimitsForDemo()" style="background:#10b981;" data-i18n="btn_do_upgrade">🔄 অ্যাকাউন্ট আপডেট করুন (Reset 3-Plays Quota)</button>
                 </div>
             </div>
 
             <!-- View: My Report -->
             <div id="view_my_report" style="display: none;">
-                <h2>📊 My Exam Performance Report</h2>
+                <h2 data-i18n="report_title">📊 My Exam Performance Report</h2>
                 <div id="myReportContent" style="background:var(--bg-card); padding:20px; border-radius:12px; border:1px solid var(--border-color); margin-top:15px;">
-                    <p>এখনও কোনো ব্যক্তিগত রিপোর্ট জমা হয়নি। পরীক্ষা সম্পন্ন করার পর এখানে রেকর্ড আপডেট হবে।</p>
+                    <p data-i18n="report_empty">এখনও কোনো ব্যক্তিগত রিপোর্ট জমা হয়নি। পরীক্ষা সম্পন্ন করার পর এখানে রেকর্ড আপডেট হবে।</p>
                 </div>
             </div>
 
             <!-- View: Deposit -->
             <div id="view_deposit" style="display: none;">
-                <h2>💳 রিয়েল টুর্নামেন্ট ডিপোজিট ফর্ম</h2>
-                <p style="color: var(--text-muted); margin-bottom: 20px;">রিয়েল ব্যালেন্স আনলক করতে নিচের অফিসিয়াল নাম্বারে সেন্ড মানি করুন।</p>
+                <h2 data-i18n="deposit_title">💳 রিয়েল টুর্নামেন্ট ডিপোজিট ফর্ম</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px;" data-i18n="deposit_subtitle">রিয়েল ব্যালেন্স আনলক করতে নিচের অফিসিয়াল নাম্বারে সেন্ড মানি করুন।</p>
                 <div style="background:var(--bg-card); padding:22px; border-radius:12px; border:1px solid var(--border-color); max-width:600px;">
                     <p><strong>বিকাশ (Personal):</strong> 01955375501</p>
                     <p><strong>নগদ (Personal):</strong> 01758871568</p>
                     <p><strong>রকেট (Personal):</strong> 01854550184-4</p>
                     <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
                     <div style="margin-bottom:12px;">
-                        <label>আপনার মোবাইল নাম্বার:</label>
+                        <label data-i18n="lbl_dep_phone">আপনার মোবাইল নাম্বার:</label>
                         <input type="text" id="depPhone" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
                     </div>
                     <div style="margin-bottom:12px;">
-                        <label>ট্রানজেকশন আইডি (TrxID):</label>
+                        <label data-i18n="lbl_dep_trx">ট্রানজেকশন আইডি (TrxID):</label>
                         <input type="text" id="depTrx" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
                     </div>
-                    <button class="btn-play" onclick="submitDeposit()" style="width:100%;">ডিপোজিট সাবমিট করুন</button>
+                    <button class="btn-play" onclick="submitDeposit()" style="width:100%;" data-i18n="btn_submit_dep">ডিপোজিট সাবমিট করুন</button>
                 </div>
             </div>
 
             <!-- View: Admin Panel -->
             <div id="view_admin" style="display: none;">
-                <h2>🛡️ এডমিন ম্যানেজমেন্ট প্যানেল</h2>
+                <h2 data-i18n="admin_title">🛡️ এডমিন ম্যানেজমেন্ট প্যানেল</h2>
                 <div style="margin: 20px 0; display:flex; gap:10px; flex-wrap:wrap;">
-                    <button class="btn-play" onclick="downloadQuizReportCSV()">📥 কুইজ রিপোর্ট CSV ডাউনলোড</button>
-                    <button class="btn-play" onclick="resetUserLimitsForDemo()" style="background:#ef4444;">⚡ অল ইউজার লিমিট রিসেট (Admin)</button>
+                    <button class="btn-play" onclick="downloadQuizReportCSV()" data-i18n="btn_download_csv">📥 কুইজ রিপোর্ট CSV ডাউনলোড</button>
+                    <button class="btn-play" onclick="resetUserLimitsForDemo()" style="background:#ef4444;" data-i18n="btn_admin_reset">⚡ অল ইউজার লিমিট রিসেট (Admin)</button>
                 </div>
                 <div id="adminHistoryTable" style="margin-top:15px; overflow-x:auto;">
                     <table style="width:100%; border-collapse:collapse; text-align:left;">
@@ -598,7 +623,7 @@
         <h3 id="selModalTitle" style="margin-bottom: 15px;">গেম সেট ও লেভেল নির্বাচন করুন</h3>
         
         <div style="margin-bottom: 15px;">
-            <label style="color:var(--text-muted); font-size:0.9rem;">সেট নির্বাচন (Set):</label>
+            <label style="color:var(--text-muted); font-size:0.9rem;" data-i18n="lbl_select_set">সেট নির্বাচন (Set):</label>
             <select id="selSet" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
                 <option value="1">Set 01 (Official 25-30 Questions)</option>
                 <option value="2">Set 02 (Comprehensive Practice Set)</option>
@@ -606,9 +631,9 @@
         </div>
 
         <div style="margin-bottom: 15px;">
-            <label style="color:var(--text-muted); font-size:0.9rem;">লেভেল নির্বাচন (7 Tiers):</label>
+            <label style="color:var(--text-muted); font-size:0.9rem;" data-i18n="lbl_select_level">লেভেল নির্বাচন (7 Tiers):</label>
             <select id="selLevel" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
-                <option value="all">🌟 All Levels (Easy + Medium + Hard Randomly)</option>
+                <option value="all">🌟 All Levels (Random Mix)</option>
                 <option value="primary">🔰 Primary Level</option>
                 <option value="basic1">📘 Basic Level 01</option>
                 <option value="basic2">📗 Basic Level 02</option>
@@ -620,14 +645,14 @@
         </div>
 
         <div style="margin-bottom: 20px;">
-            <label style="color:var(--text-muted); font-size:0.9rem;">মোড নির্বাচন:</label>
+            <label style="color:var(--text-muted); font-size:0.9rem;" data-i18n="lbl_select_mode">মোড নির্বাচন:</label>
             <select id="selMode" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
-                <option value="demo">🎮 Practice Demo Mode (ফ্রি প্র্যাকটিস)</option>
-                <option value="real">💰 Real Tournament Mode (আসল টাকা)</option>
+                <option value="demo">🎮 Practice Demo Mode (Free)</option>
+                <option value="real">💰 Real Tournament Mode (Deposit Required)</option>
             </select>
         </div>
 
-        <button class="btn-play" onclick="launchQuizFromSelection()" style="width:100%; padding:12px; font-size:1.05rem;">
+        <button class="btn-play" onclick="launchQuizFromSelection()" style="width:100%; padding:12px; font-size:1.05rem;" data-i18n="btn_start_quiz_modal">
             🚀 কুইজ শুরু করুন (Strict 28s / No Skip)
         </button>
     </div>
@@ -646,76 +671,225 @@
         </div>
 
         <div id="quizScoreBar" style="display:flex; justify-content:space-between; margin-bottom:15px; font-size:0.9rem;">
-            <span>স্কোর: <strong id="curPoints" style="color:#38bdf8;">0 Pts</strong></span>
-            <span>অর্জন: <strong id="curTaka" style="color:#34d399;">৳0.00</strong></span>
+            <span><span data-i18n="lbl_score">স্কোর:</span> <strong id="curPoints" style="color:#38bdf8;">0 Pts</strong></span>
+            <span><span data-i18n="lbl_earnings">অর্জন:</span> <strong id="curTaka" style="color:#34d399;">৳0.00</strong></span>
         </div>
 
-        <!-- Question View -->
         <div id="questionContainer">
             <h4 id="questionText" style="font-size:1.1rem; line-height:1.5; margin-bottom:18px;">Question text will appear here</h4>
             <div id="optionsList"></div>
-            <p style="font-size: 0.8rem; color: #ef4444; margin-top: 10px; text-align: center;">🚫 নো স্কিপ অপশন: প্রতি প্রশ্নের উত্তর বাধ্যতামূলক অথবা ২৮ সেকেন্ডে স্বয়ংক্রিয় মাইনাস পয়েন্ট হবে।</p>
+            <p style="font-size: 0.8rem; color: #ef4444; margin-top: 10px; text-align: center;" data-i18n="lbl_noskip_warning">🚫 নো স্কিপ অপশন: প্রতি প্রশ্নের উত্তর বাধ্যতামূলক অথবা ২৮ সেকেন্ডে স্বয়ংক্রিয় মাইনাস পয়েন্ট হবে।</p>
         </div>
 
-        <!-- Result Card View -->
         <div id="quizResultView" style="display:none; text-align:center; padding:10px 0;">
-            <h3 style="color:#34d399; margin-bottom:8px;">🎉 গেম সমাপ্ত! আপনার রেজাল্ট কার্ড</h3>
+            <h3 style="color:#34d399; margin-bottom:8px;" data-i18n="res_title">🎉 গেম সমাপ্ত! আপনার রেজাল্ট কার্ড</h3>
             
             <div class="result-card-box">
                 <div class="result-stat-row">
-                    <span>মোট প্রশ্ন:</span>
+                    <span data-i18n="res_total_q">মোট প্রশ্ন:</span>
                     <strong id="resTotalQ">0</strong>
                 </div>
                 <div class="result-stat-row">
-                    <span>✅ সঠিক উত্তর (+৫ পয়েন্ট / +০.২৫৳):</span>
+                    <span data-i18n="res_correct">✅ সঠিক উত্তর (+৫ পয়েন্ট / +০.২৫৳):</span>
                     <strong id="resCorrect" style="color:#34d399;">0</strong>
                 </div>
                 <div class="result-stat-row">
-                    <span>❌ ভুল উত্তর (-১০ পয়েন্ট / -০.৫০৳):</span>
+                    <span data-i18n="res_wrong">❌ ভুল উত্তর (-১০ পয়েন্ট / -০.৫০৳):</span>
                     <strong id="resWrong" style="color:#f87171;">0</strong>
                 </div>
                 <div class="result-stat-row">
-                    <span>⏱️ টাইমআউট (২৮ সে.):</span>
+                    <span data-i18n="res_timeout">⏱️ টাইমআউট (২৮ সে.):</span>
                     <strong id="resTimeout" style="color:#fbbf24;">0</strong>
                 </div>
                 <div class="result-stat-row" style="font-size:1.05rem; padding-top:12px; border-top:1px dashed var(--border-color);">
-                    <span>🎯 এই খেলায় অর্জিত মোট পয়েন্ট:</span>
+                    <span data-i18n="res_net_pts">🎯 এই খেলায় অর্জিত মোট পয়েন্ট:</span>
                     <strong id="resNetPoints" style="color:#38bdf8;">0 Pts</strong>
                 </div>
                 <div class="result-stat-row" style="font-size:1.05rem;">
-                    <span>💰 এই খেলায় অর্জিত টাকা:</span>
+                    <span data-i18n="res_net_taka">💰 এই খেলায় অর্জিত টাকা:</span>
                     <strong id="resNetTaka" style="color:#34d399;">৳0.00</strong>
                 </div>
                 <div class="result-stat-row" style="font-size:1.1rem; background:#1e293b; padding:10px; border-radius:8px; margin-top:8px;">
-                    <span>🏆 আপনার বর্তমান ব্যালেন্স:</span>
+                    <span data-i18n="res_current_total">🏆 আপনার বর্তমান ব্যালেন্স:</span>
                     <strong id="resCurrentTotal" style="color:#f59e0b;">0 Pts</strong>
                 </div>
             </div>
 
-            <!-- Play Next Game Confirmation -->
             <div style="background: #1e1b4b; border: 1px solid #4338ca; padding: 18px; border-radius: 12px; margin-bottom: 18px;">
-                <h4 style="color: #c7d2fe; margin-bottom: 8px;">❓ আপনি কি পরবর্তী গেম খেলতে চান?</h4>
+                <h4 style="color: #c7d2fe; margin-bottom: 8px;" data-i18n="prompt_play_next">❓ আপনি কি পরবর্তী গেম খেলতে চান?</h4>
                 <p id="nextGameBalanceNotice" style="font-size: 0.85rem; color: #a5b4fc; margin-bottom: 14px;">
-                    আপনার ব্যালেন্স চেক করা হচ্ছে...
+                    ব্যালেন্স চেক করা হচ্ছে...
                 </p>
                 <div id="nextGameActionButtons" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;"></div>
             </div>
 
-            <button class="btn-play" onclick="exitQuiz()" style="margin: 0 auto; background: #374151;">🏠 গেম এরিনায় ফিরুন</button>
+            <button class="btn-play" onclick="exitQuiz()" style="margin: 0 auto; background: #374151;" data-i18n="btn_return_arena">🏠 গেম এরিনায় ফিরুন</button>
         </div>
     </div>
 </div>
 
 <script>
+// --- BILINGUAL DICTIONARY (Bangla <-> English) ---
+const TRANSLATIONS = {
+    bn: {
+        nav_games_section: "গেমস এরিনা",
+        nav_all_games: "সকল গেম এরিনা",
+        game_grammar: "বেসিক গ্রামার গেম",
+        game_banker: "গেম ফর ব্যাংকার্স",
+        game_affiliate: "ম্যাসবিডি অ্যাফিলিয়েট",
+        game_ielts: "আইইএলটিএস গেম",
+        game_admission: "ভর্তি পরীক্ষা এরিনা",
+        game_bcs: "বিসিএস ও সরকারি চাকরি",
+        nav_user_section: "ইউজার ও লিডারবোর্ড",
+        nav_global: "গ্লোবাল পজিশন (শীর্ষ ২০)",
+        nav_portal: "ইউজার পোর্টাল ও লিমিট",
+        nav_report: "আমার রিপোর্ট",
+        nav_deposit: "ডিপোজিট / পেমেন্ট",
+        nav_admin: "এডমিন প্যানেল",
+        bot_shield_badge: "🛡️ ৪ ঘণ্টা কুলডাউন / ৩ বার লিমিট সক্রিয়",
+        arena_title: "🎯 এডুকেশনাল এক্সাম ও টুর্নামেন্ট এরিনা",
+        arena_subtitle: "⏱️ নিয়ম: ১টি গেম প্রতি ৪ ঘণ্টায় মাত্র ১ বার | লাইফটাইমে মোট ৩ বার | আপডেট করলে পুনরায় ৩ বার সুযোগ।",
+        btn_renew_limit: "🔄 অ্যাকাউন্ট আপডেট / লিমিট রিনিউ",
+        global_title: "🌍 গ্লোবাল পজিশন ও শীর্ষ ২০ প্রতিযোগী",
+        global_subtitle: "বিশ্বজুড়ে শিক্ষার্থীদের লাইভ র‍্যাংকিং ও পয়েন্ট তালিকা (Top 20)",
+        th_rank: "র‍্যাংক",
+        th_name: "প্রতিযোগীর নাম",
+        th_district: "জেলা / অঞ্চল",
+        th_level: "লেভেল",
+        th_points: "মোট পয়েন্ট",
+        th_taka: "অর্জিত টাকা (BDT)",
+        th_status: "স্ট্যাটাস",
+        portal_title: "👤 ইউজার পোর্টাল ও কোটা স্ট্যাটাস",
+        lbl_cand_name: "শিক্ষার্থীর নাম:",
+        lbl_cand_phone: "মোবাইল নাম্বার:",
+        lbl_cand_tier: "অ্যাকাউন্ট স্ট্যাটাস:",
+        lbl_quota_rules: "কুইজ খেলার নিয়ম: প্রতি ৪ ঘণ্টায় ১ বার এবং লাইফটাইমে মোট ৩ বার।",
+        lbl_upgrade_header: "🔄 অ্যাকাউন্ট আপডেট অপশন:",
+        lbl_upgrade_desc: "আপনার ৩ বারের লিমিট শেষ হয়ে গেলে অথবা নতুন সাইকেল শুরু করতে নিচে ক্লিক করে অ্যাকাউন্ট আপডেট করুন।",
+        btn_do_upgrade: "🔄 অ্যাকাউন্ট আপডেট করুন (Reset 3-Plays Quota)",
+        report_title: "📊 আমার পরীক্ষার পারফরম্যান্স রিপোর্ট",
+        report_empty: "এখনও কোনো ব্যক্তিগত রিপোর্ট জমা হয়নি। পরীক্ষা সম্পন্ন করার পর এখানে রেকর্ড আপডেট হবে।",
+        deposit_title: "💳 রিয়েল টুর্নামেন্ট ডিপোজিট ফর্ম",
+        deposit_subtitle: "রিয়েল ব্যালেন্স আনলক করতে নিচের অফিসিয়াল নাম্বারে সেন্ড মানি করুন।",
+        lbl_dep_phone: "আপনার মোবাইল নাম্বার:",
+        lbl_dep_trx: "ট্রানজেকশন আইডি (TrxID):",
+        btn_submit_dep: "ডিপোজিট সাবমিট করুন",
+        admin_title: "🛡️ এডমিন ম্যানেজমেন্ট প্যানেল",
+        btn_download_csv: "📥 কুইজ রিপোর্ট CSV ডাউনলোড",
+        btn_admin_reset: "⚡ অল ইউজার লিমিট রিসেট (Admin)",
+        lbl_select_set: "সেট নির্বাচন (Set):",
+        lbl_select_level: "লেভেল নির্বাচন (7 Tiers):",
+        lbl_select_mode: "মোড নির্বাচন:",
+        btn_start_quiz_modal: "🚀 কুইজ শুরু করুন (Strict 28s / No Skip)",
+        lbl_score: "স্কোর:",
+        lbl_earnings: "অর্জন:",
+        lbl_noskip_warning: "🚫 নো স্কিপ অপশন: প্রতি প্রশ্নের উত্তর বাধ্যতামূলক অথবা ২৮ সেকেন্ডে স্বয়ংক্রিয় মাইনাস পয়েন্ট হবে।",
+        res_title: "🎉 গেম সমাপ্ত! আপনার রেজাল্ট কার্ড",
+        res_total_q: "মোট প্রশ্ন:",
+        res_correct: "✅ সঠিক উত্তর (+৫ পয়েন্ট / +০.২৫৳):",
+        res_wrong: "❌ ভুল উত্তর (-১০ পয়েন্ট / -০.৫০৳):",
+        res_timeout: "⏱️ টাইমআউট (২৮ সে.):",
+        res_net_pts: "🎯 এই খেলায় অর্জিত মোট পয়েন্ট:",
+        res_net_taka: "💰 এই খেলায় অর্জিত টাকা:",
+        res_current_total: "🏆 আপনার বর্তমান ব্যালেন্স:",
+        prompt_play_next: "❓ আপনি কি পরবর্তী গেম খেলতে চান?",
+        btn_return_arena: "🏠 গেম এরিনায় ফিরুন",
+        play_btn: "🚀 গেম খেলুন"
+    },
+    en: {
+        nav_games_section: "Games Arena",
+        nav_all_games: "All Games Arena",
+        game_grammar: "Basic Grammar Game",
+        game_banker: "Game For Bankers",
+        game_affiliate: "MassBD Affiliate",
+        game_ielts: "IELTS Master Game",
+        game_admission: "Admission Arena",
+        game_bcs: "BCS & Govt Job",
+        nav_user_section: "User & Leaderboard",
+        nav_global: "Global Position (Top 20)",
+        nav_portal: "User Portal & Limit",
+        nav_report: "My Report",
+        nav_deposit: "Deposit / Payment",
+        nav_admin: "Admin Panel",
+        bot_shield_badge: "🛡️ 4h Cooldown / 3 Plays Active",
+        arena_title: "🎯 Educational Exam & Tournament Arena",
+        arena_subtitle: "⏱️ Rules: 1 Game per 4 hours | 3 Times lifetime | Update account to repeat quota.",
+        btn_renew_limit: "🔄 Update Account / Renew Limit",
+        global_title: "🌍 Global Position & Top 20 Candidates",
+        global_subtitle: "Live Global Ranking and Score Leaderboard (Top 20)",
+        th_rank: "Rank",
+        th_name: "Candidate Name",
+        th_district: "District / Region",
+        th_level: "Level",
+        th_points: "Total Points",
+        th_taka: "Earned BDT",
+        th_status: "Status",
+        portal_title: "👤 User Portal & Lifetime Quota Status",
+        lbl_cand_name: "Candidate Name:",
+        lbl_cand_phone: "Mobile Phone:",
+        lbl_cand_tier: "Account Status:",
+        lbl_quota_rules: "Gameplay Rule: Once per 4 hours & Max 3 times lifetime.",
+        lbl_upgrade_header: "🔄 Account Update Option:",
+        lbl_upgrade_desc: "When your 3 plays are finished, update account below to reset your quota.",
+        btn_do_upgrade: "🔄 Update Account (Reset 3-Plays Quota)",
+        report_title: "📊 My Exam Performance Report",
+        report_empty: "No exam records found yet. Complete quizzes to see analytics here.",
+        deposit_title: "💳 Real Tournament Deposit Form",
+        deposit_subtitle: "Send money to the official numbers below to unlock Real Tournament balance.",
+        lbl_dep_phone: "Your Mobile Number:",
+        lbl_dep_trx: "Transaction ID (TrxID):",
+        btn_submit_dep: "Submit Deposit Request",
+        admin_title: "🛡️ Admin Management Panel",
+        btn_download_csv: "📥 Download Quiz Report CSV",
+        btn_admin_reset: "⚡ Reset All User Limits (Admin)",
+        lbl_select_set: "Select Set:",
+        lbl_select_level: "Select Level (7 Tiers):",
+        lbl_select_mode: "Select Mode:",
+        btn_start_quiz_modal: "🚀 Start Quiz (Strict 28s / No Skip)",
+        lbl_score: "Score:",
+        lbl_earnings: "Earned:",
+        lbl_noskip_warning: "🚫 No Skip Option: Every question must be answered or auto-penalized at 28 seconds.",
+        res_title: "🎉 Game Finished! Your Scorecard",
+        res_total_q: "Total Questions:",
+        res_correct: "✅ Correct Answers (+5 Pts / +৳0.25):",
+        res_wrong: "❌ Wrong Answers (-10 Pts / -৳0.50):",
+        res_timeout: "⏱️ Timeouts (28s):",
+        res_net_pts: "🎯 Total Points Earned:",
+        res_net_taka: "💰 Total BDT Earned:",
+        res_current_total: "🏆 Your Updated Balance:",
+        prompt_play_next: "❓ Do you want to play the next game?",
+        btn_return_arena: "🏠 Return to Game Arena",
+        play_btn: "🚀 Play Game"
+    }
+};
+
+let currentLang = localStorage.getItem('edu_lang') || 'bn';
+
+function applyLanguage() {
+    const dict = TRANSLATIONS[currentLang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+            el.innerText = dict[key];
+        }
+    });
+
+    document.getElementById('langBtnText').innerText = currentLang === 'bn' ? '🌐 বাংলা (BN)' : '🌐 English (EN)';
+    renderArenaCards();
+}
+
+function toggleLanguage() {
+    currentLang = currentLang === 'bn' ? 'en' : 'bn';
+    localStorage.setItem('edu_lang', currentLang);
+    applyLanguage();
+}
+
 // --- GAME LIMIT & 4-HOUR COOLDOWN SYSTEM ---
 const COOLDOWN_HOURS = 4;
 const MAX_LIFETIME_PLAYS = 3;
 
 function getGameTracker() {
-    const defaultData = {
-        isUpdatedUser: false,
-        games: {}
-    };
+    const defaultData = { isUpdatedUser: false, games: {} };
     try {
         const stored = localStorage.getItem('edu_game_play_tracker');
         return stored ? JSON.parse(stored) : defaultData;
@@ -734,16 +908,16 @@ function checkGamePlayEligibility(gameKey) {
     const gameStat = tracker.games[gameKey] || { playCount: 0, lastPlayed: 0 };
     const now = Date.now();
 
-    // Check lifetime plays
     if (gameStat.playCount >= MAX_LIFETIME_PLAYS) {
         return {
             allowed: false,
             reason: 'exhausted',
-            message: `🚫 লিমিট শেষ: আপনি এই গেমটি সর্বোচ্চ ${MAX_LIFETIME_PLAYS} বার খেলেছেন! পুনরায় খেলতে আপনার অ্যাকাউন্ট আপডেট করুন।`
+            message: currentLang === 'bn' ?
+                `🚫 লিমিট শেষ: আপনি এই গেমটি সর্বোচ্চ ${MAX_LIFETIME_PLAYS} বার খেলেছেন! আরও খেলতে অ্যাকাউন্ট আপডেট করুন।` :
+                `🚫 Limit Reached: You have played this game ${MAX_LIFETIME_PLAYS} times! Please update your account to play more.`
         };
     }
 
-    // Check 4-hour cooldown
     if (gameStat.lastPlayed > 0) {
         const diffMs = now - gameStat.lastPlayed;
         const requiredMs = COOLDOWN_HOURS * 60 * 60 * 1000;
@@ -754,7 +928,9 @@ function checkGamePlayEligibility(gameKey) {
             return {
                 allowed: false,
                 reason: 'cooldown',
-                message: `⏳ ৪ ঘণ্টার কুলডাউন সক্রিয়! আপনি এই গেমটি ৪ ঘণ্টায় মাত্র ১ বার খেলতে পারবেন।\n\nপরবর্তী সুযোগ পাবেন: ${hours} ঘণ্টা ${mins} মিনিট পর।`
+                message: currentLang === 'bn' ?
+                    `⏳ ৪ ঘণ্টার কুলডাউন সক্রিয়! আপনি এই গেমটি ৪ ঘণ্টায় মাত্র ১ বার খেলতে পারবেন।\n\nপরবর্তী সুযোগ পাবেন: ${hours} ঘণ্টা ${mins} মিনিট পর।` :
+                    `⏳ 4-Hour Cooldown Active! You can play this game only once per 4 hours.\n\nNext available in: ${hours}h ${mins}m.`
             };
         }
     }
@@ -775,9 +951,12 @@ function recordGamePlayed(gameKey) {
 function resetUserLimitsForDemo() {
     const tracker = getGameTracker();
     tracker.isUpdatedUser = true;
-    tracker.games = {}; // Reset counts
+    tracker.games = {};
     saveGameTracker(tracker);
-    alert('✅ আপনার অ্যাকাউন্ট সফলভাবে আপডেট করা হয়েছে!\nসকল গেমের খেলার সুযোগ পুনরায় রিসেট করা হলো (৪ ঘণ্টায় ১ বার ও মোট ৩ বার)।');
+    alert(currentLang === 'bn' ? 
+        '✅ আপনার অ্যাকাউন্ট সফলভাবে আপডেট করা হয়েছে!\nসকল গেমের খেলার সুযোগ পুনরায় রিসেট করা হলো (৪ ঘণ্টায় ১ বার ও মোট ৩ বার)।' :
+        '✅ Your account has been updated successfully!\nAll game quotas have been reset (1 per 4h & 3 times total).'
+    );
     document.getElementById('portalAccountTier').innerText = "Premium Updated (Active)";
     document.getElementById('portalAccountTier').style.color = "#34d399";
 }
@@ -800,18 +979,26 @@ function renderArenaCards() {
     const container = document.getElementById('arenaGridContainer');
     if (!container) return;
     const tracker = getGameTracker();
+    const btnLabel = currentLang === 'bn' ? '🚀 গেম খেলুন' : '🚀 Play Game';
 
     container.innerHTML = GAMES_CATALOG.map(g => {
         const check = checkGamePlayEligibility(g.key);
         const playedCount = tracker.games[g.key] ? tracker.games[g.key].playCount : 0;
         
-        let tagHtml = `<span class="play-limit-tag tag-available">🎯 খেলা হয়েছে: ${playedCount}/${MAX_LIFETIME_PLAYS}</span>`;
+        let tagHtml = currentLang === 'bn' ? 
+            `<span class="play-limit-tag tag-available">🎯 খেলা হয়েছে: ${playedCount}/${MAX_LIFETIME_PLAYS}</span>` :
+            `<span class="play-limit-tag tag-available">🎯 Played: ${playedCount}/${MAX_LIFETIME_PLAYS}</span>`;
+            
         let btnDisabledClass = '';
         if (check.reason === 'exhausted') {
-            tagHtml = `<span class="play-limit-tag tag-exhausted">🔒 ৩/৩ লিমিট শেষ (আপডেট করুন)</span>`;
+            tagHtml = currentLang === 'bn' ? 
+                `<span class="play-limit-tag tag-exhausted">🔒 ৩/৩ লিমিট শেষ (আপডেট করুন)</span>` :
+                `<span class="play-limit-tag tag-exhausted">🔒 3/3 Limit Reached (Update)</span>`;
             btnDisabledClass = 'disabled';
         } else if (check.reason === 'cooldown') {
-            tagHtml = `<span class="play-limit-tag tag-cooldown">⏳ ৪ ঘণ্টার কুলডাউন</span>`;
+            tagHtml = currentLang === 'bn' ? 
+                `<span class="play-limit-tag tag-cooldown">⏳ ৪ ঘণ্টার কুলডাউন</span>` :
+                `<span class="play-limit-tag tag-cooldown">⏳ 4h Cooldown</span>`;
             btnDisabledClass = 'disabled';
         }
 
@@ -825,7 +1012,7 @@ function renderArenaCards() {
                     <h3 style="margin: 10px 0 4px 0;">${g.title}</h3>
                     <p style="color: var(--text-muted); font-size: 0.85rem;">${g.desc}</p>
                 </div>
-                <button class="btn-play ${btnDisabledClass}" onclick="tryPlayGame('${g.title}', '${g.key}')">🚀 Play Game</button>
+                <button class="btn-play ${btnDisabledClass}" onclick="tryPlayGame('${g.title}', '${g.key}')">${btnLabel}</button>
             </div>
         `;
     }).join('');
@@ -835,9 +1022,7 @@ function tryPlayGame(title, key) {
     const check = checkGamePlayEligibility(key);
     if (!check.allowed) {
         alert(check.message);
-        if (check.reason === 'exhausted') {
-            switchView('user_portal');
-        }
+        if (check.reason === 'exhausted') switchView('user_portal');
         return;
     }
     openGameSelection(title, key);
@@ -895,7 +1080,7 @@ let questionRenderTime = 0;
 
 document.addEventListener('visibilitychange', function() {
     if (document.hidden && document.getElementById('quizModal').style.display === 'flex') {
-        alert('⚠️ অ্যান্টি-বট সতর্কতা: পরীক্ষা চলাকালীন অন্য অ্যাপ বা ট্যাবে যাওয়া নিষিদ্ধ!');
+        alert('⚠️ Anti-Bot Warning: Switching tabs or minimizing during exam is prohibited!');
     }
 });
 
@@ -911,7 +1096,7 @@ window.addEventListener('keydown', function(e) {
         (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
         e.key === 'PrintScreen') {
         e.preventDefault();
-        alert('⚠️ নিরাপত্তা সতর্কবার্তা: কনটেন্ট কপি বা সোর্স কোড দেখা সম্পূর্ণ নিষিদ্ধ!');
+        alert('⚠️ Security Warning: Source code inspection and screen capturing are strictly blocked!');
         return false;
     }
 });
@@ -1122,7 +1307,7 @@ let countTimeout = 0;
 
 function openGameSelection(gameTitle, gameKey) {
     selectedGameKey = gameKey;
-    document.getElementById('selModalTitle').innerText = gameTitle + " - সেট ও লেভেল নির্বাচন";
+    document.getElementById('selModalTitle').innerText = gameTitle + (currentLang === 'bn' ? " - সেট ও লেভেল নির্বাচন" : " - Set & Level Selection");
     document.getElementById('selectionModal').style.display = 'flex';
 }
 
@@ -1131,7 +1316,6 @@ function closeSelectionModal() {
 }
 
 function launchQuizFromSelection() {
-    // Check 4-hour and 3-play rules
     const check = checkGamePlayEligibility(selectedGameKey);
     if (!check.allowed) {
         alert(check.message);
@@ -1147,7 +1331,10 @@ function launchQuizFromSelection() {
     if (mode === 'real') {
         const approvedBalance = parseFloat(document.getElementById('realBalance').innerText.replace('৳', '')) || 0;
         if (approvedBalance <= 0) {
-            alert('⚠️ রিয়েল টুর্নামেন্ট খেলতে অনুমোদিত রিয়েল ব্যালেন্স প্রয়োজন!\n\nঅনুগ্রহ করে ডিপোজিট সেকশন থেকে ডিপোজিট রিকোয়েস্ট পাঠান।');
+            alert(currentLang === 'bn' ?
+                '⚠️ রিয়েল টুর্নামেন্ট খেলতে অনুমোদিত রিয়েল ব্যালেন্স প্রয়োজন!\n\nঅনুগ্রহ করে ডিপোজিট সেকশন থেকে ডিপোজিট রিকোয়েস্ট পাঠান।' :
+                '⚠️ Approved Real Balance is required to play Real Tournament!\n\nPlease send a deposit request from the Deposit section.'
+            );
             closeSelectionModal();
             switchView('deposit_view');
             return;
@@ -1157,9 +1344,7 @@ function launchQuizFromSelection() {
         isDemoMode = true;
     }
 
-    // Record game play usage immediately
     recordGamePlayed(selectedGameKey);
-
     closeSelectionModal();
 
     const gameData = QUESTION_DATABASE[selectedGameKey] || QUESTION_DATABASE['grammar'];
@@ -1239,13 +1424,13 @@ function renderCurrentQuestion() {
 
 function handleAnswerClick(e, selectedIdx, correctIdx, optionEl) {
     if (e && !e.isTrusted) {
-        alert('🛡️ অ্যান্টি-বট অ্যালার্ট: অননুমোদিত অটোমেশন স্ক্রিপ্ট ব্লক করা হয়েছে!');
+        alert('🛡️ Anti-Bot Alert: Synthetic click event blocked!');
         return;
     }
 
     const timeTaken = Date.now() - questionRenderTime;
     if (timeTaken < 700) {
-        alert('🛡️ অ্যান্টি-বট অ্যালার্ট: অতি দ্রুত ক্লিক শনাক্ত হয়েছে! স্বাভাবিকভাবে পড়ে উত্তর দিন।');
+        alert('🛡️ Anti-Bot Alert: Click too fast! Please read carefully before answering.');
         return;
     }
 
@@ -1297,9 +1482,9 @@ function finishQuiz() {
     }
 
     document.getElementById('resTotalQ').innerText = activeQuizQuestions.length;
-    document.getElementById('resCorrect').innerText = `${countCorrect} টি (+${countCorrect * 5} Pts / +৳${(countCorrect * 0.25).toFixed(2)})`;
-    document.getElementById('resWrong').innerText = `${countWrong} টি (-${countWrong * 10} Pts / -৳${(countWrong * 0.50).toFixed(2)})`;
-    document.getElementById('resTimeout').innerText = `${countTimeout} টি (-${countTimeout * 10} Pts)`;
+    document.getElementById('resCorrect').innerText = `${countCorrect} (+${countCorrect * 5} Pts / +৳${(countCorrect * 0.25).toFixed(2)})`;
+    document.getElementById('resWrong').innerText = `${countWrong} (-${countWrong * 10} Pts / -৳${(countWrong * 0.50).toFixed(2)})`;
+    document.getElementById('resTimeout').innerText = `${countTimeout} (-${countTimeout * 10} Pts)`;
     document.getElementById('resNetPoints').innerText = (userScorePoints >= 0 ? "+" : "") + userScorePoints + " Pts";
     document.getElementById('resNetTaka').innerText = (userScoreTaka >= 0 ? "+৳" : "-৳") + Math.abs(userScoreTaka).toFixed(2);
     document.getElementById('resCurrentTotal').innerText = totalPointsDisplay;
@@ -1313,31 +1498,28 @@ function finishQuiz() {
         const demoPts = parseInt(document.getElementById('demoPoints').innerText) || 0;
         canPlayNext = demoPts >= 10;
         noticeEl.innerHTML = canPlayNext ? 
-            `✅ আপনার প্র্যাকটিস ব্যালেন্স: <strong>${demoPts} Pts</strong> (পরবর্তী গেম খেলার জন্য পর্যাপ্ত)।` : 
-            `⚠️ আপনার প্র্যাকটিস ব্যালেন্স শেষ হয়ে গেছে।`;
+            (currentLang === 'bn' ? `✅ আপনার প্র্যাকটিস ব্যালেন্স: <strong>${demoPts} Pts</strong> (পরবর্তী গেম খেলার জন্য পর্যাপ্ত)।` : `✅ Practice Balance: <strong>${demoPts} Pts</strong> (Available for next game).`) : 
+            (currentLang === 'bn' ? `⚠️ আপনার প্র্যাকটিস ব্যালেন্স শেষ হয়ে গেছে।` : `⚠️ Practice balance exhausted.`);
     } else {
         const realBal = parseFloat(document.getElementById('realBalance').innerText.replace('৳', '')) || 0;
         canPlayNext = realBal >= 10;
         noticeEl.innerHTML = canPlayNext ? 
-            `✅ আপনার রিয়েল ব্যালেন্স: <strong>৳${realBal.toFixed(2)}</strong> (পরবর্তী গেম খেলার জন্য প্রস্তুত)।` : 
-            `❌ আপনার রিয়েল ব্যালেন্স অপ্রতুল। পরবর্তী গেম খেলতে ডিপোজিট প্রয়োজন।`;
+            (currentLang === 'bn' ? `✅ আপনার রিয়েল ব্যালেন্স: <strong>৳${realBal.toFixed(2)}</strong> (পরবর্তী গেম খেলার জন্য প্রস্তুত)।` : `✅ Real Balance: <strong>৳${realBal.toFixed(2)}</strong> (Ready for next game).`) : 
+            (currentLang === 'bn' ? `❌ আপনার রিয়েল ব্যালেন্স অপ্রতুল। পরবর্তী গেম খেলতে ডিপোজিট প্রয়োজন।` : `❌ Insufficient real balance. Deposit required.`);
     }
 
     if (canPlayNext) {
         const btnNext = document.createElement('button');
         btnNext.className = 'btn-play';
         btnNext.style.background = '#10b981';
-        btnNext.innerHTML = '▶️ হ্যাঁ, পরবর্তী গেম খেলুন (Play Next Game)';
-        btnNext.onclick = function() {
-            exitQuiz();
-            switchView('game_arena');
-        };
+        btnNext.innerHTML = currentLang === 'bn' ? '▶️ হ্যাঁ, পরবর্তী গেম খেলুন' : '▶️ Yes, Play Next Game';
+        btnNext.onclick = function() { exitQuiz(); switchView('game_arena'); };
         nextGameBox.appendChild(btnNext);
     } else {
         const btnDep = document.createElement('button');
         btnDep.className = 'btn-play';
         btnDep.style.background = '#f59e0b';
-        btnDep.innerHTML = '💳 ব্যালেন্স নেই - ডিপোজিট করুন';
+        btnDep.innerHTML = currentLang === 'bn' ? '💳 ব্যালেন্স নেই - ডিপোজিট করুন' : '💳 Insufficient Balance - Deposit';
         btnDep.onclick = function() { exitQuiz(); switchView('deposit_view'); };
         nextGameBox.appendChild(btnDep);
     }
@@ -1348,7 +1530,7 @@ function finishQuiz() {
         game: selectedGameKey,
         score: userScorePoints,
         taka: userScoreTaka.toFixed(2),
-        date: new Date().toLocaleDateString('bn-BD')
+        date: new Date().toLocaleDateString(currentLang === 'bn' ? 'bn-BD' : 'en-US')
     });
     localStorage.setItem('edu_quiz_records', JSON.stringify(history));
 
@@ -1365,10 +1547,13 @@ function submitDeposit() {
     const phone = document.getElementById('depPhone').value.trim();
     const trx = document.getElementById('depTrx').value.trim();
     if (!phone || !trx) {
-        alert('অনুগ্রহ করে মোবাইল নাম্বার ও TrxID প্রদান করুন।');
+        alert(currentLang === 'bn' ? 'অনুগ্রহ করে মোবাইল নাম্বার ও TrxID প্রদান করুন।' : 'Please enter Mobile Number & TrxID.');
         return;
     }
-    alert('✅ ডিপোজিট রিকোয়েস্ট সফলভাবে সাবমিট হয়েছে!\nএডমিন আনোয়ার কর্তৃক ভেরিফাই করার পর আপনার ব্যালেন্সে যুক্ত হবে।');
+    alert(currentLang === 'bn' ? 
+        '✅ ডিপোজিট রিকোয়েস্ট সফলভাবে সাবমিট হয়েছে!\nএডমিন আনোয়ার কর্তৃক ভেরিফাই করার পর আপনার ব্যালেন্সে যুক্ত হবে।' :
+        '✅ Deposit request submitted successfully!\nBalance will be credited upon Admin Anwar verification.'
+    );
     document.getElementById('depPhone').value = '';
     document.getElementById('depTrx').value = '';
     switchView('game_arena');
@@ -1378,7 +1563,7 @@ function renderAdminHistory() {
     const history = JSON.parse(localStorage.getItem('edu_quiz_records') || '[]');
     const tbody = document.getElementById('quizHistoryBody');
     if (history.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="padding:15px; text-align:center;">এখনও কোনো কুইজ রেকর্ড নেই।</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" style="padding:15px; text-align:center;">No quiz records found.</td></tr>';
         return;
     }
 
@@ -1396,7 +1581,7 @@ function renderAdminHistory() {
 function downloadQuizReportCSV() {
     const history = JSON.parse(localStorage.getItem('edu_quiz_records') || '[]');
     if (history.length === 0) {
-        alert('ডাউনলোড করার মতো কোনো তথ্য নেই!');
+        alert('No data to export!');
         return;
     }
 
@@ -1415,6 +1600,7 @@ function downloadQuizReportCSV() {
 }
 
 window.onload = function() {
+    applyLanguage();
     renderGlobalLeaderboard();
     renderArenaCards();
 };
