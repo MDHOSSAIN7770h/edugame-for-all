@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +21,24 @@
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
             --border-color: #242f48;
+            --input-bg: #101626;
+            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="light"] {
+            --bg-dark: #f8fafc;
+            --bg-card: #ffffff;
+            --sidebar-bg: #ffffff;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --accent: #d97706;
+            --accent-green: #059669;
+            --accent-red: #dc2626;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --input-bg: #f1f5f9;
+            --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -31,6 +49,7 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
 
         body {
@@ -69,7 +88,7 @@
         .brand-title {
             font-size: 1.15rem;
             font-weight: 700;
-            color: #fff;
+            color: var(--text-main);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -106,14 +125,14 @@
 
         .nav-item:hover, .nav-item.active {
             background-color: var(--primary);
-            color: #fff;
+            color: #fff !important;
             font-weight: 600;
         }
 
         .nav-divider {
             font-size: 0.72rem;
             text-transform: uppercase;
-            color: #4b5563;
+            color: var(--text-muted);
             padding: 10px 14px 4px 14px;
             font-weight: 700;
             letter-spacing: 0.5px;
@@ -140,9 +159,9 @@
 
         .mobile-menu-btn {
             display: none;
-            background: #1f293d;
+            background: var(--input-bg);
             border: 1px solid var(--border-color);
-            color: #fff;
+            color: var(--text-main);
             padding: 8px 14px;
             border-radius: 6px;
             font-size: 1rem;
@@ -157,7 +176,7 @@
         }
 
         .wallet-pill {
-            background: #1e293b;
+            background: var(--input-bg);
             border: 1px solid var(--border-color);
             padding: 6px 14px;
             border-radius: 20px;
@@ -166,12 +185,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            color: var(--text-main);
         }
 
-        .lang-switch-btn {
-            background: #2563eb;
+        .top-action-btn {
+            background: var(--primary);
             color: #fff;
-            border: 1px solid #60a5fa;
+            border: 1px solid var(--border-color);
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.85rem;
@@ -183,9 +203,15 @@
             transition: 0.2s;
         }
 
-        .lang-switch-btn:hover {
-            background: #1d4ed8;
+        .top-action-btn:hover {
+            opacity: 0.9;
             transform: scale(1.03);
+        }
+
+        .theme-toggle-btn {
+            background: var(--input-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
         }
 
         .bot-shield-pill {
@@ -196,6 +222,12 @@
             border-radius: 12px;
             font-size: 0.78rem;
             font-weight: 600;
+        }
+
+        [data-theme="light"] .bot-shield-pill {
+            background: #e0e7ff;
+            border: 1px solid #818cf8;
+            color: #3730a3;
         }
 
         .content-area {
@@ -219,8 +251,9 @@
             flex-direction: column;
             justify-content: space-between;
             gap: 12px;
-            transition: transform 0.2s, border-color 0.2s;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
             position: relative;
+            box-shadow: var(--shadow-card);
         }
 
         .game-card:hover {
@@ -239,6 +272,12 @@
             align-self: flex-start;
         }
 
+        [data-theme="light"] .card-header-badge {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+
         .play-limit-tag {
             font-size: 0.75rem;
             padding: 3px 8px;
@@ -249,6 +288,10 @@
         .tag-available { background: #064e3b; color: #34d399; }
         .tag-cooldown { background: #78350f; color: #fde047; }
         .tag-exhausted { background: #7f1d1d; color: #fca5a5; }
+
+        [data-theme="light"] .tag-available { background: #d1fae5; color: #065f46; }
+        [data-theme="light"] .tag-cooldown { background: #fef3c7; color: #92400e; }
+        [data-theme="light"] .tag-exhausted { background: #fee2e2; color: #991b1b; }
 
         .btn-play {
             background-color: var(--primary);
@@ -270,8 +313,8 @@
         }
 
         .btn-play.disabled {
-            background-color: #374151 !important;
-            color: #9ca3af !important;
+            background-color: #64748b !important;
+            color: #cbd5e1 !important;
             cursor: not-allowed !important;
         }
 
@@ -284,11 +327,12 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-card);
         }
 
         .leaderboard-table th {
-            background: #1e293b;
-            color: #93c5fd;
+            background: var(--input-bg);
+            color: var(--text-main);
             padding: 14px;
             text-align: left;
             font-size: 0.92rem;
@@ -299,9 +343,10 @@
             padding: 12px 14px;
             border-bottom: 1px solid var(--border-color);
             font-size: 0.9rem;
+            color: var(--text-main);
         }
 
-        .leaderboard-table tr:hover { background: #182238; }
+        .leaderboard-table tr:hover { background: var(--input-bg); }
 
         .rank-badge {
             font-weight: 700;
@@ -315,18 +360,19 @@
         .rank-1 { background: #eab308; color: #000; }
         .rank-2 { background: #94a3b8; color: #000; }
         .rank-3 { background: #b45309; color: #fff; }
-        .rank-other { background: #1e293b; color: #9ca3af; }
+        .rank-other { background: var(--input-bg); color: var(--text-muted); }
 
         /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.75);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 2000;
             padding: 15px;
+            backdrop-filter: blur(4px);
         }
 
         .modal-container {
@@ -339,6 +385,8 @@
             overflow-y: auto;
             padding: 25px;
             position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            color: var(--text-main);
         }
 
         .modal-close-btn {
@@ -353,7 +401,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #111827;
+            background: var(--input-bg);
             padding: 12px 18px;
             border-radius: 10px;
             margin-bottom: 18px;
@@ -363,18 +411,18 @@
         .timer-badge {
             font-size: 1.15rem;
             font-weight: 700;
-            color: #fbbf24;
+            color: #d97706;
             display: flex;
             align-items: center;
             gap: 6px;
-            background: #2b1f09;
+            background: rgba(245, 158, 11, 0.15);
             padding: 4px 12px;
             border-radius: 8px;
-            border: 1px solid #78350f;
+            border: 1px solid var(--accent);
         }
 
         .option-item {
-            background: #1a233a;
+            background: var(--input-bg);
             border: 1px solid var(--border-color);
             padding: 14px 18px;
             border-radius: 10px;
@@ -385,11 +433,12 @@
             align-items: center;
             gap: 12px;
             font-size: 1rem;
+            color: var(--text-main);
         }
 
         .option-item:hover {
-            background: #243052;
             border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.1);
         }
 
         .option-item.correct {
@@ -398,14 +447,28 @@
             color: #34d399 !important;
         }
 
+        [data-theme="light"] .option-item.correct {
+            background: #d1fae5 !important;
+            border-color: #059669 !important;
+            color: #065f46 !important;
+            font-weight: 600;
+        }
+
         .option-item.wrong {
             background: #7f1d1d !important;
             border-color: var(--accent-red) !important;
             color: #f87171 !important;
         }
 
+        [data-theme="light"] .option-item.wrong {
+            background: #fee2e2 !important;
+            border-color: #dc2626 !important;
+            color: #991b1b !important;
+            font-weight: 600;
+        }
+
         .result-card-box {
-            background: #111827;
+            background: var(--input-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 20px;
@@ -417,7 +480,7 @@
             display: flex;
             justify-content: space-between;
             padding: 8px 0;
-            border-bottom: 1px solid #1f293d;
+            border-bottom: 1px solid var(--border-color);
             font-size: 0.95rem;
         }
 
@@ -483,16 +546,19 @@
     <!-- Main Wrapper -->
     <main class="main-wrapper">
         <header class="topbar">
-            <div style="display:flex; align-items:center; gap:10px;">
+            <div style="display:flex; align-items:center; gap:8px;">
                 <button class="mobile-menu-btn" onclick="toggleSidebar()">☰ মেনু</button>
-                <button class="lang-switch-btn" onclick="toggleLanguage()">
-                    🌐 <span id="langBtnText">বাংলা / English</span>
+                <button class="top-action-btn" onclick="toggleLanguage()">
+                    🌐 <span id="langBtnText">বাংলা (BN)</span>
+                </button>
+                <button class="top-action-btn theme-toggle-btn" onclick="toggleTheme()">
+                    <span id="themeBtnText">🌙 Dark</span>
                 </button>
             </div>
             <div class="wallet-badges">
                 <span class="bot-shield-pill" data-i18n="bot_shield_badge">🛡️ 4h Cooldown / 3 Plays Active</span>
                 <div class="wallet-pill">🎮 Demo: <span id="demoPoints" style="color:#60a5fa;">100 Pts</span></div>
-                <div class="wallet-pill">💰 Real: <span id="realBalance" style="color:#34d399;">৳00.00</span></div>
+                <div class="wallet-pill">💰 Real: <span id="realBalance" style="color:#10b981;">৳00.00</span></div>
             </div>
         </header>
 
@@ -520,7 +586,7 @@
                         <p style="color: var(--text-muted); font-size:0.9rem;" data-i18n="global_subtitle">বিশ্বজুড়ে শিক্ষার্থীদের লাইভ র‍্যাংকিং ও পয়েন্ট তালিকা (Top 20)</p>
                     </div>
                     <div>
-                        <input type="text" id="leaderSearch" onkeyup="filterLeaderboard()" placeholder="🔍 নাম বা জেলা খুঁজুন..." style="padding:8px 14px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:8px; font-size:0.9rem;">
+                        <input type="text" id="leaderSearch" onkeyup="filterLeaderboard()" placeholder="🔍 নাম বা জেলা খুঁজুন..." style="padding:8px 14px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:8px; font-size:0.9rem;">
                     </div>
                 </div>
 
@@ -545,13 +611,13 @@
             <!-- View: User Portal & Limits -->
             <div id="view_user_portal" style="display: none;">
                 <h2 data-i18n="portal_title">👤 User Portal & Lifetime Quota Status</h2>
-                <div style="background:var(--bg-card); padding:24px; border-radius:12px; border:1px solid var(--border-color); max-width:650px; margin-top:15px;">
+                <div style="background:var(--bg-card); padding:24px; border-radius:12px; border:1px solid var(--border-color); max-width:650px; margin-top:15px; box-shadow:var(--shadow-card);">
                     <p><strong data-i18n="lbl_cand_name">Candidate Name:</strong> Md. Student Account</p>
                     <p><strong data-i18n="lbl_cand_phone">Phone:</strong> 017XXXXXXXX</p>
                     <p><strong data-i18n="lbl_cand_tier">Account Tier:</strong> <span id="portalAccountTier" style="color:#60a5fa; font-weight:700;">Standard User</span></p>
                     <p data-i18n="lbl_quota_rules">কুইজ খেলার নিয়ম: প্রতি ৪ ঘণ্টায় ১ বার এবং লাইফটাইমে মোট ৩ বার।</p>
                     <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
-                    <h4 style="margin-bottom:10px; color:#fde047;" data-i18n="lbl_upgrade_header">🔄 অ্যাকাউন্ট আপডেট অপশন:</h4>
+                    <h4 style="margin-bottom:10px; color:#d97706;" data-i18n="lbl_upgrade_header">🔄 অ্যাকাউন্ট আপডেট অপশন:</h4>
                     <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:15px;" data-i18n="lbl_upgrade_desc">
                         আপনার ৩ বারের লিমিট শেষ হয়ে গেলে অথবা নতুন সাইকেল শুরু করতে নিচে ক্লিক করে অ্যাকাউন্ট আপডেট করুন।
                     </p>
@@ -562,7 +628,7 @@
             <!-- View: My Report -->
             <div id="view_my_report" style="display: none;">
                 <h2 data-i18n="report_title">📊 My Exam Performance Report</h2>
-                <div id="myReportContent" style="background:var(--bg-card); padding:20px; border-radius:12px; border:1px solid var(--border-color); margin-top:15px;">
+                <div id="myReportContent" style="background:var(--bg-card); padding:20px; border-radius:12px; border:1px solid var(--border-color); margin-top:15px; box-shadow:var(--shadow-card);">
                     <p data-i18n="report_empty">এখনও কোনো ব্যক্তিগত রিপোর্ট জমা হয়নি। পরীক্ষা সম্পন্ন করার পর এখানে রেকর্ড আপডেট হবে।</p>
                 </div>
             </div>
@@ -571,18 +637,18 @@
             <div id="view_deposit" style="display: none;">
                 <h2 data-i18n="deposit_title">💳 রিয়েল টুর্নামেন্ট ডিপোজিট ফর্ম</h2>
                 <p style="color: var(--text-muted); margin-bottom: 20px;" data-i18n="deposit_subtitle">রিয়েল ব্যালেন্স আনলক করতে নিচের অফিসিয়াল নাম্বারে সেন্ড মানি করুন।</p>
-                <div style="background:var(--bg-card); padding:22px; border-radius:12px; border:1px solid var(--border-color); max-width:600px;">
+                <div style="background:var(--bg-card); padding:22px; border-radius:12px; border:1px solid var(--border-color); max-width:600px; box-shadow:var(--shadow-card);">
                     <p><strong>বিকাশ (Personal):</strong> 01955375501</p>
                     <p><strong>নগদ (Personal):</strong> 01758871568</p>
                     <p><strong>রকেট (Personal):</strong> 01854550184-4</p>
                     <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
                     <div style="margin-bottom:12px;">
                         <label data-i18n="lbl_dep_phone">আপনার মোবাইল নাম্বার:</label>
-                        <input type="text" id="depPhone" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
+                        <input type="text" id="depPhone" style="width:100%; padding:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:6px; margin-top:5px;">
                     </div>
                     <div style="margin-bottom:12px;">
                         <label data-i18n="lbl_dep_trx">ট্রানজেকশন আইডি (TrxID):</label>
-                        <input type="text" id="depTrx" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
+                        <input type="text" id="depTrx" style="width:100%; padding:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:6px; margin-top:5px;">
                     </div>
                     <button class="btn-play" onclick="submitDeposit()" style="width:100%;" data-i18n="btn_submit_dep">ডিপোজিট সাবমিট করুন</button>
                 </div>
@@ -598,7 +664,7 @@
                 <div id="adminHistoryTable" style="margin-top:15px; overflow-x:auto;">
                     <table style="width:100%; border-collapse:collapse; text-align:left;">
                         <thead>
-                            <tr style="background:#1e293b; color:#93c5fd;">
+                            <tr style="background:var(--input-bg); color:var(--text-main);">
                                 <th style="padding:10px; border:1px solid var(--border-color);">User</th>
                                 <th style="padding:10px; border:1px solid var(--border-color);">Game</th>
                                 <th style="padding:10px; border:1px solid var(--border-color);">Score</th>
@@ -607,7 +673,7 @@
                             </tr>
                         </thead>
                         <tbody id="quizHistoryBody">
-                            <tr><td colspan="5" style="padding:15px; text-align:center;">এখনও কোনো কুইজ রেকর্ড নেই।</td></tr>
+                            <tr><td colspan="5" style="padding:15px; text-align:center;">No quiz records found.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -624,7 +690,7 @@
         
         <div style="margin-bottom: 15px;">
             <label style="color:var(--text-muted); font-size:0.9rem;" data-i18n="lbl_select_set">সেট নির্বাচন (Set):</label>
-            <select id="selSet" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
+            <select id="selSet" style="width:100%; padding:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:6px; margin-top:5px;">
                 <option value="1">Set 01 (Official 25-30 Questions)</option>
                 <option value="2">Set 02 (Comprehensive Practice Set)</option>
             </select>
@@ -632,7 +698,7 @@
 
         <div style="margin-bottom: 15px;">
             <label style="color:var(--text-muted); font-size:0.9rem;" data-i18n="lbl_select_level">লেভেল নির্বাচন (7 Tiers):</label>
-            <select id="selLevel" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
+            <select id="selLevel" style="width:100%; padding:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:6px; margin-top:5px;">
                 <option value="all">🌟 All Levels (Random Mix)</option>
                 <option value="primary">🔰 Primary Level</option>
                 <option value="basic1">📘 Basic Level 01</option>
@@ -646,7 +712,7 @@
 
         <div style="margin-bottom: 20px;">
             <label style="color:var(--text-muted); font-size:0.9rem;" data-i18n="lbl_select_mode">মোড নির্বাচন:</label>
-            <select id="selMode" style="width:100%; padding:10px; background:#101626; border:1px solid var(--border-color); color:#fff; border-radius:6px; margin-top:5px;">
+            <select id="selMode" style="width:100%; padding:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:6px; margin-top:5px;">
                 <option value="demo">🎮 Practice Demo Mode (Free)</option>
                 <option value="real">💰 Real Tournament Mode (Deposit Required)</option>
             </select>
@@ -664,7 +730,7 @@
         <button class="modal-close-btn" onclick="exitQuiz()">✕</button>
         <div class="quiz-timer-bar">
             <div>
-                <span id="quizGameTitle" style="font-weight:700; color:#60a5fa;">Game</span>
+                <span id="quizGameTitle" style="font-weight:700; color:#3b82f6;">Game</span>
                 <span id="quizProgress" style="font-size:0.85rem; color:var(--text-muted); margin-left:10px;">Q 1/25</span>
             </div>
             <div class="timer-badge">⏱️ <span id="timerSec">28</span>s</div>
@@ -672,7 +738,7 @@
 
         <div id="quizScoreBar" style="display:flex; justify-content:space-between; margin-bottom:15px; font-size:0.9rem;">
             <span><span data-i18n="lbl_score">স্কোর:</span> <strong id="curPoints" style="color:#38bdf8;">0 Pts</strong></span>
-            <span><span data-i18n="lbl_earnings">অর্জন:</span> <strong id="curTaka" style="color:#34d399;">৳0.00</strong></span>
+            <span><span data-i18n="lbl_earnings">অর্জন:</span> <strong id="curTaka" style="color:#10b981;">৳0.00</strong></span>
         </div>
 
         <div id="questionContainer">
@@ -682,7 +748,7 @@
         </div>
 
         <div id="quizResultView" style="display:none; text-align:center; padding:10px 0;">
-            <h3 style="color:#34d399; margin-bottom:8px;" data-i18n="res_title">🎉 গেম সমাপ্ত! আপনার রেজাল্ট কার্ড</h3>
+            <h3 style="color:#10b981; margin-bottom:8px;" data-i18n="res_title">🎉 গেম সমাপ্ত! আপনার রেজাল্ট কার্ড</h3>
             
             <div class="result-card-box">
                 <div class="result-stat-row">
@@ -691,15 +757,15 @@
                 </div>
                 <div class="result-stat-row">
                     <span data-i18n="res_correct">✅ সঠিক উত্তর (+৫ পয়েন্ট / +০.২৫৳):</span>
-                    <strong id="resCorrect" style="color:#34d399;">0</strong>
+                    <strong id="resCorrect" style="color:#10b981;">0</strong>
                 </div>
                 <div class="result-stat-row">
                     <span data-i18n="res_wrong">❌ ভুল উত্তর (-১০ পয়েন্ট / -০.৫০৳):</span>
-                    <strong id="resWrong" style="color:#f87171;">0</strong>
+                    <strong id="resWrong" style="color:#ef4444;">0</strong>
                 </div>
                 <div class="result-stat-row">
                     <span data-i18n="res_timeout">⏱️ টাইমআউট (২৮ সে.):</span>
-                    <strong id="resTimeout" style="color:#fbbf24;">0</strong>
+                    <strong id="resTimeout" style="color:#d97706;">0</strong>
                 </div>
                 <div class="result-stat-row" style="font-size:1.05rem; padding-top:12px; border-top:1px dashed var(--border-color);">
                     <span data-i18n="res_net_pts">🎯 এই খেলায় অর্জিত মোট পয়েন্ট:</span>
@@ -707,28 +773,49 @@
                 </div>
                 <div class="result-stat-row" style="font-size:1.05rem;">
                     <span data-i18n="res_net_taka">💰 এই খেলায় অর্জিত টাকা:</span>
-                    <strong id="resNetTaka" style="color:#34d399;">৳0.00</strong>
+                    <strong id="resNetTaka" style="color:#10b981;">৳0.00</strong>
                 </div>
-                <div class="result-stat-row" style="font-size:1.1rem; background:#1e293b; padding:10px; border-radius:8px; margin-top:8px;">
+                <div class="result-stat-row" style="font-size:1.1rem; background:rgba(245, 158, 11, 0.1); padding:10px; border-radius:8px; margin-top:8px;">
                     <span data-i18n="res_current_total">🏆 আপনার বর্তমান ব্যালেন্স:</span>
-                    <strong id="resCurrentTotal" style="color:#f59e0b;">0 Pts</strong>
+                    <strong id="resCurrentTotal" style="color:#d97706;">0 Pts</strong>
                 </div>
             </div>
 
-            <div style="background: #1e1b4b; border: 1px solid #4338ca; padding: 18px; border-radius: 12px; margin-bottom: 18px;">
-                <h4 style="color: #c7d2fe; margin-bottom: 8px;" data-i18n="prompt_play_next">❓ আপনি কি পরবর্তী গেম খেলতে চান?</h4>
-                <p id="nextGameBalanceNotice" style="font-size: 0.85rem; color: #a5b4fc; margin-bottom: 14px;">
+            <div style="background: rgba(79, 70, 229, 0.15); border: 1px solid #4338ca; padding: 18px; border-radius: 12px; margin-bottom: 18px;">
+                <h4 style="color: var(--text-main); margin-bottom: 8px;" data-i18n="prompt_play_next">❓ আপনি কি পরবর্তী গেম খেলতে চান?</h4>
+                <p id="nextGameBalanceNotice" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px;">
                     ব্যালেন্স চেক করা হচ্ছে...
                 </p>
                 <div id="nextGameActionButtons" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;"></div>
             </div>
 
-            <button class="btn-play" onclick="exitQuiz()" style="margin: 0 auto; background: #374151;" data-i18n="btn_return_arena">🏠 গেম এরিনায় ফিরুন</button>
+            <button class="btn-play" onclick="exitQuiz()" style="margin: 0 auto; background: #64748b;" data-i18n="btn_return_arena">🏠 গেম এরিনায় ফিরুন</button>
         </div>
     </div>
 </div>
 
 <script>
+// --- THEME SYSTEM (Dark Mode <-> Light Mode) ---
+let currentTheme = localStorage.getItem('edu_theme') || 'dark';
+
+function applyTheme() {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    const themeBtn = document.getElementById('themeBtnText');
+    if (themeBtn) {
+        if (currentLang === 'bn') {
+            themeBtn.innerText = currentTheme === 'dark' ? '🌙 ডার্ক' : '☀️ লাইট';
+        } else {
+            themeBtn.innerText = currentTheme === 'dark' ? '🌙 Dark' : '☀️ Light';
+        }
+    }
+}
+
+function toggleTheme() {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('edu_theme', currentTheme);
+    applyTheme();
+}
+
 // --- BILINGUAL DICTIONARY (Bangla <-> English) ---
 const TRANSLATIONS = {
     bn: {
@@ -874,7 +961,8 @@ function applyLanguage() {
         }
     });
 
-    document.getElementById('langBtnText').innerText = currentLang === 'bn' ? '🌐 বাংলা (BN)' : '🌐 English (EN)';
+    document.getElementById('langBtnText').innerText = currentLang === 'bn' ? 'বাংলা (BN)' : 'English (EN)';
+    applyTheme();
     renderArenaCards();
 }
 
@@ -958,7 +1046,7 @@ function resetUserLimitsForDemo() {
         '✅ Your account has been updated successfully!\nAll game quotas have been reset (1 per 4h & 3 times total).'
     );
     document.getElementById('portalAccountTier').innerText = "Premium Updated (Active)";
-    document.getElementById('portalAccountTier').style.color = "#34d399";
+    document.getElementById('portalAccountTier').style.color = "#10b981";
 }
 
 // --- All 10 Games Meta List ---
@@ -992,12 +1080,12 @@ function renderArenaCards() {
         let btnDisabledClass = '';
         if (check.reason === 'exhausted') {
             tagHtml = currentLang === 'bn' ? 
-                `<span class="play-limit-tag tag-exhausted">🔒 ৩/৩ লিমিট শেষ (আপডেট করুন)</span>` :
-                `<span class="play-limit-tag tag-exhausted">🔒 3/3 Limit Reached (Update)</span>`;
+                `<span class="play-limit-tag tag-exhausted">🔒 ৩/৩ লিমিট শেষ</span>` :
+                `<span class="play-limit-tag tag-exhausted">🔒 3/3 Limit Reached</span>`;
             btnDisabledClass = 'disabled';
         } else if (check.reason === 'cooldown') {
             tagHtml = currentLang === 'bn' ? 
-                `<span class="play-limit-tag tag-cooldown">⏳ ৪ ঘণ্টার কুলডাউন</span>` :
+                `<span class="play-limit-tag tag-cooldown">⏳ ৪ ঘণ্টা কুলডাউন</span>` :
                 `<span class="play-limit-tag tag-cooldown">⏳ 4h Cooldown</span>`;
             btnDisabledClass = 'disabled';
         }
@@ -1009,7 +1097,7 @@ function renderArenaCards() {
                         <span class="card-header-badge">${g.category}</span>
                         ${tagHtml}
                     </div>
-                    <h3 style="margin: 10px 0 4px 0;">${g.title}</h3>
+                    <h3 style="margin: 10px 0 4px 0; color:var(--text-main);">${g.title}</h3>
                     <p style="color: var(--text-muted); font-size: 0.85rem;">${g.desc}</p>
                 </div>
                 <button class="btn-play ${btnDisabledClass}" onclick="tryPlayGame('${g.title}', '${g.key}')">${btnLabel}</button>
@@ -1141,7 +1229,7 @@ function renderGlobalLeaderboard(list) {
                 <td>${item.district}</td>
                 <td>${item.level}</td>
                 <td style="color:#38bdf8; font-weight:600;">${item.points}</td>
-                <td style="color:#34d399; font-weight:600;">${item.taka}</td>
+                <td style="color:#10b981; font-weight:600;">${item.taka}</td>
                 <td><span style="color:#10b981;">● ${item.status}</span></td>
             </tr>
         `;
@@ -1572,7 +1660,7 @@ function renderAdminHistory() {
             <td style="padding:10px; border:1px solid var(--border-color);">${item.user}</td>
             <td style="padding:10px; border:1px solid var(--border-color);">${item.game}</td>
             <td style="padding:10px; border:1px solid var(--border-color); font-weight:600; color:#38bdf8;">${item.score}</td>
-            <td style="padding:10px; border:1px solid var(--border-color); font-weight:600; color:#34d399;">৳${item.taka}</td>
+            <td style="padding:10px; border:1px solid var(--border-color); font-weight:600; color:#10b981;">৳${item.taka}</td>
             <td style="padding:10px; border:1px solid var(--border-color);">${item.date}</td>
         </tr>
     `).join('');
@@ -1600,6 +1688,7 @@ function downloadQuizReportCSV() {
 }
 
 window.onload = function() {
+    applyTheme();
     applyLanguage();
     renderGlobalLeaderboard();
     renderArenaCards();
