@@ -212,7 +212,7 @@
             border: 1px solid var(--border-color);
         }
 
-        .btn-logout {
+        .btn-auth-toggle {
             background: #ef4444 !important;
             border-color: #dc2626 !important;
             color: #fff !important;
@@ -301,6 +301,43 @@
             background-color: var(--primary-hover);
         }
 
+        /* Login Card */
+        .login-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 15px;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 35px;
+            width: 100%;
+            max-width: 460px;
+            box-shadow: var(--shadow-card);
+            text-align: center;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            margin-top: 6px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .login-input:focus {
+            border-color: var(--primary);
+        }
+
+        /* Leaderboard Table */
         .leaderboard-table {
             width: 100%;
             border-collapse: collapse;
@@ -344,6 +381,7 @@
         .rank-3 { background: #b45309; color: #fff; }
         .rank-other { background: var(--input-bg); color: var(--text-muted); }
 
+        /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -517,7 +555,7 @@
             <li class="nav-item" id="nav_report" onclick="switchView('my_report')">📊 <span data-i18n="nav_report">My Report</span></li>
             <li class="nav-item" id="nav_deposit" onclick="switchView('deposit_view')">💳 <span data-i18n="nav_deposit">Deposit / Payment</span></li>
             <li class="nav-item" id="nav_admin" onclick="switchView('admin_panel')">🛡️ <span data-i18n="nav_admin">Admin Panel</span></li>
-            <li class="nav-item" style="color:#ef4444;" onclick="handleUserLogout()">🚪 <span data-i18n="btn_logout">লগআউট (Logout)</span></li>
+            <li class="nav-item" id="nav_logout_item" style="color:#ef4444;" onclick="handleUserLogout()">🚪 <span data-i18n="btn_logout">লগআউট (Logout)</span></li>
         </ul>
         <div style="padding: 15px 20px; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
             <div><strong>Admin:</strong> Anwar</div>
@@ -536,11 +574,11 @@
                 <button class="top-action-btn theme-toggle-btn" onclick="toggleTheme()">
                     <span id="themeBtnText">🌙 Dark</span>
                 </button>
-                <button class="top-action-btn btn-logout" onclick="handleUserLogout()">
-                    🚪 <span data-i18n="btn_logout">Logout</span>
+                <button class="top-action-btn btn-auth-toggle" id="topAuthBtn" onclick="toggleAuthAction()">
+                    🚪 <span id="authBtnLabel">Logout</span>
                 </button>
             </div>
-            <div class="wallet-badges">
+            <div class="wallet-badges" id="topWalletBadges">
                 <span class="bot-shield-pill" data-i18n="bot_shield_badge">⚡ নো কুলডাউন / আনলিমিটেড প্র্যাকটিস</span>
                 <div class="wallet-pill">🎮 Demo: <span id="demoPoints" style="color:#60a5fa;">10,000 Pts</span></div>
                 <div class="wallet-pill">💰 Real: <span id="realBalance" style="color:#10b981;">৳00.00</span></div>
@@ -548,6 +586,35 @@
         </header>
 
         <section class="content-area">
+            <!-- View: Login Screen (Shown when logged out) -->
+            <div id="view_login" style="display: none;">
+                <div class="login-wrapper">
+                    <div class="login-card">
+                        <div style="font-size: 2.2rem; margin-bottom: 8px;">⚡</div>
+                        <h2 style="margin-bottom: 6px;" data-i18n="login_title">EDU GAME FOR ALL</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;" data-i18n="login_subtitle">
+                            শিক্ষার্থী ও প্রতিযোগী সাইন-ইন গেটওয়ে
+                        </p>
+                        
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; padding: 10px 14px; border-radius: 8px; margin-bottom: 20px; font-size: 0.88rem; color: #10b981;">
+                            🎁 <strong>ওয়েলকাম বোনাস:</strong> সাইন-ইন করলেই তাৎক্ষণিক ১০,০০০ ডেমো পয়েন্ট!
+                        </div>
+
+                        <div style="text-align: left;">
+                            <label style="font-size: 0.85rem; color: var(--text-muted);" data-i18n="lbl_dep_phone">আপনার মোবাইল নাম্বার:</label>
+                            <input type="text" id="loginPhone" class="login-input" placeholder="017XXXXXXXX" value="01712345678">
+
+                            <label style="font-size: 0.85rem; color: var(--text-muted);">পাসওয়ার্ড / পিন (PIN):</label>
+                            <input type="password" id="loginPass" class="login-input" placeholder="••••••••" value="123456">
+                        </div>
+
+                        <button class="btn-play" onclick="handleUserLogin()" style="width: 100%; padding: 12px; font-size: 1rem; margin-top: 5px;">
+                            🚀 সাইন-ইন করে খেলা শুরু করুন (10,000 Pts)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- View: Game Arena -->
             <div id="view_game_arena">
                 <div style="margin-bottom: 20px;">
@@ -599,7 +666,7 @@
                     <p><strong>Demo Bonus Points:</strong> <span style="color:#60a5fa; font-weight:700;">10,000 Pts (Granted)</span></p>
                     <p><strong data-i18n="lbl_cand_tier">Account Tier:</strong> <span id="portalAccountTier" style="color:#10b981; font-weight:700;">Active Standard (Unlimited Play)</span></p>
                     <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
-                    <button class="btn-play btn-logout" onclick="handleUserLogout()" style="width:100%;">🚪 সাইন আউট / লগআউট করুন</button>
+                    <button class="btn-play" onclick="handleUserLogout()" style="width:100%; background:#ef4444;">🚪 সাইন আউট / লগআউট করুন</button>
                 </div>
             </div>
 
@@ -772,6 +839,74 @@
 </div>
 
 <script>
+// --- AUTHENTICATION & LOGIN/LOGOUT STATE ---
+let isAuthenticated = localStorage.getItem('edu_user_logged_in') !== 'false'; // Default logged in
+
+function updateAuthUI() {
+    const authBtn = document.getElementById('topAuthBtn');
+    const authLabel = document.getElementById('authBtnLabel');
+    const navLogout = document.getElementById('nav_logout_item');
+
+    if (!isAuthenticated) {
+        // User is logged out
+        authBtn.style.background = '#10b981';
+        authBtn.style.borderColor = '#059669';
+        authLabel.innerText = currentLang === 'bn' ? '🔑 লগইন' : '🔑 Login';
+        if (navLogout) navLogout.style.display = 'none';
+
+        // Hide app views and show login view
+        const allViews = ['game_arena', 'global_position', 'user_portal', 'my_report', 'deposit', 'admin'];
+        allViews.forEach(v => {
+            const el = document.getElementById('view_' + v);
+            if (el) el.style.display = 'none';
+        });
+        document.getElementById('view_login').style.display = 'block';
+    } else {
+        // User is logged in
+        authBtn.style.background = '#ef4444';
+        authBtn.style.borderColor = '#dc2626';
+        authLabel.innerText = currentLang === 'bn' ? '🚪 লগআউট' : '🚪 Logout';
+        if (navLogout) navLogout.style.display = 'flex';
+
+        document.getElementById('view_login').style.display = 'none';
+        document.getElementById('view_game_arena').style.display = 'block';
+        document.getElementById('nav_arena').classList.add('active');
+        renderArenaCards();
+    }
+}
+
+function handleUserLogin() {
+    isAuthenticated = true;
+    localStorage.setItem('edu_user_logged_in', 'true');
+    initDemoPoints();
+    updateAuthUI();
+    alert(currentLang === 'bn' ? 
+        '✅ সফলভাবে সাইন-ইন সম্পন্ন হয়েছে! ১০,০০০ ডেমো পয়েন্ট আপনার অ্যাকাউন্টে প্রস্তুত।' : 
+        '✅ Logged in successfully! 10,000 Demo Points are ready in your account.'
+    );
+}
+
+function handleUserLogout() {
+    const confirmMsg = currentLang === 'bn' ? 
+        'আপনি কি নিশ্চিতভাবে প্ল্যাটফর্ম থেকে লগআউট করতে চান?' : 
+        'Are you sure you want to log out from the platform?';
+    if (confirm(confirmMsg)) {
+        isAuthenticated = false;
+        localStorage.setItem('edu_user_logged_in', 'false');
+        updateAuthUI();
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('backdrop').classList.remove('active');
+    }
+}
+
+function toggleAuthAction() {
+    if (isAuthenticated) {
+        handleUserLogout();
+    } else {
+        handleUserLogin();
+    }
+}
+
 // --- DEMO POINTS (10,000 PTS FOR ALL USERS) ---
 function initDemoPoints() {
     let pts = localStorage.getItem('edu_demo_points');
@@ -780,19 +915,6 @@ function initDemoPoints() {
         localStorage.setItem('edu_demo_points', pts);
     }
     document.getElementById('demoPoints').innerText = parseInt(pts).toLocaleString() + " Pts";
-}
-
-function handleUserLogout() {
-    const msg = currentLang === 'bn' ? 
-        "আপনি কি নিশ্চিতভাবে লগআউট করতে চান?" : 
-        "Are you sure you want to log out?";
-    if (confirm(msg)) {
-        alert(currentLang === 'bn' ? 
-            "✅ সফলভাবে লগআউট সম্পন্ন হয়েছে!" : 
-            "✅ Logged out successfully!"
-        );
-        switchView('game_arena');
-    }
 }
 
 // --- THEME SYSTEM ---
@@ -873,7 +995,9 @@ const TRANSLATIONS = {
         res_current_total: "🏆 আপনার বর্তমান ব্যালেন্স:",
         prompt_play_next: "❓ আপনি কি পরবর্তী গেম খেলতে চান?",
         btn_return_arena: "🏠 গেম এরিনায় ফিরুন",
-        btn_logout: "লগআউট"
+        btn_logout: "লগআউট",
+        login_title: "EDU GAME FOR ALL",
+        login_subtitle: "শিক্ষার্থী ও প্রতিযোগী সাইন-ইন গেটওয়ে"
     },
     en: {
         nav_games_section: "Games Arena",
@@ -932,7 +1056,9 @@ const TRANSLATIONS = {
         res_current_total: "🏆 Your Updated Balance:",
         prompt_play_next: "❓ Do you want to play the next game?",
         btn_return_arena: "🏠 Return to Game Arena",
-        btn_logout: "Logout"
+        btn_logout: "Logout",
+        login_title: "EDU GAME FOR ALL",
+        login_subtitle: "Student & Candidate Sign-In Gateway"
     }
 };
 
@@ -947,7 +1073,7 @@ function applyLanguage() {
 
     document.getElementById('langBtnText').innerText = currentLang === 'bn' ? 'বাংলা (BN)' : 'English (EN)';
     applyTheme();
-    renderArenaCards();
+    updateAuthUI();
 }
 
 function toggleLanguage() {
@@ -1121,7 +1247,12 @@ function toggleSidebar() {
 }
 
 function switchView(viewName) {
-    const allViews = ['game_arena', 'global_position', 'user_portal', 'my_report', 'deposit', 'admin'];
+    if (!isAuthenticated && viewName !== 'login') {
+        updateAuthUI();
+        return;
+    }
+
+    const allViews = ['game_arena', 'global_position', 'user_portal', 'my_report', 'deposit', 'admin', 'login'];
     allViews.forEach(v => {
         const el = document.getElementById('view_' + v);
         if (el) el.style.display = 'none';
@@ -1614,7 +1745,7 @@ window.onload = function() {
     applyTheme();
     applyLanguage();
     renderGlobalLeaderboard();
-    renderArenaCards();
+    updateAuthUI();
 };
 </script>
 </body>
