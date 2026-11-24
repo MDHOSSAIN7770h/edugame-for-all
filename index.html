@@ -1,1752 +1,1561 @@
 ﻿<!DOCTYPE html>
-<html lang="bn" data-theme="dark">
+<html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>EDU GAME FOR ALL - OFFICIAL WORKSPACE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0b0f19;
-            --bg-card: #151b2b;
-            --sidebar-bg: #101626;
-            --primary: #3b82f6;
-            --primary-hover: #2563eb;
-            --accent: #f59e0b;
-            --accent-green: #10b981;
-            --accent-red: #ef4444;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --border-color: #242f48;
-            --input-bg: #101626;
-            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EDU GAME FOR ALL - OFFICIAL WORKSPACE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-body: #070b19;
+      --bg-card: rgba(15, 23, 42, 0.88);
+      --border-glow: rgba(0, 242, 254, 0.35);
+      --neon-cyan: #00f2fe;
+      --neon-green: #00ff87;
+      --bright-red: #ff3b5c;
+      --gold: #ffd700;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --sidebar-bg: #0b1126;
+      --sidebar-border: rgba(255, 255, 255, 0.08);
+      --topbar-bg: rgba(11, 17, 38, 0.95);
+      --btn-bg: rgba(30, 41, 59, 0.7);
+    }
 
-        [data-theme="light"] {
-            --bg-dark: #f8fafc;
-            --bg-card: #ffffff;
-            --sidebar-bg: #ffffff;
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --accent: #d97706;
-            --accent-green: #059669;
-            --accent-red: #dc2626;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --input-bg: #f1f5f9;
-            --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
+    [data-theme="light"] {
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --border-glow: rgba(2, 132, 199, 0.3);
+      --neon-cyan: #0284c7;
+      --neon-green: #10b981;
+      --bright-red: #ef4444;
+      --gold: #d97706;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --sidebar-bg: #ffffff;
+      --sidebar-border: rgba(0, 0, 0, 0.08);
+      --topbar-bg: rgba(255, 255, 255, 0.95);
+      --btn-bg: #e2e8f0;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
+    body {
+      font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+      background: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
 
-        body {
-            font-family: 'Poppins', 'Hind Siliguri', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+    /* TOPBAR */
+    .topbar {
+      height: 65px;
+      background: var(--topbar-bg);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--sidebar-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .brand { font-size: 1.25rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .topbar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .badge {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-unlimited { background: rgba(0, 255, 135, 0.15); border: 1px solid rgba(0, 255, 135, 0.3); color: var(--neon-green); }
+    .badge-demo { background: rgba(0, 242, 254, 0.12); border: 1px solid var(--border-glow); color: var(--neon-cyan); }
+    .badge-real { background: rgba(255, 215, 0, 0.15); border: 1px solid rgba(255, 215, 0, 0.3); color: var(--gold); }
+    .btn-toggle {
+      background: var(--btn-bg);
+      border: 1px solid var(--sidebar-border);
+      color: var(--text-main);
+      padding: 5px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-logout { background: rgba(255, 59, 92, 0.2); border-color: var(--bright-red); color: #ff6b81; }
 
-        .app-container {
-            display: flex;
-            min-height: 100vh;
-            position: relative;
-        }
+    /* LAYOUT */
+    .app-layout { display: flex; flex: 1; }
+    .sidebar {
+      width: 280px;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--sidebar-border);
+      padding: 20px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      overflow-y: auto;
+    }
+    .sidebar-heading {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      padding: 8px 12px;
+      margin-top: 10px;
+    }
+    .nav-btn {
+      width: 100%;
+      text-align: left;
+      padding: 9px 12px;
+      border-radius: 8px;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover, .nav-btn.active {
+      background: rgba(0, 242, 254, 0.12);
+      color: var(--neon-cyan);
+      border-left: 3px solid var(--neon-cyan);
+    }
+    .nav-btn.health-btn {
+      color: var(--neon-green);
+      font-weight: 700;
+      background: rgba(0, 255, 135, 0.1);
+      border: 1px solid rgba(0, 255, 135, 0.3);
+    }
 
-        .sidebar {
-            width: 290px;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            z-index: 1000;
-            transition: transform 0.3s ease;
-        }
+    /* DROPDOWNS */
+    .dropdown-container {
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 3px;
+    }
+    .dropdown-trigger {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .dropdown-arrow {
+      font-size: 0.8rem;
+      transition: transform 0.25s ease;
+    }
+    .dropdown-menu {
+      display: none;
+      padding: 4px 6px 6px 18px;
+      flex-direction: column;
+      gap: 3px;
+      border-left: 2px solid var(--neon-cyan);
+      margin-left: 14px;
+      margin-bottom: 6px;
+    }
+    .dropdown-menu.open {
+      display: flex;
+    }
+    .dropdown-sub-btn {
+      padding: 7px 10px;
+      font-size: 0.86rem;
+      border-radius: 6px;
+      color: var(--text-muted);
+    }
+    .dropdown-sub-btn:hover {
+      color: var(--neon-cyan);
+      background: rgba(0, 242, 254, 0.1);
+    }
 
-        .sidebar-header {
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-        }
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 12px;
+      border-top: 1px solid var(--sidebar-border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
 
-        .brand-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    /* MAIN CONTENT */
+    .main-view { flex: 1; padding: 25px 30px; max-width: 1400px; margin: 0 auto; width: 100%; }
+    .arena-header { margin-bottom: 24px; }
+    .arena-header h1 { font-size: 1.65rem; color: #ffffff; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+    .arena-header p { color: var(--text-muted); font-size: 0.95rem; }
 
-        .close-drawer-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
+    /* GAMES GRID */
+    .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+    .game-card {
+      background: var(--bg-card);
+      border: 1px solid var(--sidebar-border);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+    .game-card:hover { transform: translateY(-3px); border-color: var(--border-glow); box-shadow: 0 8px 30px rgba(0, 242, 254, 0.15); }
+    .game-card.health-card {
+      border: 1px solid rgba(0, 255, 135, 0.45);
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.95), rgba(7, 28, 20, 0.8));
+    }
+    .tag-category {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(0, 242, 254, 0.15);
+      color: var(--neon-cyan);
+      margin-bottom: 12px;
+    }
+    .tag-health { background: rgba(0, 255, 135, 0.2); color: var(--neon-green); border: 1px solid var(--neon-green); }
+    .game-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
+    .game-desc { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 18px; line-height: 1.5; }
+    .btn-play {
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      border: none;
+      color: #070b19;
+      font-weight: 700;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: opacity 0.2s ease;
+    }
+    .btn-play:hover { opacity: 0.9; }
+    .btn-play-health {
+      background: linear-gradient(135deg, #00ff87, #60efff);
+      color: #05140d;
+    }
 
-        .nav-menu {
-            list-style: none;
-            padding: 15px 10px;
-            flex: 1;
-            overflow-y: auto;
-        }
+    /* QUIZ VIEW */
+    .quiz-view { display: none; max-width: 900px; margin: 0 auto; }
+    .quiz-header {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 14px;
+      padding: 18px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+    .timer-badge {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold);
+      background: rgba(255, 215, 0, 0.15);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      padding: 6px 16px;
+      border-radius: 10px;
+    }
+    .quiz-card {
+      background: var(--bg-card);
+      border: 1px solid var(--sidebar-border);
+      border-radius: 16px;
+      padding: 26px;
+      margin-bottom: 20px;
+    }
+    .question-title { font-size: 1.22rem; font-weight: 600; margin-bottom: 20px; line-height: 1.6; }
+    .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 640px) { .options-grid { grid-template-columns: 1fr 1fr; } }
+    .opt-btn {
+      background: var(--btn-bg);
+      border: 1px solid var(--sidebar-border);
+      color: var(--text-main);
+      padding: 14px 18px;
+      border-radius: 10px;
+      text-align: left;
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+    .opt-btn:hover:not(:disabled) {
+      border-color: var(--neon-cyan);
+      background: rgba(0, 242, 254, 0.15);
+      transform: translateX(4px);
+    }
+    .opt-btn.correct { background: rgba(0, 255, 135, 0.22) !important; border-color: var(--neon-green) !important; color: #fff; }
+    .opt-btn.wrong { background: rgba(255, 59, 92, 0.22) !important; border-color: var(--bright-red) !important; color: #fff; }
+    .opt-prefix {
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--gold);
+    }
 
-        .nav-item {
-            padding: 10px 14px;
-            border-radius: 8px;
-            margin-bottom: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            transition: 0.2s;
-        }
+    /* NEXT QUESTION BUTTON BAR */
+    .quiz-action-bar {
+      margin-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--sidebar-border);
+    }
+    .quiz-hint-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .btn-next-question {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid var(--sidebar-border);
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 11px 26px;
+      border-radius: 10px;
+      cursor: not-allowed;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+    .btn-next-question.active-ready {
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      border-color: var(--neon-cyan);
+      color: #070b19;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0, 242, 254, 0.35);
+      transform: translateY(-2px);
+    }
+    .btn-next-question.active-ready:hover {
+      box-shadow: 0 6px 24px rgba(0, 242, 254, 0.5);
+      transform: translateY(-3px);
+    }
 
-        .nav-item:hover, .nav-item.active {
-            background-color: var(--primary);
-            color: #fff !important;
-            font-weight: 600;
-        }
+    /* SCORECARD MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 18px;
+      max-width: 480px;
+      width: 100%;
+      padding: 30px;
+      text-align: center;
+    }
+    .modal-card h2 { font-size: 1.8rem; color: var(--gold); margin-bottom: 12px; }
+    .score-stats { margin: 20px 0; display: flex; flex-direction: column; gap: 8px; font-size: 1.05rem; }
+    .stat-row { display: flex; justify-content: space-between; padding: 8px 12px; border-radius: 8px; background: rgba(255, 255, 255, 0.05); }
 
-        .nav-divider {
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            padding: 10px 14px 4px 14px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .main-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
-
-        .topbar {
-            background-color: var(--sidebar-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 8px 14px;
-            border-radius: 6px;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        .wallet-badges {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .wallet-pill {
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-main);
-        }
-
-        .top-action-btn {
-            background: var(--primary);
-            color: #fff;
-            border: 1px solid var(--border-color);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: 0.2s;
-        }
-
-        .top-action-btn:hover {
-            opacity: 0.9;
-            transform: scale(1.03);
-        }
-
-        .theme-toggle-btn {
-            background: var(--input-bg);
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-auth-toggle {
-            background: #ef4444 !important;
-            border-color: #dc2626 !important;
-            color: #fff !important;
-        }
-
-        .bot-shield-pill {
-            background: #064e3b;
-            border: 1px solid #10b981;
-            color: #34d399;
-            padding: 5px 12px;
-            border-radius: 12px;
-            font-size: 0.78rem;
-            font-weight: 600;
-        }
-
-        [data-theme="light"] .bot-shield-pill {
-            background: #d1fae5;
-            border: 1px solid #059669;
-            color: #065f46;
-        }
-
-        .content-area {
-            padding: 24px;
-            flex: 1;
-        }
-
-        .grid-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-            gap: 18px;
-            margin-top: 15px;
-        }
-
-        .game-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 12px;
-            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-            position: relative;
-            box-shadow: var(--shadow-card);
-        }
-
-        .game-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .card-header-badge {
-            display: inline-block;
-            background: #23314f;
-            color: #60a5fa;
-            font-size: 0.78rem;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 6px;
-            align-self: flex-start;
-        }
-
-        [data-theme="light"] .card-header-badge {
-            background: #eff6ff;
-            color: #1d4ed8;
-            border: 1px solid #bfdbfe;
-        }
-
-        .btn-play {
-            background-color: var(--primary);
-            color: #fff;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: 0.2s;
-        }
-
-        .btn-play:hover {
-            background-color: var(--primary-hover);
-        }
-
-        /* Login Card */
-        .login-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 15px;
-        }
-
-        .login-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 35px;
-            width: 100%;
-            max-width: 460px;
-            box-shadow: var(--shadow-card);
-            text-align: center;
-        }
-
-        .login-input {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            margin-top: 6px;
-            margin-bottom: 15px;
-            outline: none;
-        }
-
-        .login-input:focus {
-            border-color: var(--primary);
-        }
-
-        /* Leaderboard Table */
-        .leaderboard-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            background: var(--bg-card);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-card);
-        }
-
-        .leaderboard-table th {
-            background: var(--input-bg);
-            color: var(--text-main);
-            padding: 14px;
-            text-align: left;
-            font-size: 0.92rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .leaderboard-table td {
-            padding: 12px 14px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.9rem;
-            color: var(--text-main);
-        }
-
-        .leaderboard-table tr:hover { background: var(--input-bg); }
-
-        .rank-badge {
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 6px;
-            display: inline-block;
-            text-align: center;
-            min-width: 32px;
-        }
-
-        .rank-1 { background: #eab308; color: #000; }
-        .rank-2 { background: #94a3b8; color: #000; }
-        .rank-3 { background: #b45309; color: #fff; }
-        .rank-other { background: var(--input-bg); color: var(--text-muted); }
-
-        /* Modal Overlay */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.75);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            padding: 15px;
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            width: 100%;
-            max-width: 680px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 25px;
-            position: relative;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            color: var(--text-main);
-        }
-
-        .modal-close-btn {
-            position: absolute;
-            top: 15px; right: 18px;
-            background: none; border: none;
-            color: var(--text-muted);
-            font-size: 1.4rem; cursor: pointer;
-        }
-
-        .quiz-timer-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--input-bg);
-            padding: 12px 18px;
-            border-radius: 10px;
-            margin-bottom: 18px;
-            border: 1px solid var(--border-color);
-        }
-
-        .timer-badge {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #d97706;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(245, 158, 11, 0.15);
-            padding: 4px 12px;
-            border-radius: 8px;
-            border: 1px solid var(--accent);
-        }
-
-        .option-item {
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            padding: 14px 18px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1rem;
-            color: var(--text-main);
-        }
-
-        .option-item:hover {
-            border-color: var(--primary);
-            background: rgba(59, 130, 246, 0.1);
-        }
-
-        .option-item.correct {
-            background: #064e3b !important;
-            border-color: var(--accent-green) !important;
-            color: #34d399 !important;
-        }
-
-        [data-theme="light"] .option-item.correct {
-            background: #d1fae5 !important;
-            border-color: #059669 !important;
-            color: #065f46 !important;
-            font-weight: 600;
-        }
-
-        .option-item.wrong {
-            background: #7f1d1d !important;
-            border-color: var(--accent-red) !important;
-            color: #f87171 !important;
-        }
-
-        [data-theme="light"] .option-item.wrong {
-            background: #fee2e2 !important;
-            border-color: #dc2626 !important;
-            color: #991b1b !important;
-            font-weight: 600;
-        }
-
-        .result-card-box {
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 18px 0;
-            text-align: left;
-        }
-
-        .result-stat-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.95rem;
-        }
-
-        .result-stat-row:last-child {
-            border-bottom: none;
-        }
-
-        .mobile-backdrop {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 999;
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn { display: block; }
-            .close-drawer-btn { display: block; }
-            .sidebar {
-                position: fixed;
-                top: 0; left: 0; bottom: 0;
-                transform: translateX(-100%);
-            }
-            .sidebar.open { transform: translateX(0); }
-            .mobile-backdrop.active { display: block; }
-        }
-    </style>
+    /* AUTH LOGIN */
+    .auth-view { display: none; max-width: 420px; margin: 60px auto; }
+    .auth-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 18px;
+      padding: 32px;
+      text-align: center;
+    }
+    .auth-card h2 { color: var(--gold); margin-bottom: 10px; }
+    .auth-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px; }
+    .auth-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: inherit;
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      color: #070b19;
+    }
+  </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
-<div class="mobile-backdrop" id="backdrop" onclick="toggleSidebar()"></div>
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="brand" onclick="navigate('arena')">
+      ⚡ <span id="txt_platform_title">EDU GAME FOR ALL</span>
+    </div>
+    <div class="topbar-right">
+      <button class="btn-toggle" onclick="toggleLanguage()">
+        🌐 <span id="lbl_lang">বাংলা (BN)</span>
+      </button>
+      <button class="btn-toggle" onclick="toggleTheme()">
+        🌙 <span id="lbl_theme">ডার্ক</span>
+      </button>
+      <button class="btn-toggle btn-logout" onclick="handleLogout()" id="btn_auth_state">
+        🚪 <span id="lbl_logout">লগআউট</span>
+      </button>
+      <div class="badge badge-unlimited">⚡ <span>নো কুলডাউন / আনলিমিটেড প্র্যাকটিস</span></div>
+      <div class="badge badge-demo">🎮 Demo: <span id="txt_points">10,000</span> Pts</div>
+      <div class="badge badge-real">💰 Real: ৳00.00</div>
+    </div>
+  </header>
 
-<div class="app-container">
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="brand-title">⚡ EDU GAME FOR ALL</div>
-            <button class="close-drawer-btn" onclick="toggleSidebar()">✕</button>
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-heading" id="lbl_menu_games">গেমস অ্যারিনা</div>
+      <button class="nav-btn active" onclick="navigate('arena')">🎯 <span id="lbl_nav_all">সকল গেম অ্যারিনা</span></button>
+      
+      <!-- HEALTH SECTOR -->
+      <button class="nav-btn health-btn" onclick="startGame('health', 'set1')">🩺 <span id="lbl_nav_health">Health (Set 01)</span></button>
+
+      <!-- JOB PREPARATION DROPDOWN ACCORDION -->
+      <div class="dropdown-container">
+        <button class="nav-btn dropdown-trigger" onclick="toggleDropdown('job_dropdown_menu', 'job_arrow')">
+          <span>📚 <span id="lbl_nav_job">Job Preparation</span></span>
+          <span class="dropdown-arrow" id="job_arrow">▾</span>
+        </button>
+        <div class="dropdown-menu" id="job_dropdown_menu">
+          <button class="nav-btn dropdown-sub-btn" onclick="startGame('bcs', 'default')">🏛️ <span>BCS</span></button>
+          <button class="nav-btn dropdown-sub-btn" onclick="startGame('bankjob', 'default')">🏦 <span>Bank Job</span></button>
+          <button class="nav-btn dropdown-sub-btn" onclick="startGame('job_others', 'default')">📁 <span>Others</span></button>
         </div>
-        <ul class="nav-menu">
-            <div class="nav-divider" data-i18n="nav_games_section">Games Arena</div>
-            <li class="nav-item active" id="nav_arena" onclick="switchView('game_arena')">🎮 <span data-i18n="nav_all_games">All Games Arena</span></li>
-            <li class="nav-item" id="nav_bcs" onclick="openGameSelection('Job Preparation Arena (BCS & Govt)', 'bcs')">🏛️ <span data-i18n="game_bcs">Job Preparation Arena</span></li>
-            <li class="nav-item" id="nav_grammar" onclick="openGameSelection('Basic Grammar Master Game', 'grammar')">📖 <span data-i18n="game_grammar">Basic Grammar Game</span></li>
-            <li class="nav-item" id="nav_banker" onclick="openGameSelection('Game For Bankers', 'banker')">🏦 <span data-i18n="game_banker">Game For Bankers</span></li>
-            <li class="nav-item" id="nav_affiliate" onclick="openGameSelection('MassBD Affiliate Game', 'affiliate')">💼 <span data-i18n="game_affiliate">MassBD Affiliate</span></li>
-            <li class="nav-item" id="nav_ielts" onclick="openGameSelection('IELTS Master Game', 'ielts')">✈️ <span data-i18n="game_ielts">IELTS Game</span></li>
-            <li class="nav-item" id="nav_admission" onclick="openGameSelection('University & Medical Admission Game', 'admission')">🎓 <span data-i18n="game_admission">Admission Arena</span></li>
-            
-            <div class="nav-divider" data-i18n="nav_user_section">User & Leaderboard</div>
-            <li class="nav-item" id="nav_global" onclick="switchView('global_position')">🌍 <span data-i18n="nav_global">Global Position (Top 20)</span></li>
-            <li class="nav-item" id="nav_portal" onclick="switchView('user_portal')">👤 <span data-i18n="nav_portal">User Portal</span></li>
-            <li class="nav-item" id="nav_report" onclick="switchView('my_report')">📊 <span data-i18n="nav_report">My Report</span></li>
-            <li class="nav-item" id="nav_deposit" onclick="switchView('deposit_view')">💳 <span data-i18n="nav_deposit">Deposit / Payment</span></li>
-            <li class="nav-item" id="nav_admin" onclick="switchView('admin_panel')">🛡️ <span data-i18n="nav_admin">Admin Panel</span></li>
-            <li class="nav-item" id="nav_logout_item" style="color:#ef4444;" onclick="handleUserLogout()">🚪 <span data-i18n="btn_logout">লগআউট (Logout)</span></li>
-        </ul>
-        <div style="padding: 15px 20px; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
-            <div><strong>Admin:</strong> Anwar</div>
-            <div style="font-size: 0.75rem;">Super Authority Verified</div>
+      </div>
+
+      <!-- SSC GAME DROPDOWN (MATH, ENG, SCIENCE) -->
+      <div class="dropdown-container">
+        <button class="nav-btn dropdown-trigger" onclick="toggleDropdown('ssc_dropdown_menu', 'ssc_arrow')">
+          <span>🎓 <span id="lbl_nav_ssc">SSC Game</span></span>
+          <span class="dropdown-arrow" id="ssc_arrow">▾</span>
+        </button>
+        <div class="dropdown-menu" id="ssc_dropdown_menu">
+          <button class="nav-btn dropdown-sub-btn" onclick="startGame('ssc', 'math')">📐 <span>MATH</span></button>
+          <button class="nav-btn dropdown-sub-btn" onclick="startGame('ssc', 'eng')">📖 <span>ENG</span></button>
+          <button class="nav-btn dropdown-sub-btn" onclick="startGame('ssc', 'science')">🔬 <span>SCIENCE</span></button>
         </div>
+      </div>
+
+      <!-- HSC GAME DROPDOWN (CHE, PHY, BIO, ICT, ENG) -->
+      <div class="dropdown-container">
+        <button class="nav-btn dropdown-trigger" onclick="toggleDropdown('hsc_dropdown_menu', 'hsc_arrow')">
+          <span>🎓 <span id="lbl_nav_hsc">HSC Game</span></span>
+          <span class="dropdown-arrow" id="hsc_arrow">▾</span>
+        </button>
+        <div class="dropdown-menu" id="hsc_dropdown_menu">
+          <button class="nav-btn dropdown-sub-btn" onclick="startGame('hsc', 'che')">🧪 <span>CHE</span></button>
+          <button class="nav-btn dropdown-sub-btn" onclick="startGame('hsc', 'phy')">⚡ <span>PHY</span></button>
+          <button class="nav-btn dropdown-sub-btn" onclick="startGame('hsc', 'bio')">🧬 <span>BIO</span></button>
+          <button class="nav-btn dropdown-sub-btn" onclick="startGame('hsc', 'ict')">💻 <span>ICT</span></button>
+          <button class="nav-btn dropdown-sub-btn" onclick="startGame('hsc', 'eng')">📚 <span>ENG</span></button>
+        </div>
+      </div>
+
+      <!-- EXISTING BUTTONS -->
+      <button class="nav-btn" onclick="startGame('grammar', 'default')">📝 <span>বেসিক গ্রামার গেম</span></button>
+      <button class="nav-btn" onclick="startGame('bankers', 'default')">💼 <span>গেম ফর ব্যাংকার্স</span></button>
+      <button class="nav-btn" onclick="startGame('affiliate', 'default')">💼 <span>মাসবিডি অ্যাফিলিয়েট</span></button>
+      <button class="nav-btn" onclick="startGame('ielts', 'default')">✈️ <span>আইইএলটিএস গেম</span></button>
+      <button class="nav-btn" onclick="startGame('admission', 'default')">🎓 <span>ভর্তি পরীক্ষা অ্যারিনা</span></button>
+
+      <div class="sidebar-heading" id="lbl_menu_user">ইউজার ও লিডারবোর্ড</div>
+      <button class="nav-btn" onclick="alert('গ্লোবাল লিডারবোর্ড সক্রিয়')">🟢 <span>গ্লোবাল পজিশন (শীর্ষ ২০)</span></button>
+      <button class="nav-btn" onclick="alert('ইউজার পোর্টাল')">👤 <span>ইউজার পোর্টাল</span></button>
+      <button class="nav-btn" onclick="alert('আমার রিপোর্ট')">📊 <span>আমার রিপোর্ট</span></button>
+      <button class="nav-btn" onclick="alert('ডিপোজিট ও পেমেন্ট গেটওয়ে')">💳 <span>ডিপোজিট / পেমেন্ট</span></button>
+      <button class="nav-btn" onclick="alert('এডমিন প্যানেল')">🛡️ <span>এডমিন প্যানেল</span></button>
+      <button class="nav-btn" onclick="handleLogout()" style="color: #ff6b81;">🚪 <span>লগআউট</span></button>
+
+      <div class="sidebar-footer">
+        Admin: Anwar<br>
+        <span style="color: var(--neon-cyan);">Super Authority Verified</span>
+      </div>
     </aside>
 
-    <!-- Main Wrapper -->
-    <main class="main-wrapper">
-        <header class="topbar">
-            <div style="display:flex; align-items:center; gap:8px;">
-                <button class="mobile-menu-btn" onclick="toggleSidebar()">☰ মেনু</button>
-                <button class="top-action-btn" onclick="toggleLanguage()">
-                    🌐 <span id="langBtnText">বাংলা (BN)</span>
-                </button>
-                <button class="top-action-btn theme-toggle-btn" onclick="toggleTheme()">
-                    <span id="themeBtnText">🌙 Dark</span>
-                </button>
-                <button class="top-action-btn btn-auth-toggle" id="topAuthBtn" onclick="toggleAuthAction()">
-                    🚪 <span id="authBtnLabel">Logout</span>
-                </button>
-            </div>
-            <div class="wallet-badges" id="topWalletBadges">
-                <span class="bot-shield-pill" data-i18n="bot_shield_badge">⚡ নো কুলডাউন / আনলিমিটেড প্র্যাকটিস</span>
-                <div class="wallet-pill">🎮 Demo: <span id="demoPoints" style="color:#60a5fa;">10,000 Pts</span></div>
-                <div class="wallet-pill">💰 Real: <span id="realBalance" style="color:#10b981;">৳00.00</span></div>
-            </div>
-        </header>
+    <!-- MAIN VIEW -->
+    <main class="main-view">
+      <!-- ARENA VIEW -->
+      <section id="view_arena">
+        <div class="arena-header">
+          <h1 id="txt_arena_title">🎯 এডুকেশনাল এক্সাম ও টুর্নামেন্ট অ্যারিনা</h1>
+          <p id="txt_arena_sub">প্রতি প্রশ্ন: ২৮ সেকেন্ড | নো স্কিপ | সঠিক উত্তর: +৫ পয়েন্ট (+৳০.২৫) | ভুল উত্তর: -১০ পয়েন্ট (-৳০.৫০)</p>
+        </div>
+        <div class="games-grid" id="games_grid_container"></div>
+      </section>
 
-        <section class="content-area">
-            <!-- View: Login Screen (Shown when logged out) -->
-            <div id="view_login" style="display: none;">
-                <div class="login-wrapper">
-                    <div class="login-card">
-                        <div style="font-size: 2.2rem; margin-bottom: 8px;">⚡</div>
-                        <h2 style="margin-bottom: 6px;" data-i18n="login_title">EDU GAME FOR ALL</h2>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;" data-i18n="login_subtitle">
-                            শিক্ষার্থী ও প্রতিযোগী সাইন-ইন গেটওয়ে
-                        </p>
-                        
-                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; padding: 10px 14px; border-radius: 8px; margin-bottom: 20px; font-size: 0.88rem; color: #10b981;">
-                            🎁 <strong>ওয়েলকাম বোনাস:</strong> সাইন-ইন করলেই তাৎক্ষণিক ১০,০০০ ডেমো পয়েন্ট!
-                        </div>
+      <!-- QUIZ VIEW -->
+      <section id="view_quiz" class="quiz-view">
+        <div class="quiz-header">
+          <div>
+            <h3 id="quiz_game_title" style="color: var(--gold); font-size: 1.35rem;">গেমের নাম</h3>
+            <p id="quiz_progress" style="color: var(--text-muted); font-size: 0.95rem;">প্রশ্ন ১/২৫</p>
+          </div>
+          <div class="timer-badge">⏳ <span id="timer_display">28s</span></div>
+        </div>
+        <div class="quiz-card">
+          <div class="question-title" id="question_text">প্রশ্ন লোড হচ্ছে...</div>
+          <div class="options-grid" id="options_container"></div>
+          
+          <!-- NEXT QUESTION BUTTON ACTION BAR -->
+          <div class="quiz-action-bar">
+            <div class="quiz-hint-text" id="quiz_status_hint">একটি উত্তর নির্বাচন করুন (নো স্কিপ)</div>
+            <button id="btn_next_q" class="btn-next-question" onclick="goToNextQuestion()" disabled>
+              <span id="lbl_next_btn">পরবর্তী প্রশ্ন ❯</span>
+            </button>
+          </div>
+        </div>
+      </section>
 
-                        <div style="text-align: left;">
-                            <label style="font-size: 0.85rem; color: var(--text-muted);" data-i18n="lbl_dep_phone">আপনার মোবাইল নাম্বার:</label>
-                            <input type="text" id="loginPhone" class="login-input" placeholder="017XXXXXXXX" value="01712345678">
-
-                            <label style="font-size: 0.85rem; color: var(--text-muted);">পাসওয়ার্ড / পিন (PIN):</label>
-                            <input type="password" id="loginPass" class="login-input" placeholder="••••••••" value="123456">
-                        </div>
-
-                        <button class="btn-play" onclick="handleUserLogin()" style="width: 100%; padding: 12px; font-size: 1rem; margin-top: 5px;">
-                            🚀 সাইন-ইন করে খেলা শুরু করুন (10,000 Pts)
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- View: Game Arena -->
-            <div id="view_game_arena">
-                <div style="margin-bottom: 20px;">
-                    <h2 data-i18n="arena_title">🎯 Educational Exam & Tournament Arena</h2>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="arena_subtitle">
-                        ⏱️ প্রতি প্রশ্ন: ২৮ সেকেন্ড | নো স্কিপ | সঠিক উত্তর: +৫ পয়েন্ট (+০.২৫৳) | ভুল উত্তর: -১০ পয়েন্ট (-০.৫০৳)
-                    </p>
-                </div>
-
-                <div class="grid-cards" id="arenaGridContainer"></div>
-            </div>
-
-            <!-- View: Global Position -->
-            <div id="view_global_position" style="display: none;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
-                    <div>
-                        <h2 data-i18n="global_title">🌍 Global Position & Top 20 Candidates</h2>
-                        <p style="color: var(--text-muted); font-size:0.9rem;" data-i18n="global_subtitle">বিশ্বজুড়ে শিক্ষার্থীদের লাইভ র‍্যাংকিং ও পয়েন্ট তালিকা (Top 20)</p>
-                    </div>
-                    <div>
-                        <input type="text" id="leaderSearch" onkeyup="filterLeaderboard()" placeholder="🔍 নাম বা জেলা খুঁজুন..." style="padding:8px 14px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:8px; font-size:0.9rem;">
-                    </div>
-                </div>
-
-                <div style="overflow-x:auto;">
-                    <table class="leaderboard-table" id="leaderboardTable">
-                        <thead>
-                            <tr>
-                                <th data-i18n="th_rank">র‍্যাংক</th>
-                                <th data-i18n="th_name">প্রতিযোগীর নাম</th>
-                                <th data-i18n="th_district">জেলা / অঞ্চল</th>
-                                <th data-i18n="th_level">লেভেল</th>
-                                <th data-i18n="th_points">মোট পয়েন্ট</th>
-                                <th data-i18n="th_taka">অর্জিত টাকা (BDT)</th>
-                                <th data-i18n="th_status">স্ট্যাটাস</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leaderboardBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- View: User Portal -->
-            <div id="view_user_portal" style="display: none;">
-                <h2 data-i18n="portal_title">👤 User Portal & Candidate Profile</h2>
-                <div style="background:var(--bg-card); padding:24px; border-radius:12px; border:1px solid var(--border-color); max-width:650px; margin-top:15px; box-shadow:var(--shadow-card);">
-                    <p><strong data-i18n="lbl_cand_name">Candidate Name:</strong> Md. Student Account</p>
-                    <p><strong data-i18n="lbl_cand_phone">Phone:</strong> 017XXXXXXXX</p>
-                    <p><strong>Demo Bonus Points:</strong> <span style="color:#60a5fa; font-weight:700;">10,000 Pts (Granted)</span></p>
-                    <p><strong data-i18n="lbl_cand_tier">Account Tier:</strong> <span id="portalAccountTier" style="color:#10b981; font-weight:700;">Active Standard (Unlimited Play)</span></p>
-                    <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
-                    <button class="btn-play" onclick="handleUserLogout()" style="width:100%; background:#ef4444;">🚪 সাইন আউট / লগআউট করুন</button>
-                </div>
-            </div>
-
-            <!-- View: My Report -->
-            <div id="view_my_report" style="display: none;">
-                <h2 data-i18n="report_title">📊 My Exam Performance Report</h2>
-                <div id="myReportContent" style="background:var(--bg-card); padding:20px; border-radius:12px; border:1px solid var(--border-color); margin-top:15px; box-shadow:var(--shadow-card);">
-                    <p data-i18n="report_empty">এখনও কোনো ব্যক্তিগত রিপোর্ট জমা হয়নি। পরীক্ষা সম্পন্ন করার পর এখানে রেকর্ড আপডেট হবে।</p>
-                </div>
-            </div>
-
-            <!-- View: Deposit -->
-            <div id="view_deposit" style="display: none;">
-                <h2 data-i18n="deposit_title">💳 রিয়েল টুর্নামেন্ট ডিপোজিট ফর্ম</h2>
-                <p style="color: var(--text-muted); margin-bottom: 20px;" data-i18n="deposit_subtitle">রিয়েল ব্যালেন্স আনলক করতে নিচের অফিসিয়াল নাম্বারে সেন্ড মানি করুন।</p>
-                <div style="background:var(--bg-card); padding:22px; border-radius:12px; border:1px solid var(--border-color); max-width:600px; box-shadow:var(--shadow-card);">
-                    <p><strong>বিকাশ (Personal):</strong> 01955375501</p>
-                    <p><strong>নগদ (Personal):</strong> 01758871568</p>
-                    <p><strong>রকেট (Personal):</strong> 01854550184-4</p>
-                    <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
-                    <div style="margin-bottom:12px;">
-                        <label data-i18n="lbl_dep_phone">আপনার মোবাইল নাম্বার:</label>
-                        <input type="text" id="depPhone" style="width:100%; padding:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:6px; margin-top:5px;">
-                    </div>
-                    <div style="margin-bottom:12px;">
-                        <label data-i18n="lbl_dep_trx">ট্রানজেকশন আইডি (TrxID):</label>
-                        <input type="text" id="depTrx" style="width:100%; padding:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:6px; margin-top:5px;">
-                    </div>
-                    <button class="btn-play" onclick="submitDeposit()" style="width:100%;" data-i18n="btn_submit_dep">ডিপোজিট সাবমিট করুন</button>
-                </div>
-            </div>
-
-            <!-- View: Admin Panel -->
-            <div id="view_admin" style="display: none;">
-                <h2 data-i18n="admin_title">🛡️ এডমিন ম্যানেজমেন্ট প্যানেল</h2>
-                <div style="margin: 20px 0;">
-                    <button class="btn-play" onclick="downloadQuizReportCSV()" data-i18n="btn_download_csv">📥 কুইজ রিপোর্ট CSV ডাউনলোড</button>
-                </div>
-                <div id="adminHistoryTable" style="margin-top:15px; overflow-x:auto;">
-                    <table style="width:100%; border-collapse:collapse; text-align:left;">
-                        <thead>
-                            <tr style="background:var(--input-bg); color:var(--text-main);">
-                                <th style="padding:10px; border:1px solid var(--border-color);">User</th>
-                                <th style="padding:10px; border:1px solid var(--border-color);">Game</th>
-                                <th style="padding:10px; border:1px solid var(--border-color);">Score</th>
-                                <th style="padding:10px; border:1px solid var(--border-color);">Taka</th>
-                                <th style="padding:10px; border:1px solid var(--border-color);">Date</th>
-                            </tr>
-                        </thead>
-                        <tbody id="quizHistoryBody">
-                            <tr><td colspan="5" style="padding:15px; text-align:center;">No quiz records found.</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
+      <!-- AUTH / LOGIN VIEW -->
+      <section id="view_auth" class="auth-view">
+        <div class="auth-card">
+          <h2>🔐 সাইন ইন / লগইন</h2>
+          <p>আপনার ডেমো ব্যালেন্স দিয়ে কুইজ খেলতে লগইন করুন।</p>
+          <button class="auth-btn" onclick="loginDemoAccount()">🚀 ডেমো একাউন্ট দিয়ে খেলুন (১০,০০০ Pts)</button>
+        </div>
+      </section>
     </main>
-</div>
+  </div>
 
-<!-- Game Selection Modal -->
-<div class="modal-overlay" id="selectionModal">
-    <div class="modal-container">
-        <button class="modal-close-btn" onclick="closeSelectionModal()">✕</button>
-        <h3 id="selModalTitle" style="margin-bottom: 15px;">গেম সেট ও লেভেল নির্বাচন করুন</h3>
-        
-        <div style="margin-bottom: 15px;">
-            <label style="color:var(--text-muted); font-size:0.9rem;" data-i18n="lbl_select_set">সেট নির্বাচন (Set):</label>
-            <select id="selSet" style="width:100%; padding:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:6px; margin-top:5px;">
-                <option value="1">Set 01 (Official 30 Questions)</option>
-                <option value="2">Set 02 (Comprehensive 30 Questions)</option>
-            </select>
-        </div>
-
-        <div style="margin-bottom: 15px;">
-            <label style="color:var(--text-muted); font-size:0.9rem;" data-i18n="lbl_select_level">লেভেল নির্বাচন (7 Tiers):</label>
-            <select id="selLevel" style="width:100%; padding:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:6px; margin-top:5px;">
-                <option value="all">🌟 All Levels (Random Mix)</option>
-                <option value="primary">🔰 Primary Level</option>
-                <option value="basic1">📘 Basic Level 01</option>
-                <option value="basic2">📗 Basic Level 02</option>
-                <option value="basic3">📙 Basic Level 03</option>
-                <option value="mid">🎖️ Level 01: MID LEVEL</option>
-                <option value="executive">💼 Level 02: EXECUTIVE LEVEL</option>
-                <option value="mastery">👑 Level 03: MASTERY LEVEL</option>
-            </select>
-        </div>
-
-        <div style="margin-bottom: 20px;">
-            <label style="color:var(--text-muted); font-size:0.9rem;" data-i18n="lbl_select_mode">মোড নির্বাচন:</label>
-            <select id="selMode" style="width:100%; padding:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main); border-radius:6px; margin-top:5px;">
-                <option value="demo">🎮 Practice Demo Mode (Free)</option>
-                <option value="real">💰 Real Tournament Mode (Deposit Required)</option>
-            </select>
-        </div>
-
-        <button class="btn-play" onclick="launchQuizFromSelection()" style="width:100%; padding:12px; font-size:1.05rem;" data-i18n="btn_start_quiz_modal">
-            🚀 কুইজ শুরু করুন (Strict 28s / No Skip)
-        </button>
+  <!-- SCORECARD MODAL -->
+  <div class="modal-overlay" id="scorecard_modal">
+    <div class="modal-card">
+      <h2 id="sc_title">🎉 ফলাফল ও স্কোরকার্ড</h2>
+      <div class="score-stats">
+        <div class="stat-row"><span>মোট প্রশ্ন:</span><span id="sc_total">২৫</span></div>
+        <div class="stat-row"><span>সঠিক উত্তর:</span><span id="sc_correct" style="color: var(--neon-green);">০</span></div>
+        <div class="stat-row"><span>ভুল / টাইমআউট:</span><span id="sc_wrong" style="color: var(--bright-red);">০</span></div>
+        <div class="stat-row"><span>অর্জিত পয়েন্ট:</span><span id="sc_net_pts">০ Pts</span></div>
+        <div class="stat-row"><span>উপার্জিত টাকা:</span><span id="sc_earned_bdt">৳০.০০</span></div>
+      </div>
+      <p id="sc_next_prompt" style="margin-bottom: 20px; color: var(--text-muted);">আপনি কি পরবর্তী গেম খেলতে চান?</p>
+      <div style="display: flex; gap: 10px; justify-content: center;">
+        <button class="btn-play" onclick="closeScorecard('arena')">অ্যারিনায় ফিরুন</button>
+        <button class="btn-play" style="background: linear-gradient(135deg, #ffd700, #f59e0b);" onclick="closeScorecard('replay')">আবার খেলুন</button>
+      </div>
     </div>
-</div>
-
-<!-- Active Quiz Modal -->
-<div class="modal-overlay" id="quizModal">
-    <div class="modal-container">
-        <button class="modal-close-btn" onclick="exitQuiz()">✕</button>
-        <div class="quiz-timer-bar">
-            <div>
-                <span id="quizGameTitle" style="font-weight:700; color:#3b82f6;">Game</span>
-                <span id="quizProgress" style="font-size:0.85rem; color:var(--text-muted); margin-left:10px;">Q 1/30</span>
-            </div>
-            <div class="timer-badge">⏱️ <span id="timerSec">28</span>s</div>
-        </div>
-
-        <div id="quizScoreBar" style="display:flex; justify-content:space-between; margin-bottom:15px; font-size:0.9rem;">
-            <span><span data-i18n="lbl_score">স্কোর:</span> <strong id="curPoints" style="color:#38bdf8;">0 Pts</strong></span>
-            <span><span data-i18n="lbl_earnings">অর্জন:</span> <strong id="curTaka" style="color:#10b981;">৳0.00</strong></span>
-        </div>
-
-        <div id="questionContainer">
-            <h4 id="questionText" style="font-size:1.1rem; line-height:1.5; margin-bottom:18px;">Question text will appear here</h4>
-            <div id="optionsList"></div>
-            <p style="font-size: 0.8rem; color: #ef4444; margin-top: 10px; text-align: center;" data-i18n="lbl_noskip_warning">🚫 নো স্কিপ অপশন: প্রতি প্রশ্নের উত্তর বাধ্যতামূলক অথবা ২৮ সেকেন্ডে স্বয়ংক্রিয় মাইনাস পয়েন্ট হবে।</p>
-        </div>
-
-        <div id="quizResultView" style="display:none; text-align:center; padding:10px 0;">
-            <h3 style="color:#10b981; margin-bottom:8px;" data-i18n="res_title">🎉 গেম সমাপ্ত! আপনার রেজাল্ট কার্ড</h3>
-            
-            <div class="result-card-box">
-                <div class="result-stat-row">
-                    <span data-i18n="res_total_q">মোট প্রশ্ন:</span>
-                    <strong id="resTotalQ">0</strong>
-                </div>
-                <div class="result-stat-row">
-                    <span data-i18n="res_correct">✅ সঠিক উত্তর (+৫ পয়েন্ট / +০.২৫৳):</span>
-                    <strong id="resCorrect" style="color:#10b981;">0</strong>
-                </div>
-                <div class="result-stat-row">
-                    <span data-i18n="res_wrong">❌ ভুল উত্তর (-১০ পয়েন্ট / -০.৫০৳):</span>
-                    <strong id="resWrong" style="color:#ef4444;">0</strong>
-                </div>
-                <div class="result-stat-row">
-                    <span data-i18n="res_timeout">⏱️ টাইমআউট (২৮ সে.):</span>
-                    <strong id="resTimeout" style="color:#d97706;">0</strong>
-                </div>
-                <div class="result-stat-row" style="font-size:1.05rem; padding-top:12px; border-top:1px dashed var(--border-color);">
-                    <span data-i18n="res_net_pts">🎯 এই খেলায় অর্জিত মোট পয়েন্ট:</span>
-                    <strong id="resNetPoints" style="color:#38bdf8;">0 Pts</strong>
-                </div>
-                <div class="result-stat-row" style="font-size:1.05rem;">
-                    <span data-i18n="res_net_taka">💰 এই খেলায় অর্জিত টাকা:</span>
-                    <strong id="resNetTaka" style="color:#10b981;">৳0.00</strong>
-                </div>
-                <div class="result-stat-row" style="font-size:1.1rem; background:rgba(245, 158, 11, 0.1); padding:10px; border-radius:8px; margin-top:8px;">
-                    <span data-i18n="res_current_total">🏆 আপনার বর্তমান ব্যালেন্স:</span>
-                    <strong id="resCurrentTotal" style="color:#d97706;">0 Pts</strong>
-                </div>
-            </div>
-
-            <div style="background: rgba(79, 70, 229, 0.15); border: 1px solid #4338ca; padding: 18px; border-radius: 12px; margin-bottom: 18px;">
-                <h4 style="color: var(--text-main); margin-bottom: 8px;" data-i18n="prompt_play_next">❓ আপনি কি পরবর্তী গেম খেলতে চান?</h4>
-                <p id="nextGameBalanceNotice" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px;">
-                    ব্যালেন্স চেক করা হচ্ছে...
-                </p>
-                <div id="nextGameActionButtons" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;"></div>
-            </div>
-
-            <button class="btn-play" onclick="exitQuiz()" style="margin: 0 auto; background: #64748b;" data-i18n="btn_return_arena">🏠 গেম এরিনায় ফিরুন</button>
-        </div>
-    </div>
-</div>
+  </div>
 
 <script>
-// --- AUTHENTICATION & LOGIN/LOGOUT STATE ---
-let isAuthenticated = localStorage.getItem('edu_user_logged_in') !== 'false'; // Default logged in
-
-function updateAuthUI() {
-    const authBtn = document.getElementById('topAuthBtn');
-    const authLabel = document.getElementById('authBtnLabel');
-    const navLogout = document.getElementById('nav_logout_item');
-
-    if (!isAuthenticated) {
-        // User is logged out
-        authBtn.style.background = '#10b981';
-        authBtn.style.borderColor = '#059669';
-        authLabel.innerText = currentLang === 'bn' ? '🔑 লগইন' : '🔑 Login';
-        if (navLogout) navLogout.style.display = 'none';
-
-        // Hide app views and show login view
-        const allViews = ['game_arena', 'global_position', 'user_portal', 'my_report', 'deposit', 'admin'];
-        allViews.forEach(v => {
-            const el = document.getElementById('view_' + v);
-            if (el) el.style.display = 'none';
-        });
-        document.getElementById('view_login').style.display = 'block';
-    } else {
-        // User is logged in
-        authBtn.style.background = '#ef4444';
-        authBtn.style.borderColor = '#dc2626';
-        authLabel.innerText = currentLang === 'bn' ? '🚪 লগআউট' : '🚪 Logout';
-        if (navLogout) navLogout.style.display = 'flex';
-
-        document.getElementById('view_login').style.display = 'none';
-        document.getElementById('view_game_arena').style.display = 'block';
-        document.getElementById('nav_arena').classList.add('active');
-        renderArenaCards();
-    }
-}
-
-function handleUserLogin() {
-    isAuthenticated = true;
-    localStorage.setItem('edu_user_logged_in', 'true');
-    initDemoPoints();
-    updateAuthUI();
-    alert(currentLang === 'bn' ? 
-        '✅ সফলভাবে সাইন-ইন সম্পন্ন হয়েছে! ১০,০০০ ডেমো পয়েন্ট আপনার অ্যাকাউন্টে প্রস্তুত।' : 
-        '✅ Logged in successfully! 10,000 Demo Points are ready in your account.'
-    );
-}
-
-function handleUserLogout() {
-    const confirmMsg = currentLang === 'bn' ? 
-        'আপনি কি নিশ্চিতভাবে প্ল্যাটফর্ম থেকে লগআউট করতে চান?' : 
-        'Are you sure you want to log out from the platform?';
-    if (confirm(confirmMsg)) {
-        isAuthenticated = false;
-        localStorage.setItem('edu_user_logged_in', 'false');
-        updateAuthUI();
-        document.getElementById('sidebar').classList.remove('open');
-        document.getElementById('backdrop').classList.remove('active');
-    }
-}
-
-function toggleAuthAction() {
-    if (isAuthenticated) {
-        handleUserLogout();
-    } else {
-        handleUserLogin();
-    }
-}
-
-// --- DEMO POINTS (10,000 PTS FOR ALL USERS) ---
-function initDemoPoints() {
-    let pts = localStorage.getItem('edu_demo_points');
-    if (!pts || parseInt(pts) < 10000) {
-        pts = '10000';
-        localStorage.setItem('edu_demo_points', pts);
-    }
-    document.getElementById('demoPoints').innerText = parseInt(pts).toLocaleString() + " Pts";
-}
-
-// --- THEME SYSTEM ---
-let currentTheme = localStorage.getItem('edu_theme') || 'dark';
-
-function applyTheme() {
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    const themeBtn = document.getElementById('themeBtnText');
-    if (themeBtn) {
-        themeBtn.innerText = currentTheme === 'dark' ? 
-            (currentLang === 'bn' ? '🌙 ডার্ক' : '🌙 Dark') : 
-            (currentLang === 'bn' ? '☀️ লাইট' : '☀️ Light');
-    }
-}
-
-function toggleTheme() {
-    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('edu_theme', currentTheme);
-    applyTheme();
-}
-
-// --- BILINGUAL DICTIONARY ---
-const TRANSLATIONS = {
-    bn: {
-        nav_games_section: "গেমস এরিনা",
-        nav_all_games: "সকল গেম এরিনা",
-        game_bcs: "জব প্রিপারেশন এরিনা (BCS)",
-        game_grammar: "বেসিক গ্রামার গেম",
-        game_banker: "গেম ফর ব্যাংকার্স",
-        game_affiliate: "ম্যাসবিডি অ্যাফিলিয়েট",
-        game_ielts: "আইইএলটিএস গেম",
-        game_admission: "ভর্তি পরীক্ষা এরিনা",
-        nav_user_section: "ইউজার ও লিডারবোর্ড",
-        nav_global: "গ্লোবাল পজিশন (শীর্ষ ২০)",
-        nav_portal: "ইউজার পোর্টাল",
-        nav_report: "আমার রিপোর্ট",
-        nav_deposit: "ডিপোজিট / পেমেন্ট",
-        nav_admin: "এডমিন প্যানেল",
-        bot_shield_badge: "⚡ নো কুলডাউন / আনলিমিটেড প্র্যাকটিস",
-        arena_title: "🎯 এডুকেশনাল এক্সাম ও টুর্নামেন্ট এরিনা",
-        arena_subtitle: "⏱️ প্রতি প্রশ্ন: ২৮ সেকেন্ড | নো স্কিপ | সঠিক উত্তর: +৫ পয়েন্ট (+০.২৫৳) | ভুল উত্তর: -১০ পয়েন্ট (-০.৫০৳)",
-        global_title: "🌍 গ্লোবাল পজিশন ও শীর্ষ ২০ প্রতিযোগী",
-        global_subtitle: "বিশ্বজুড়ে শিক্ষার্থীদের লাইভ র‍্যাংকিং ও পয়েন্ট তালিকা (Top 20)",
-        th_rank: "র‍্যাংক",
-        th_name: "প্রতিযোগীর নাম",
-        th_district: "জেলা / অঞ্চল",
-        th_level: "লেভেল",
-        th_points: "মোট পয়েন্ট",
-        th_taka: "অর্জিত টাকা (BDT)",
-        th_status: "স্ট্যাটাস",
-        portal_title: "👤 ইউজার পোর্টাল ও প্রোফাইল",
-        lbl_cand_name: "শিক্ষার্থীর নাম:",
-        lbl_cand_phone: "মোবাইল নাম্বার:",
-        lbl_cand_tier: "অ্যাকাউন্ট স্ট্যাটাস:",
-        report_title: "📊 আমার পরীক্ষার পারফরম্যান্স রিপোর্ট",
-        report_empty: "এখনও কোনো ব্যক্তিগত রিপোর্ট জমা হয়নি। পরীক্ষা সম্পন্ন করার পর এখানে রেকর্ড আপডেট হবে।",
-        deposit_title: "💳 রিয়েল টুর্নামেন্ট ডিপোজিট ফর্ম",
-        deposit_subtitle: "রিয়েল ব্যালেন্স আনলক করতে নিচের অফিসিয়াল নাম্বারে সেন্ড মানি করুন।",
-        lbl_dep_phone: "আপনার মোবাইল নাম্বার:",
-        lbl_dep_trx: "ট্রানজেকশন আইডি (TrxID):",
-        btn_submit_dep: "ডিপোজিট সাবমিট করুন",
-        admin_title: "🛡️ এডমিন ম্যানেজমেন্ট প্যানেল",
-        btn_download_csv: "📥 কুইজ রিপোর্ট CSV ডাউনলোড",
-        lbl_select_set: "সেট নির্বাচন (Set):",
-        lbl_select_level: "লেভেল নির্বাচন (7 Tiers):",
-        lbl_select_mode: "মোড নির্বাচন:",
-        btn_start_quiz_modal: "🚀 কুইজ শুরু করুন (Strict 28s / No Skip)",
-        lbl_score: "স্কোর:",
-        lbl_earnings: "অর্জন:",
-        lbl_noskip_warning: "🚫 নো স্কিপ অপশন: প্রতি প্রশ্নের উত্তর বাধ্যতামূলক অথবা ২৮ সেকেন্ডে স্বয়ংক্রিয় মাইনাস পয়েন্ট হবে।",
-        res_title: "🎉 গেম সমাপ্ত! আপনার রেজাল্ট কার্ড",
-        res_total_q: "মোট প্রশ্ন:",
-        res_correct: "✅ সঠিক উত্তর (+৫ পয়েন্ট / +০.২৫৳):",
-        res_wrong: "❌ ভুল উত্তর (-১০ পয়েন্ট / -০.৫০৳):",
-        res_timeout: "⏱️ টাইমআউট (২৮ সে.):",
-        res_net_pts: "🎯 এই খেলায় অর্জিত মোট পয়েন্ট:",
-        res_net_taka: "💰 এই খেলায় অর্জিত টাকা:",
-        res_current_total: "🏆 আপনার বর্তমান ব্যালেন্স:",
-        prompt_play_next: "❓ আপনি কি পরবর্তী গেম খেলতে চান?",
-        btn_return_arena: "🏠 গেম এরিনায় ফিরুন",
-        btn_logout: "লগআউট",
-        login_title: "EDU GAME FOR ALL",
-        login_subtitle: "শিক্ষার্থী ও প্রতিযোগী সাইন-ইন গেটওয়ে"
-    },
-    en: {
-        nav_games_section: "Games Arena",
-        nav_all_games: "All Games Arena",
-        game_bcs: "Job Preparation Arena (BCS)",
-        game_grammar: "Basic Grammar Game",
-        game_banker: "Game For Bankers",
-        game_affiliate: "MassBD Affiliate",
-        game_ielts: "IELTS Master Game",
-        game_admission: "Admission Arena",
-        nav_user_section: "User & Leaderboard",
-        nav_global: "Global Position (Top 20)",
-        nav_portal: "User Portal",
-        nav_report: "My Report",
-        nav_deposit: "Deposit / Payment",
-        nav_admin: "Admin Panel",
-        bot_shield_badge: "⚡ No Cooldown / Unlimited Practice",
-        arena_title: "🎯 Educational Exam & Tournament Arena",
-        arena_subtitle: "⏱️ 28s per Question | No Skip | Correct: +5 Pts (+৳0.25) | Wrong: -10 Pts (-৳0.50)",
-        global_title: "🌍 Global Position & Top 20 Candidates",
-        global_subtitle: "Live Global Ranking and Score Leaderboard (Top 20)",
-        th_rank: "Rank",
-        th_name: "Candidate Name",
-        th_district: "District / Region",
-        th_level: "Level",
-        th_points: "Total Points",
-        th_taka: "Earned BDT",
-        th_status: "Status",
-        portal_title: "👤 User Portal & Candidate Profile",
-        lbl_cand_name: "Candidate Name:",
-        lbl_cand_phone: "Mobile Phone:",
-        lbl_cand_tier: "Account Status:",
-        report_title: "📊 My Exam Performance Report",
-        report_empty: "No exam records found yet. Complete quizzes to see analytics here.",
-        deposit_title: "💳 Real Tournament Deposit Form",
-        deposit_subtitle: "Send money to the official numbers below to unlock Real Tournament balance.",
-        lbl_dep_phone: "Your Mobile Number:",
-        lbl_dep_trx: "Transaction ID (TrxID):",
-        btn_submit_dep: "Submit Deposit Request",
-        admin_title: "🛡️ Admin Management Panel",
-        btn_download_csv: "📥 Download Quiz Report CSV",
-        lbl_select_set: "Select Set:",
-        lbl_select_level: "Select Level (7 Tiers):",
-        lbl_select_mode: "Select Mode:",
-        btn_start_quiz_modal: "🚀 Start Quiz (Strict 28s / No Skip)",
-        lbl_score: "Score:",
-        lbl_earnings: "Earned:",
-        lbl_noskip_warning: "🚫 No Skip Option: Every question must be answered or auto-penalized at 28 seconds.",
-        res_title: "🎉 Game Finished! Your Scorecard",
-        res_total_q: "Total Questions:",
-        res_correct: "✅ Correct Answers (+5 Pts / +৳0.25):",
-        res_wrong: "❌ Wrong Answers (-10 Pts / -৳0.50):",
-        res_timeout: "⏱️ Timeouts (28s):",
-        res_net_pts: "🎯 Total Points Earned:",
-        res_net_taka: "💰 Total BDT Earned:",
-        res_current_total: "🏆 Your Updated Balance:",
-        prompt_play_next: "❓ Do you want to play the next game?",
-        btn_return_arena: "🏠 Return to Game Arena",
-        btn_logout: "Logout",
-        login_title: "EDU GAME FOR ALL",
-        login_subtitle: "Student & Candidate Sign-In Gateway"
-    }
-};
-
-let currentLang = localStorage.getItem('edu_lang') || 'bn';
-
-function applyLanguage() {
-    const dict = TRANSLATIONS[currentLang];
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (dict[key]) el.innerText = dict[key];
-    });
-
-    document.getElementById('langBtnText').innerText = currentLang === 'bn' ? 'বাংলা (BN)' : 'English (EN)';
-    applyTheme();
-    updateAuthUI();
-}
-
-function toggleLanguage() {
-    currentLang = currentLang === 'bn' ? 'en' : 'bn';
-    localStorage.setItem('edu_lang', currentLang);
-    applyLanguage();
-}
-
-// --- All 10 Games Meta List ---
-const GAMES_CATALOG = [
-    { key: "bcs", title: "Job Preparation Arena (BCS & Govt)", category: "Competitive Exam", desc: "BCS, Bank, Primary & Govt Job Preliminary Simulator (Set 01 & Set 02 - 30+30 Questions)." },
-    { key: "grammar", title: "Basic Grammar Master Game", category: "English & Grammar", desc: "Articles, Prepositions, Tenses, Subjunctive Mood, Voice & Idioms (Official 25 Questions)." },
-    { key: "banker", title: "Game For Bankers", category: "Finance & Banking", desc: "Bank Math, CRR, SLR, General Banking, LC, Forex, CAMELS Rating & Financial Analysis." },
-    { key: "affiliate", title: "MassBD Affiliate Game", category: "Digital Sales & SEO", desc: "CPA, Cookie tracking, Referral link, CTR, SEO, কমিশন ও ডিজিটাল সেলিং (massbd.org)।" },
-    { key: "ielts", title: "IELTS Master Game", category: "Language Proficiency", desc: "Academic & General Training Vocabulary, Collocations, Reading Tricks & Grammar." },
-    { key: "admission", title: "University & Medical Admission", category: "Higher Education", desc: "Physics, Chemistry, Biology, Higher Math & Medical-Engineering admission test model." },
-    { key: "freelancing", title: "Online Income & Freelancing", category: "Freelancing Skills", desc: "Marketplace rules, Client handling, CPA strategies, Remote work & Sales conversion." },
-    { key: "software", title: "Skills & Software Selling", category: "IT & Tech", desc: "Software licenses, SaaS sales, Tech support, CMS & Website management fundamentals." },
-    { key: "school", title: "School Foundation (Class 1-10)", category: "School Level", desc: "Basic Arithmetic, Elementary Science, General Knowledge & Kids IQ Development." },
-    { key: "brain", title: "Brain Booster & Quick IQ", category: "IQ & Brain Booster", desc: "Mental Math, Pattern Recognition, Analytical Reasoning & Quick Cognitive Puzzles." }
-];
-
-function renderArenaCards() {
-    const container = document.getElementById('arenaGridContainer');
-    if (!container) return;
-    const btnLabel = currentLang === 'bn' ? '🚀 গেম খেলুন' : '🚀 Play Game';
-
-    container.innerHTML = GAMES_CATALOG.map(g => `
-        <div class="game-card">
-            <div>
-                <span class="card-header-badge">${g.category}</span>
-                <h3 style="margin: 10px 0 4px 0; color:var(--text-main);">${g.title}</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">${g.desc}</p>
-            </div>
-            <button class="btn-play" onclick="openGameSelection('${g.title}', '${g.key}')">${btnLabel}</button>
-        </div>
-    `).join('');
-}
-
-// --- Web Audio API Synthesizer ---
-const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-let audioCtx = null;
-
-function initAudio() {
-    if (!audioCtx) audioCtx = new AudioContextClass();
+  // AUDIO SYNTHESIZER
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  function playTone(type) {
     if (audioCtx.state === 'suspended') audioCtx.resume();
-}
-
-function playSuccessSound() {
-    try {
-        initAudio();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.type = 'sine';
-        const now = audioCtx.currentTime;
-        osc.frequency.setValueAtTime(523.25, now);
-        osc.frequency.setValueAtTime(659.25, now + 0.1);
-        osc.frequency.setValueAtTime(783.99, now + 0.2);
-        gain.gain.setValueAtTime(0.25, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-        osc.start(now);
-        osc.stop(now + 0.35);
-    } catch(e) {}
-}
-
-function playErrorSound() {
-    try {
-        initAudio();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.type = 'sawtooth';
-        const now = audioCtx.currentTime;
-        osc.frequency.setValueAtTime(160, now);
-        osc.frequency.setValueAtTime(100, now + 0.15);
-        gain.gain.setValueAtTime(0.25, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-        osc.start(now);
-        osc.stop(now + 0.35);
-    } catch(e) {}
-}
-
-// --- Anti-Bot & Anti-Cheating System ---
-let isSuperAdmin = false;
-let questionRenderTime = 0;
-
-document.addEventListener('visibilitychange', function() {
-    if (document.hidden && document.getElementById('quizModal').style.display === 'flex') {
-        alert('⚠️ Anti-Bot Warning: Switching tabs during exam is prohibited!');
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    if (type === 'correct') {
+      osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1);
+      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.35);
+    } else {
+      osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(146.83, audioCtx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.4);
     }
-});
+  }
 
-document.addEventListener('contextmenu', function(e) { if (!isSuperAdmin) { e.preventDefault(); return false; } });
-document.addEventListener('copy', function(e) { if (!isSuperAdmin) e.preventDefault(); });
-document.addEventListener('cut', function(e) { if (!isSuperAdmin) e.preventDefault(); });
-document.addEventListener('selectstart', function(e) { if (!isSuperAdmin) e.preventDefault(); });
+  // STATE
+  let currentLang = localStorage.getItem('edu_lang') || 'bn';
+  let currentTheme = localStorage.getItem('edu_theme') || 'dark';
+  let userPoints = parseInt(localStorage.getItem('edu_points') || '10000');
+  let isLoggedIn = localStorage.getItem('edu_logged_in') !== 'false';
 
-window.addEventListener('keydown', function(e) {
-    if (isSuperAdmin) return;
-    if (e.key === 'F12' || 
-        (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.key === 'c' || e.key === 'C')) ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
-        e.key === 'PrintScreen') {
-        e.preventDefault();
-        alert('⚠️ Security Warning: Screen capture and dev tools are blocked!');
-        return false;
+  let currentGame = null;
+  let currentSet = null;
+  let qIndex = 0;
+  let timerInterval = null;
+  let autoAdvanceTimeout = null;
+  let timeLeft = 28;
+  let correctAnswers = 0;
+  let wrongAnswers = 0;
+  let qStartTime = 0;
+  let hasAnsweredCurrentQ = false;
+
+  // GENERIC DROPDOWN HANDLER
+  function toggleDropdown(menuId, arrowId) {
+    const menu = document.getElementById(menuId);
+    const arrow = document.getElementById(arrowId);
+    if (menu.classList.contains('open')) {
+      menu.classList.remove('open');
+      if (arrow) arrow.innerText = '▾';
+    } else {
+      menu.classList.add('open');
+      if (arrow) arrow.innerText = '▴';
     }
-});
+  }
 
-// --- 20 Global Leaders Data ---
-const GLOBAL_LEADERS = [
-    { rank: 1, name: "Tanvir Hasan", district: "Dhaka", level: "👑 Mastery", points: "18,450 Pts", taka: "৳922.50", status: "Active" },
-    { rank: 2, name: "Nusrat Jahan", district: "Chittagong", level: "👑 Mastery", points: "16,920 Pts", taka: "৳846.00", status: "Active" },
-    { rank: 3, name: "Md. Shakil Ahmed", district: "Rajshahi", level: "💼 Executive", points: "15,700 Pts", taka: "৳785.00", status: "Active" },
-    { rank: 4, name: "Farhana Yasmin", district: "Sylhet", level: "💼 Executive", points: "14,850 Pts", taka: "৳742.50", status: "Active" },
-    { rank: 5, name: "Arifur Rahman", district: "Khulna", level: "💼 Executive", points: "13,900 Pts", taka: "৳695.00", status: "Active" },
-    { rank: 6, name: "Sadia Afrin", district: "Barisal", level: "🎖️ Mid Level", points: "12,650 Pts", taka: "৳632.50", status: "Active" },
-    { rank: 7, name: "Mehedi Hasan", district: "Rangpur", level: "🎖️ Mid Level", points: "11,800 Pts", taka: "৳590.00", status: "Active" },
-    { rank: 8, name: "Jannatul Ferdous", district: "Mymensingh", level: "🎖️ Mid Level", points: "10,950 Pts", taka: "৳547.50", status: "Active" },
-    { rank: 9, name: "Rakibul Islam", district: "Comilla", level: "🎖️ Mid Level", points: "9,820 Pts", taka: "৳491.00", status: "Active" },
-    { rank: 10, name: "Sumaiya Akter", district: "Gazipur", level: "📘 Basic 03", points: "9,150 Pts", taka: "৳457.50", status: "Active" },
-    { rank: 11, name: "Kamrul Hasan", district: "Bogra", level: "📗 Basic 02", points: "8,700 Pts", taka: "৳435.00", status: "Active" },
-    { rank: 12, name: "Rashedul Islam", district: "Pabna", level: "📗 Basic 02", points: "8,250 Pts", taka: "৳412.50", status: "Active" },
-    { rank: 13, name: "Tasnim Sultana", district: "Narayanganj", level: "📘 Basic 01", points: "7,900 Pts", taka: "৳395.00", status: "Active" },
-    { rank: 14, name: "Asif Mahmud", district: "Jessore", level: "🔰 Primary", points: "7,450 Pts", taka: "৳372.50", status: "Active" },
-    { rank: 15, name: "Sharmin Sultana", district: "Kushtia", level: "🔰 Primary", points: "6,980 Pts", taka: "৳349.00", status: "Active" },
-    { rank: 16, name: "Nahid Hossain", district: "Dinajpur", level: "🔰 Primary", points: "6,400 Pts", taka: "৳320.00", status: "Active" },
-    { rank: 17, name: "Rumana Parvin", district: "Tangail", level: "🔰 Primary", points: "5,950 Pts", taka: "৳297.50", status: "Active" },
-    { rank: 18, name: "Mahfuzur Rahman", district: "Noakhali", level: "🔰 Primary", points: "5,420 Pts", taka: "৳271.00", status: "Active" },
-    { rank: 19, name: "Fahmida Khatun", district: "Feni", level: "🔰 Primary", points: "4,890 Pts", taka: "৳244.50", status: "Active" },
-    { rank: 20, name: "Al-Amin Hossain", district: "Faridpur", level: "🔰 Primary", points: "4,350 Pts", taka: "৳217.50", status: "Active" }
-];
+  // QUESTION DATABASE
+  const QUESTION_DATABASE = {
+    // HEALTH 25 QUESTIONS (USER SPECIFIED)
+    health: {
+      set1: [
+        {
+          q_bn: "১. একজন প্রাপ্তবয়স্ক মানুষের রক্তে হিমোগ্লোবিনের মাত্রা স্বাভাবিকের চেয়ে অনেক কমে গেলে অক্সিজেন পরিবহন ক্ষমতা হ্রাস পায়। এই শারীরিক অবস্থার প্রধান কারণ হিসেবে নিচের কোন পুষ্টি উপাদানের অভাবকে দায়ী করা হয়?",
+          q_en: "1. When adult hemoglobin drops significantly impairing oxygen delivery, deficiency of which nutrient is primarily responsible?",
+          options_bn: ["আয়রন ও ভিটামিন বি-১২", "ভিটামিন সি ও জিঙ্ক", "ক্যালসিয়াম ও ফসফরাস", "সোডিয়াম ও পটাশিয়াম"],
+          options_en: ["Iron & Vitamin B-12", "Vitamin C & Zinc", "Calcium & Phosphorus", "Sodium & Potassium"],
+          ans: 0
+        },
+        {
+          q_bn: "২. ডায়াবেটিস মেলিটাস টাইপ-২ আক্রান্ত রোগীদের ক্ষেত্রে রক্তে গ্লুকোজের মাত্রা দীর্ঘমেয়াদে নিয়ন্ত্রণে আছে কি না, তা নিশ্চিত করার জন্য চিকিৎসকরা কোন পরীক্ষাটি করার পরামর্শ দেন?",
+          q_en: "2. Which test confirms long-term glycemic control in patients with Type 2 Diabetes Mellitus?",
+          options_bn: ["লিপিড প্রোফাইল টেস্ট", "এইচবিএওয়ানসি (HbA1c) টেস্ট", "সিরাম ক্রিয়েটিনিন টেস্ট", "বিলিরুবিন টেস্ট"],
+          options_en: ["Lipid Profile Test", "HbA1c Test", "Serum Creatinine Test", "Bilirubin Test"],
+          ans: 1
+        },
+        {
+          q_bn: "৩. ডেঙ্গু জ্বরে আক্রান্ত একজন রোগীর রক্তে প্লাটিলেট বা অণুচক্রিকার সংখ্যা দ্রুত কমে গেলে কোন ধরনের জটিলতা দেখা দেওয়ার ঝুঁকি সবচেয়ে বেশি থাকে?",
+          q_en: "3. Rapid platelet drop in a dengue patient poses the highest risk of which complication?",
+          options_bn: ["হাড়ের ঘনত্ব হ্রাস", "অভ্যন্তরীণ রক্তক্ষরণ ও প্লাজমা লিকেজ", "কিডনিতে পাথর তৈরি", "রক্তচাপ অতিরিক্ত বৃদ্ধি পাওয়া"],
+          options_en: ["Bone density loss", "Internal bleeding & plasma leakage", "Kidney stone formation", "Severe blood pressure spike"],
+          ans: 1
+        },
+        {
+          q_bn: "৪. উচ্চ রক্তচাপকে (Hypertension) চিকিৎসাবিজ্ঞানে প্রায়ই 'নীরব ঘাতক' (Silent Killer) বলা হয় কেন?",
+          q_en: "4. Why is Hypertension commonly termed a 'Silent Killer' in medical practice?",
+          options_bn: ["এটি কেবল রাতে ঘুমের মধ্যে আক্রমণ করে", "প্রাথমিক পর্যায়ে কোনো দৃশ্যমান লক্ষণ থাকে না", "এটি শুধুমাত্র বয়স্ক ব্যক্তিদের ক্ষেত্রেই দেখা দেয়", "এর কোনো কার্যকর চিকিৎসা নেই"],
+          options_en: ["Attacks only during night sleep", "Shows no noticeable symptoms initially", "Affects only senior citizens", "Has no effective treatment"],
+          ans: 1
+        },
+        {
+          q_bn: "৫. শিশুদের ক্ষেত্রে রাতকানা (Night Blindness) এবং জেরপথালমিয়া (Xerophthalmia) রোগ প্রতিরোধের জন্য কোন ভিটামিনটি খাদ্যে থাকা অপরিহার্য?",
+          q_en: "5. Which dietary vitamin is essential in preventing Night Blindness and Xerophthalmia in children?",
+          options_bn: ["ভিটামিন ডি", "ভিটামিন সি", "ভিটামিন এ", "ভিটামিন কে"],
+          options_en: ["Vitamin D", "Vitamin C", "Vitamin A", "Vitamin K"],
+          ans: 2
+        },
+        {
+          q_bn: "৬. যক্ষ্মা বা টিউবারকিউলোসিস (TB) রোগটি মূলত কোন ধরনের জীবাণুর সংক্রমণে ঘটে এবং মানবদেহের কোন অঙ্গটি এতে সবচেয়ে বেশি আক্রান্ত হয়?",
+          q_en: "6. Which pathogen causes Tuberculosis (TB) and which organ is most predominantly affected?",
+          options_bn: ["ভাইরাস; লিভার বা যকৃত", "ব্যাকটেরিয়া; ফুসফুস", "ছত্রাক; ত্বক বা চামড়া", "প্রোটোজোয়া; অন্ত্র"],
+          options_en: ["Virus; Liver", "Bacteria; Lungs", "Fungus; Skin", "Protozoa; Intestine"],
+          ans: 1
+        },
+        {
+          q_bn: "৭. ডায়রিয়া বা পাতলা পায়খানা হলে শরীরে পানিশূন্যতা ও ইলেক্ট্রোলাইটের ভারসাম্যহীনতা রোধে খাবার স্যালাইন (ORS) তৈরির সঠিক নিয়ম কোনটি?",
+          q_en: "7. What is the standard sterile preparation rule for 1 packet of Oral Rehydration Salts (ORS)?",
+          options_bn: ["২৫০ মিলি ফুটানো ঠান্ডা পানিতে ১ প্যাকেট", "৫০০ মিলি ফুটানো ঠান্ডা পানিতে ১ প্যাকেট", "১ লিটার ফুটানো গরম পানিতে ১ প্যাকেট", "৭৫০ মিলি সাধারণ পানিতে ১ প্যাকেট"],
+          options_en: ["1 packet in 250ml cool boiled water", "1 packet in 500ml cool boiled water", "1 packet in 1L boiled hot water", "1 packet in 750ml tap water"],
+          ans: 1
+        },
+        {
+          q_bn: "৮. রক্তে কোন ধরনের কোলেস্টেরলের মাত্রা অত্যধিক বেড়ে গেলে তা রক্তনালীর দেওয়ালে জমে হৃদরোগ (Heart Attack) ও আর্টারি ব্লকের ঝুঁকি বহুগুণ বাড়িয়ে দেয়?",
+          q_en: "8. Elevation of which cholesterol builds plaque on artery walls causing Heart Attack and arterial blockages?",
+          options_bn: ["এইচডিএল (HDL) কোলেস্টেরল", "এলডিএল (LDL) কোলেস্টেরল", "ট্রাইগ্লিসারাইড-মুক্ত প্রোটিন", "অ্যালবুমিন"],
+          options_en: ["HDL Cholesterol", "LDL Cholesterol", "Triglyceride-free protein", "Albumin"],
+          ans: 1
+        },
+        {
+          q_bn: "৯. একজন রোগী ডাক্তারের পরামর্শ ছাড়া অ্যান্টিবায়োটিক ওষুধের পুরো কোর্স শেষ না করে মাঝপথে খাওয়া বন্ধ করে দিলে কোন মারাত্মক ঝুঁকি তৈরি হয়?",
+          q_en: "9. Stopping an antibiotic course prematurely without finishing introduces which fatal hazard?",
+          options_bn: ["শরীরে রক্তের পরিমাণ দ্রুত কমে যায়", "জীবাণু ওই ওষুধের বিরুদ্ধে প্রতিরোধী বা অ্যান্টিবায়োটিক রেজিস্ট্যান্স হয়ে ওঠে", "হজমে স্থায়ী সমস্যা সৃষ্টি হয়", "শরীরে তাৎক্ষণিক অ্যালার্জি বেড়ে যায়"],
+          options_en: ["Blood volume decreases rapidly", "Microbes develop Antibiotic Resistance", "Permanent digestive failure occurs", "Immediate severe skin allergy"],
+          ans: 1
+        },
+        {
+          q_bn: "১০. মানবদেহের উচ্চতা ও ওজনের অনুপাত অনুযায়ী বডি ম্যাস ইনডেক্স (BMI) কত বা তার বেশি হলে একজন ব্যক্তিকে চিকিৎসা বিজ্ঞানে 'স্থূলকায়' বা 'Obese' হিসেবে গণ্য করা হয়?",
+          q_en: "10. In clinical health standards, a Body Mass Index (BMI) equal or greater than what threshold classifies Obesity?",
+          options_bn: ["১৮.৫ বা তার কম", "২৫.০ – ২৯.৯", "৩০.০ বা তার বেশি", "৪০.০ বা তার বেশি"],
+          options_en: ["18.5 or lower", "25.0 – 29.9", "30.0 or higher", "40.0 or higher"],
+          ans: 2
+        },
+        {
+          q_bn: "১১. হেপাটাইটিস বি (Hepatitis B) ভাইরাস মূলত মানবদেহের কোন অঙ্গের কোষে দীর্ঘমেয়াদী প্রদাহ সৃষ্টি করে সিরোসিস বা ক্যান্সারের কারণ হতে পারে?",
+          q_en: "11. Hepatitis B virus causes chronic cell damage in which human organ resulting in Cirrhosis or cancer?",
+          options_bn: ["কিডনি বা বৃক্ক", "যকৃত বা লিভার", "অগ্ন্যাশয় বা প্যানক্রিয়াস", "প্লীহা বা স্প্লিন"],
+          options_en: ["Kidney", "Liver", "Pancreas", "Spleen"],
+          ans: 1
+        },
+        {
+          q_bn: "১২. মস্তিষ্কের কোনো রক্তনালী হঠাৎ বন্ধ হয়ে রক্ত সঞ্চালন বাধাগ্রস্ত হলে অথবা রক্তনালী ছিঁড়ে রক্তক্ষরণ ঘটলে মস্তিষ্কের কোষ ক্ষতিগ্রস্ত হয়—এই দশাকে কী বলে?",
+          q_en: "12. Sudden arterial blockage or rupture depriving brain tissue of oxygen and nutrients is medically termed:",
+          options_bn: ["কার্ডিয়াক অ্যারেস্ট", "ব্রেন স্ট্রোক", "এপিলিপ্সি বা মৃগীরোগ", "মাইগ্রেন অ্যাটাক"],
+          options_en: ["Cardiac Arrest", "Brain Stroke", "Epilepsy", "Migraine Attack"],
+          ans: 1
+        },
+        {
+          q_bn: "১৩. শিশুদের হাড় নরম ও দুর্বল হয়ে বাঁকা হয়ে যাওয়া (রিকেটস) এবং প্রাপ্তবয়স্কদের অস্টিওম্যালাসিয়া প্রতিরোধে সূর্যের আলোর সহায়তায় কোন ভিটামিন তৈরি হয়?",
+          q_en: "13. Which vitamin is synthesized via sunlight to prevent Rickets in children and Osteomalacia in adults?",
+          options_bn: ["ভিটামিন এ", "ভিটামিন ডি", "ভিটামিন ই", "ভিটামিন সি"],
+          options_en: ["Vitamin A", "Vitamin D", "Vitamin E", "Vitamin C"],
+          ans: 1
+        },
+        {
+          q_bn: "১৪. দীর্ঘমেয়াদী মানসিক চাপ বা ক্রনিক স্ট্রেসের সময় মানবদেহে কোন হরমোনটির নিঃসরণ অতিরিক্ত বেড়ে গিয়ে রোগ প্রতিরোধ ক্ষমতা দুর্বল করে এবং পেটে চর্বি জমায়?",
+          q_en: "14. Which hormone spikes during chronic stress, suppressing immunity and increasing visceral abdominal fat?",
+          options_bn: ["ইনসুলিন", "কর্টিসল", "থাইরক্সিন", "মেলাটোনিন"],
+          options_en: ["Insulin", "Cortisol", "Thyroxine", "Melatonin"],
+          ans: 1
+        },
+        {
+          q_bn: "১৫. তীব্র ডায়রিয়া বা কলেরায় আক্রান্ত রোগীর ক্ষেত্রে মলের বর্ণ বা বৈশিষ্ট্য সাধারণত কেমন হয়ে থাকে?",
+          q_en: "15. What is the classic hallmark stool consistency in acute cholera diarrhea?",
+          options_bn: ["চাল ধোয়া পানির মতো পাতলা ও সাদাটে", "গাঢ় হলুদ ও ঘন পেস্টের মতো", "কালো ও শক্ত দানাদার", "সবুজাভ ফেনাযুক্ত"],
+          options_en: ["Rice-water-like watery and whitish", "Thick dark yellow paste", "Dark black hard pellets", "Greenish frothy liquid"],
+          ans: 0
+        },
+        {
+          q_bn: "১৬. হাঁপানি বা অ্যাজমা রোগীর হঠাৎ শ্বাসকষ্ট বেড়ে গেলে তাৎক্ষণিক স্বস্তি পাওয়ার জন্য ইনহেলারের মাধ্যমে কোন শ্রেণির ওষুধ প্রয়োগ করা হয়?",
+          q_en: "16. In acute asthma bronchospasm, which class of fast-acting inhaler medication is administered?",
+          options_bn: ["অ্যান্টিবায়োটিক", "ব্রঙ্কোডাইলেটর (শ্বাসনালী প্রসারক)", "অ্যান্টিহিস্টামিন", "পেইন কিলার"],
+          options_en: ["Antibiotics", "Bronchodilators (Airway openers)", "Antihistamines", "Painkillers"],
+          ans: 1
+        },
+        {
+          q_bn: "১৭. দৈনন্দিন খাদ্যতালিকায় দীর্ঘদিন আয়োডিনের তীব্র অভাব থাকলে মানবদেহের গলার সামনের কোন অন্তঃক্ষরা গ্রন্থিটি অস্বাভাবিক ফুলে গিয়ে গয়টার বা গলগণ্ড রোগ সৃষ্টি করে?",
+          q_en: "17. Prolonged dietary deficiency of iodine produces enlargement (Goiter) of which gland located in the anterior neck?",
+          options_bn: ["পিটুইটারি গ্রন্থি", "থাইরয়েড গ্রন্থি", "অ্যাড্রিনাল গ্রন্থি", "প্যারাথাইরয়েড গ্রন্থি"],
+          options_en: ["Pituitary Gland", "Thyroid Gland", "Adrenal Gland", "Parathyroid Gland"],
+          ans: 1
+        },
+        {
+          q_bn: "১৮. কিডনি যখন রক্ত থেকে ক্ষতিকর বর্জ্য ও অতিরিক্ত পানি বের করতে সম্পূর্ণ অক্ষম হয়ে পড়ে, তখন কৃত্রিম মেশিনের মাধ্যমে রক্ত পরিশোধনের চিকিৎসাকে কী বলা হয়?",
+          q_en: "18. What is the medical procedure called when an external machine cleanses waste and extra fluid in end-stage renal failure?",
+          options_bn: ["এনজিওগ্রাম", "ডায়ালাইসিস", "কেমোথেরাপি", "এন্ডোস্কোপি"],
+          options_en: ["Angiogram", "Dialysis", "Chemotherapy", "Endoscopy"],
+          ans: 1
+        },
+        {
+          q_bn: "১৯. ম্যালেরিয়া রোগের জীবাণু (Plasmodium) কোন জাতীয় মশার মাধ্যমে মানুষের রক্তে ছড়ায় এবং মানবদেহের কোন কণিকাগুলোকে ধ্বংস করে?",
+          q_en: "19. Plasmodium parasite is vector-borne by which mosquito and multiplies inside/ruptures which human blood cells?",
+          options_bn: ["এডিস মশা; শ্বেত রক্তকণিকা", "স্ত্রী অ্যানোফিলিস মশা; লোহিত রক্তকণিকা", "কিউলেক্স মশা; প্লাটিলেট", "পুরুষ অ্যানোফিলিস মশা; হিমোগ্লোবিন"],
+          options_en: ["Aedes; White Blood Cells", "Female Anopheles; Red Blood Cells", "Culex; Platelets", "Male Anopheles; Hemoglobin"],
+          ans: 1
+        },
+        {
+          q_bn: "২০. গর্ভধারণের পূর্বে এবং গর্ভাবস্থার প্রথম তিন মাসে অনাগত শিশুর স্নায়ুনালী বা নিউরাল টিউব ত্রুটি (Neural Tube Defects) প্রতিরোধে কোন ভিটামিন অত্যন্ত জরুরি?",
+          q_en: "20. Which critical B-vitamin prevents fetal Neural Tube Defects when supplemented pre-conception and in first trimester?",
+          options_bn: ["ফলিক অ্যাসিড (ভিটামিন বি-৯)", "ভিটামিন সি", "ভিটামিন কে", "ভিটামিন বি-১২"],
+          options_en: ["Folic Acid (Vitamin B-9)", "Vitamin C", "Vitamin K", "Vitamin B-12"],
+          ans: 0
+        },
+        {
+          q_bn: "২১. ফুড পয়জনিং বা খাদ্যে বিষক্রিয়া প্রতিরোধে রান্না করা খাবার সাধারণ কক্ষ তাপমাত্রায় (Room Temperature) সর্বোচ্চ কত সময়ের বেশি ফেলে রাখা উচিত নয়?",
+          q_en: "21. Under food microbiology hygiene standards, cooked perishable food should not stay at room temperature for more than:",
+          options_bn: ["২ ঘণ্টা", "৫ ঘণ্টা", "৮ ঘণ্টা", "১২ ঘণ্টা"],
+          options_en: ["2 Hours", "5 Hours", "8 Hours", "12 Hours"],
+          ans: 0
+        },
+        {
+          q_bn: "২২. অস্টিওপোরোসিস (Osteoporosis) রোগে হাড় ভঙ্গুর ও দুর্বল হওয়ার মূল কারণ নিচের কোনটি?",
+          q_en: "22. What pathophysiological change directly causes brittle and fragile skeletal bones in Osteoporosis?",
+          options_bn: ["হাড়ের খনিজ ঘনত্ব (Bone Mineral Density) ও ক্যালসিয়াম কমে যাওয়ায়", "শরীরে অতিরিক্ত ইউরিক অ্যাসিড জমার কারণে", "অতিরিক্ত কোলেস্টেরল হাড়ের সন্ধিতে জমার ফলে", "ভিটামিন সি-এর অতিরিক্ত উপস্থিতির কারণে"],
+          options_en: ["Depletion of Bone Mineral Density & Calcium stores", "Excessive Uric Acid deposition", "Cholesterol buildup inside joint capsules", "Elevated serum Vitamin C levels"],
+          ans: 0
+        },
+        {
+          q_bn: "২৩. পানীয় জলে সহনশীল মাত্রার চেয়ে অতিরিক্ত আর্সেনিক দীর্ঘদিন গ্রহণের ফলে ত্বকে কালো দাগ ও ঘা সৃষ্টির মাধ্যমে যে ক্রনিক স্বাস্থ্য জটিলতা দেখা দেয় তাকে কী বলে?",
+          q_en: "23. Chronic toxic ingestion of arsenic beyond threshold limits presenting with melanosis and keratosis is known as:",
+          options_bn: ["ফ্লুরোসিস", "আর্সেনিকোসিস", "সিলিকোসিস", "অ্যাসবেস্টোসিস"],
+          options_en: ["Fluorosis", "Arsenicosis", "Silicosis", "Asbestosis"],
+          ans: 1
+        },
+        {
+          q_bn: "২৪. কোনো ব্যক্তি রাস্তায় কোনো দুর্ঘটনার শিকার হয়ে গভীর বা মরিচাধরা ধাতব বস্তু দিয়ে জখম হলে সংক্রমণজনিত প্রাণঘাতী খিঁচুনি প্রতিরোধে অবিলম্বে কোন টিকা বা ইনজেকশন দেওয়া আবশ্যক?",
+          q_en: "24. Following a deep contaminated injury from rusty metal objects, which immunization must be immediately given against fatal spasms?",
+          options_bn: ["হেপাটাইটিস বি", "টিটেনাস (ধনুষ্টংকার)", "রেবিস (জলাতঙ্ক)", "টাইফয়েড"],
+          options_en: ["Hepatitis B", "Tetanus Toxoid", "Rabies Vaccine", "Typhoid Vaccine"],
+          ans: 1
+        },
+        {
+          q_bn: "২৫. খাদ্যাভ্যাসে অতিরিক্ত শর্করা, স্যাচুরেটেড ফ্যাট ও শারীরিক নিষ্ক্রিয়তার কারণে লিভারের কোষে ট্রাইগ্লিসারাইড জমার প্রাথমিক পর্যায়কে কী রোগ বলা হয়?",
+          q_en: "25. The initial hepatic disease state where excess dietary calories and sedentary lifestyle cause triglyceride pooling in hepatocytes is called:",
+          options_bn: ["ফ্যাটি লিভার ডিজিজ", "জন্ডিস", "গলব্লাডার স্টোন", "পিত্তথলির প্রদাহ"],
+          options_en: ["Fatty Liver Disease", "Jaundice", "Gallbladder Stones", "Cholecystitis"],
+          ans: 0
+        }
+      ]
+    },
 
-function renderGlobalLeaderboard(list) {
-    const tbody = document.getElementById('leaderboardBody');
-    tbody.innerHTML = (list || GLOBAL_LEADERS).map(item => {
-        let badgeClass = 'rank-other';
-        let badgeIcon = '#' + item.rank;
-        if (item.rank === 1) { badgeClass = 'rank-1'; badgeIcon = '🥇 1'; }
-        else if (item.rank === 2) { badgeClass = 'rank-2'; badgeIcon = '🥈 2'; }
-        else if (item.rank === 3) { badgeClass = 'rank-3'; badgeIcon = '🥉 3'; }
+    // SSC SUBJECTS: MATH, ENG, SCIENCE
+    ssc: {
+      math: [
+        {
+          q_bn: "এসএসসি গণিত: সমকোণী ত্রিভুজের অতিভুজ ১০ সেমি এবং লম্ব ৬ সেমি হলে ভূমির দৈর্ঘ্য কত?",
+          q_en: "SSC Math: If a right triangle has hypotenuse 10cm and height 6cm, what is its base length?",
+          options_bn: ["৮ সেমি", "৭ সেমি", "৯ সেমি", "৫ সেমি"],
+          options_en: ["8 cm", "7 cm", "9 cm", "5 cm"],
+          ans: 0
+        },
+        {
+          q_bn: "এসএসসি গণিত: (a + b)² - (a - b)² এর সমান কোনটি?",
+          q_en: "SSC Math: Which identity equals (a + b)² - (a - b)²?",
+          options_bn: ["4ab", "2(a² + b²)", "2ab", "a² - b²"],
+          options_en: ["4ab", "2(a² + b²)", "2ab", "a² - b²"],
+          ans: 0
+        }
+      ],
+      eng: [
+        {
+          q_bn: "SSC English: Fill in the blank: 'Neither of the boys ___ present.'",
+          q_en: "SSC English: Fill in the blank: 'Neither of the boys ___ present.'",
+          options_bn: ["was", "were", "are", "have been"],
+          options_en: ["was", "were", "are", "have been"],
+          ans: 0
+        },
+        {
+          q_bn: "SSC English: Identify the noun form of 'Glorious':",
+          q_en: "SSC English: Identify the noun form of 'Glorious':",
+          options_bn: ["Glory", "Glorify", "Gloriously", "Glorifying"],
+          options_en: ["Glory", "Glorify", "Gloriously", "Glorifying"],
+          ans: 0
+        }
+      ],
+      science: [
+        {
+          q_bn: "এসএসসি সাধারণ বিজ্ঞান: মানবদেহের সবচেয়ে বড় গ্রন্থি (Largest Gland) কোনটি?",
+          q_en: "SSC Science: What is the largest gland in the human body?",
+          options_bn: ["যকৃত (Liver)", "অগ্ন্যাশয় (Pancreas)", "থাইরয়েড (Thyroid)", "পিটুইটারি (Pituitary)"],
+          options_en: ["Liver", "Pancreas", "Thyroid", "Pituitary"],
+          ans: 0
+        },
+        {
+          q_bn: "এসএসসি সাধারণ বিজ্ঞান: বায়ুমণ্ডলে সবচেয়ে বেশি পরিমাণে কোন গ্যাস থাকে?",
+          q_en: "SSC Science: Which gas is most abundant in Earth's atmosphere?",
+          options_bn: ["নাইট্রোজেন (Nitrogen)", "অক্সিজেন (Oxygen)", "আর্গন (Argon)", "কার্বন ডাই অক্সাইড (CO2)"],
+          options_en: ["Nitrogen", "Oxygen", "Argon", "Carbon Dioxide"],
+          ans: 0
+        }
+      ]
+    },
 
-        return `
-            <tr>
-                <td><span class="rank-badge ${badgeClass}">${badgeIcon}</span></td>
-                <td><strong>${item.name}</strong></td>
-                <td>${item.district}</td>
-                <td>${item.level}</td>
-                <td style="color:#38bdf8; font-weight:600;">${item.points}</td>
-                <td style="color:#10b981; font-weight:600;">${item.taka}</td>
-                <td><span style="color:#10b981;">● ${item.status}</span></td>
-            </tr>
-        `;
-    }).join('');
-}
+    // HSC SUBJECTS: CHE, PHY, BIO, ICT, ENG
+    hsc: {
+      che: [
+        {
+          q_bn: "এইচএসসি রসায়ন: কোন অরবিটালের আকৃতি ডাম্বেল (Dumbbell) আকৃতির?",
+          q_en: "HSC Chemistry: Which atomic orbital has a dumbbell shape?",
+          options_bn: ["p অরবিটাল", "s অরবিটাল", "d অরবিটাল", "f অরবিটাল"],
+          options_en: ["p orbital", "s orbital", "d orbital", "f orbital"],
+          ans: 0
+        },
+        {
+          q_bn: "এইচএসসি রসায়ন: সাধারণ তাপমাত্রায় কোন ধাতু তরল অবস্থায় থাকে?",
+          q_en: "HSC Chemistry: Which metal exists in liquid state at standard room temperature?",
+          options_bn: ["পারদ (Mercury)", "ব্রোমিন (Bromine)", "সোডিয়াম (Sodium)", "গ্যালিয়াম (Gallium)"],
+          options_en: ["Mercury", "Bromine", "Sodium", "Gallium"],
+          ans: 0
+        }
+      ],
+      phy: [
+        {
+          q_bn: "এইচএসসি পদার্থবিজ্ঞান: কাজের এসআই (SI) একক কোনটি?",
+          q_en: "HSC Physics: What is the SI unit of work and energy?",
+          options_bn: ["জুল (Joule)", "ওয়াট (Watt)", "নিউটন (Newton)", "প্যাসকেল (Pascal)"],
+          options_en: ["Joule", "Watt", "Newton", "Pascal"],
+          ans: 0
+        },
+        {
+          q_bn: "এইচএসসি পদার্থবিজ্ঞান: আলোর গতিবেগ প্রতি সেকেন্ডে কত?",
+          q_en: "HSC Physics: What is the speed of light in vacuum?",
+          options_bn: ["3 × 10⁸ m/s", "3 × 10⁶ m/s", "3 × 10¹⁰ m/s", "3 × 10⁵ m/s"],
+          options_en: ["3 × 10⁸ m/s", "3 × 10⁶ m/s", "3 × 10¹⁰ m/s", "3 × 10⁵ m/s"],
+          ans: 0
+        }
+      ],
+      bio: [
+        {
+          q_bn: "এইচএসসি জীববিজ্ঞান: কোষের 'পাওয়ার হাউস' (Powerhouse of the Cell) বলা হয় কাকে?",
+          q_en: "HSC Biology: Which organelle is known as the powerhouse of the cell?",
+          options_bn: ["মাইটোকন্ড্রিয়া (Mitochondria)", "রাইবোসোম (Ribosome)", "গলগি বডি (Golgi Body)", "লাইসোজোম (Lysosome)"],
+          options_en: ["Mitochondria", "Ribosome", "Golgi Body", "Lysosome"],
+          ans: 0
+        },
+        {
+          q_bn: "এইচএসসি জীববিজ্ঞান: মানবদেহের সার্বজনীন গ্রহীতা (Universal Recipient) রক্তের গ্রুপ কোনটি?",
+          q_en: "HSC Biology: Which blood group is known as the Universal Recipient?",
+          options_bn: ["AB+", "O-", "A+", "B+"],
+          options_en: ["AB+", "O-", "A+", "B+"],
+          ans: 0
+        }
+      ],
+      ict: [
+        {
+          q_bn: "এইচএসসি আইসিটি: বাইনারি সংখ্যা পদ্ধতিতে মোট কয়টি মৌলিক অঙ্ক ব্যবহৃত হয়?",
+          q_en: "HSC ICT: How many fundamental digits are used in the binary number system?",
+          options_bn: ["২টি (০ এবং ১)", "৮টি", "১০টি", "১৬টি"],
+          options_en: ["2 (0 and 1)", "8", "10", "16"],
+          ans: 0
+        },
+        {
+          q_bn: "এইচএসসি আইসিটি: ওয়েবসাইটের একক পেজ তৈরি করতে কোন ভাষাটি প্রধানত ব্যবহৃত হয়?",
+          q_en: "HSC ICT: Which language is primarily used to structure web pages?",
+          options_bn: ["HTML", "C++", "SQL", "Python"],
+          options_en: ["HTML", "C++", "SQL", "Python"],
+          ans: 0
+        }
+      ],
+      eng: [
+        {
+          q_bn: "HSC English: 'Look forward to' এর পর verb-এর কোন রূপটি বসে?",
+          q_en: "HSC English: Which form of verb follows the prepositional phrase 'look forward to'?",
+          options_bn: ["Verb + ing (Gerund)", "Base form (V1)", "Past participle (V3)", "Infinitive (to + verb)"],
+          options_en: ["Verb + ing (Gerund)", "Base form (V1)", "Past participle (V3)", "Infinitive (to + verb)"],
+          ans: 0
+        }
+      ]
+    },
 
-function filterLeaderboard() {
-    const q = document.getElementById('leaderSearch').value.toLowerCase();
-    const filtered = GLOBAL_LEADERS.filter(item => 
-        item.name.toLowerCase().includes(q) || item.district.toLowerCase().includes(q)
-    );
-    renderGlobalLeaderboard(filtered);
-}
-
-function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('open');
-    document.getElementById('backdrop').classList.toggle('active');
-}
-
-function switchView(viewName) {
-    if (!isAuthenticated && viewName !== 'login') {
-        updateAuthUI();
-        return;
-    }
-
-    const allViews = ['game_arena', 'global_position', 'user_portal', 'my_report', 'deposit', 'admin', 'login'];
-    allViews.forEach(v => {
-        const el = document.getElementById('view_' + v);
-        if (el) el.style.display = 'none';
-    });
-
-    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-
-    if (viewName === 'game_arena') {
-        document.getElementById('view_game_arena').style.display = 'block';
-        document.getElementById('nav_arena').classList.add('active');
-        renderArenaCards();
-    } else if (viewName === 'global_position') {
-        document.getElementById('view_global_position').style.display = 'block';
-        document.getElementById('nav_global').classList.add('active');
-        renderGlobalLeaderboard();
-    } else if (viewName === 'user_portal') {
-        document.getElementById('view_user_portal').style.display = 'block';
-        document.getElementById('nav_portal').classList.add('active');
-    } else if (viewName === 'my_report') {
-        document.getElementById('view_my_report').style.display = 'block';
-        document.getElementById('nav_report').classList.add('active');
-    } else if (viewName === 'deposit_view') {
-        document.getElementById('view_deposit').style.display = 'block';
-        document.getElementById('nav_deposit').classList.add('active');
-    } else if (viewName === 'admin_panel') {
-        document.getElementById('view_admin').style.display = 'block';
-        document.getElementById('nav_admin').classList.add('active');
-        renderAdminHistory();
-    }
-
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('backdrop').classList.remove('active');
-}
-
-// --- Question Bank ---
-const QUESTION_DATABASE = {
+    // JOB PREPARATION: BCS, BANK, OTHERS
     bcs: {
-        set1: [
-            { q: "বাংলা সাহিত্যের প্রাচীনতম নিদর্শন চর্যাপদ কে আবিষ্কার করেন?", options: ["ড. মুহম্মদ শহীদুল্লাহ", "হরপ্রসাদ শাস্ত্রী", "সুনীতিকুমার চট্টোপাধ্যায়", "সুকুমার সেন"], ans: 1, level: "primary" },
-            { q: "বাংলাদেশের সংবিধানে কয়টি অনুচ্ছেদ রয়েছে?", options: ["১৩৩টি", "১৪৩টি", "১৫৩টি", "১৬৩টি"], ans: 2, level: "primary" },
-            { q: "পদ্মা সেতুর দৈর্ঘ্য কত কিলোমিটার?", options: ["৬.১৫ কিমি", "৫.৮০ কিমি", "৭.২০ কিমি", "৬.৫০ কিমি"], ans: 0, level: "primary" },
-            { q: "বঙ্গবন্ধু স্যাটেলাইট-১ কোন দেশ থেকে উৎক্ষেপণ করা হয়?", options: ["যুক্তরাষ্ট্র (ফ্লোরিডা)", "রাশিয়া", "ফ্রান্স", "চীন"], ans: 0, level: "mid" },
-            { q: "বাংলা বর্ণমালায় মাত্রাহীন বর্ণ কয়টি?", options: ["৭টি", "৮টি", "৯টি", "১০টি"], ans: 3, level: "primary" },
-            { q: "মুজিবনগর সরকার কবে শপথ গ্রহণ করে?", options: ["১০ এপ্রিল ১৯৭১", "১৭ এপ্রিল ১৯৭১", "২৬ মার্চ ১৯৭১", "১৬ ডিসেম্বর ১৯৭১"], ans: 1, level: "mid" },
-            { q: "রবীন্দ্রনাথ ঠাকুর কত সালে সাহিত্যে নোবেল পুরস্কার পান?", options: ["১৯১১", "১৯১৩", "১৯১৪", "১৯২১"], ans: 1, level: "primary" },
-            { q: "বাংলাদেশের সর্বউত্তরের উপজেলার নাম কী?", options: ["তেঁতুলিয়া", "বাংলাবান্ধা", "রুহিয়া", "পঞ্চগড় সদর"], ans: 0, level: "primary" },
-            { q: "'সূর্যদীঘল বাড়ী' উপন্যাসটির রচয়িতা কে?", options: ["আবু ইসহাক", "শওকত ওসমান", "জহির রায়হান", "সৈয়দ ওয়ালীউল্লাহ"], ans: 0, level: "mid" },
-            { q: "নিচের কোন নদীটি হিমালয় থেকে উৎপন্ন হয়েছে?", options: ["মেঘনা", "পদ্মা", "যমুনা", "কর্ণফুলী"], ans: 1, level: "mid" },
-            { q: "জাতিসংঘের নিরাপত্তা পরিষদের স্থায়ী সদস্য সংখ্যা কত?", options: ["৫টি", "১০টি", "১৫টি", "৭টি"], ans: 0, level: "primary" },
-            { q: "বাংলাদেশের প্রথম আদমশুমারি অনুষ্ঠিত হয় কোন সালে?", options: ["১৯৭২", "১৯৭৩", "১৯৭৪", "১৯৭৫"], ans: 2, level: "mid" },
-            { q: "কম্পিউটারের প্রধান মেমরি কোনটি?", options: ["RAM", "Hard Disk", "CD-ROM", "Pen Drive"], ans: 0, level: "primary" },
-            { q: "'অসমাপ্ত আত্মজীবনী' গ্রন্থের রচয়িতা কে?", options: ["বঙ্গবন্ধু শেখ মুজিবুর রহমান", "তাজউদ্দীন আহমদ", "মওলানা ভাসানী", "আবুল মনসুর আহমদ"], ans: 0, level: "primary" },
-            { q: "বায়ুমণ্ডলে অক্সিজেনের শতকরা পরিমাণ কত?", options: ["২০.৯৫%", "৭৮.০৯%", "০.০৩%", "১.০০%"], ans: 0, level: "mid" },
-            { q: "বাংলাদেশের একমাত্র প্রবাল দ্বীপ কোনটি?", options: ["সেন্টমার্টিন", "হাতিয়া", "সন্দ্বীপ", "মহেশখালী"], ans: 0, level: "primary" },
-            { q: "মুক্তিযুদ্ধকালে বাংলাদেশকে কয়টি সেক্টরে ভাগ করা হয়েছিল?", options: ["৯টি", "১০টি", "১১টি", "১২টি"], ans: 2, level: "primary" },
-            { q: "গ্রিনহাউস ইফেক্টের জন্য প্রধান দায়ী কোন গ্যাস?", options: ["কার্বন ডাই-অক্সাইড", "নাইট্রোজেন", "হাইড্রোজেন", "অক্সিজেন"], ans: 0, level: "primary" },
-            { q: "আন্তর্জাতিক নারী দিবস কবে পালিত হয়?", options: ["৮ মার্চ", "১ মে", "৫ জুন", "১০ ডিসেম্বর"], ans: 0, level: "primary" },
-            { q: "রক্তের গ্রুপ আবিষ্কার করেন কে?", options: ["কার্ল ল্যান্ডস্টাইনার", "আলেকজান্ডার ফ্লেমিং", "রবার্ট হুক", "লুই পাস্তুর"], ans: 0, level: "executive" },
-            { q: "শহীদ বুদ্ধিজীবী দিবস কবে পালিত হয়?", options: ["১৪ ডিসেম্বর", "১৬ ডিসেম্বর", "৭ মার্চ", "২৬ মার্চ"], ans: 0, level: "primary" },
-            { q: "কোন মুঘল সুবাদার বাংলাকে 'জান্নাতাবাদ' নামকরণ করেন?", options: ["হুমায়ুন", "আকবর", "জাহাঙ্গীর", "শাহজাহান"], ans: 0, level: "executive" },
-            { q: "SDG (টেকসই উন্নয়ন লক্ষ্যমাত্রা)-এর অভীষ্ট কয়টি?", options: ["১৫টি", "১৬টি", "১৭টি", "১৮টি"], ans: 2, level: "executive" },
-            { q: "বাংলাদেশ জাতিসংঘের কততম সদস্য রাষ্ট্র?", options: ["১৩৬তম", "১৩২তম", "১৪০তম", "১৩০তম"], ans: 0, level: "executive" },
-            { q: "আন্তর্জাতিক মাতৃভাষা দিবস হিসেবে ২১শে ফেব্রুয়ারিকে স্বীকৃতি দেয় কোন সংস্থা?", options: ["ইউনেস্কো (UNESCO)", "ইউনিসেফ", "ইউএনডিপি", "বিশ্বব্যাংক"], ans: 0, level: "mid" },
-            { q: "'লালসালু' উপন্যাসের কেন্দ্রীয় চরিত্রের নাম কী?", options: ["মজিদ", "খালেক ব্যাপারী", "রহিমা", "জমিলা"], ans: 0, level: "mid" },
-            { q: "কোন দেশ প্রথম বাংলাদেশকে স্বীকৃতি প্রদান করে?", options: ["ভুটান", "ভারত", "রাশিয়া", "যুক্তরাজ্য"], ans: 0, level: "mid" },
-            { q: "বিশ্বব্যাংকের সদর দপ্তর কোথায় অবস্থিত?", options: ["ওয়াশিংটন ডিসি", "নিউইয়র্ক", "জেনেভা", "প্যারিস"], ans: 0, level: "primary" },
-            { q: "বাংলাদেশের দীর্ঘতম নদী কোনটি?", options: ["মেঘনা", "পদ্মা", "যমুনা", "ব্রহ্মপুত্র"], ans: 0, level: "mastery" },
-            { q: "জাতীয় স্মৃতিসৌধের স্থপতি কে?", options: ["সৈয়দ মাইনুল হোসেন", "শামীম শিকদার", "হামিদুর রহমান", "মাজহারুল ইসলাম"], ans: 0, level: "mid" }
-        ],
-        set2: [
-            { q: "একটি সংখ্যার ৩ গুণের সাথে দ্বিগুণ যোগ করলে ৯০ হয়। সংখ্যাটি কত?", options: ["১৫", "১৮", "২০", "২৫"], ans: 1, level: "primary" },
-            { q: "৫টি ক্রমিক সংখ্যার যোগফল ১০০ হলে, মধ্যম সংখ্যাটি কত?", options: ["১৯", "২০", "২১", "২২"], ans: 1, level: "primary" },
-            { q: "১০% ক্ষতিতে একটি পণ্য ৪৫০ টাকায় বিক্রি করা হলে, ক্রয়মূল্য কত?", options: ["৫০০ টাকা", "৪৮০ টাকা", "৫২০ টাকা", "৫৫০ টাকা"], ans: 0, level: "mid" },
-            { q: "বৃত্তের ব্যাস ৩ গুণ বৃদ্ধি পেলে ক্ষেত্রফল কত গুণ বৃদ্ধি পাবে?", options: ["৩ গুণ", "৬ গুণ", "৯ গুণ", "১২ গুণ"], ans: 2, level: "mid" },
-            { q: "log2(8) এর মান কত?", options: ["২", "৩", "৪", "৮"], ans: 1, level: "primary" },
-            { q: "পিতা ও পুত্রের বয়সের সমষ্টি ৬০ বছর। পিতার বয়স পুত্রের বয়সের ৩ গুণ হলে পিতার বয়স কত?", options: ["৪০", "৪৫", "৫০", "৩৫"], ans: 1, level: "primary" },
-            { q: "Choose the correct spelling:", options: ["Lieutenant", "Leftenant", "Lieutanant", "Lientenant"], ans: 0, level: "mid" },
-            { q: "What is the synonym of 'Competent'?", options: ["Capable", "Lazy", "Weak", "Hostile"], ans: 0, level: "primary" },
-            { q: "A person who writes dictionaries is called a:", options: ["Lexicographer", "Calligrapher", "Biographer", "Cartographer"], ans: 0, level: "executive" },
-            { q: "Identify the antonym of 'Optimist':", options: ["Pessimist", "Pragmatist", "Altruist", "Realist"], ans: 0, level: "primary" },
-            { q: "কোন ভিটামিনের অভাবে স্কার্ভি রোগ হয়?", options: ["ভিটামিন এ", "ভিটামিন বি", "ভিটামিন সি", "ভিটামিন ডি"], ans: 2, level: "primary" },
-            { q: "মানবদেহের স্বাভাবিক তাপমাত্রা কত ডিগ্রি ফারেনহাইট?", options: ["৯৮.৪°F", "৯৮.৬°F", "৯৯.০°F", "৯৭.৮°F"], ans: 1, level: "mid" },
-            { q: "পানির স্ফুটনাঙ্ক কত ডিগ্রি সেলসিয়াস?", options: ["৯০°C", "১০০°C", "৮০°C", "১২০°C"], ans: 1, level: "primary" },
-            { q: "বাংলাদেশ ব্যাংকের প্রথম গভর্নরের নাম কী?", options: ["এ এন এম হামিদুল্লাহ", "ফখরুদ্দীন আহমদ", "ড. আতিউর রহমান", "লুৎফর রহমান সরকার"], ans: 0, level: "executive" },
-            { q: "বাংলাদেশের সংবিধানে মৌলিক অধিকার সংক্রান্ত অনুচ্ছেদ কতটি?", options: ["১৮টি", "১২টি", "১৮টি (অনুচ্ছেদ ২৭-৪৪)", "১৫টি"], ans: 2, level: "mastery" },
-            { q: "জাতীয় সংসদে সংরক্ষিত নারী আসনের সংখ্যা কত?", options: ["৪৫টি", "৫০টি", "৫৫টি", "৬০টি"], ans: 1, level: "primary" },
-            { q: "বাংলাদেশের বৃহত্তম স্থলবন্দর কোনটি?", options: ["বেনাপোল", "বুড়িমারী", "হিলি", "বাংলাবান্ধা"], ans: 0, level: "primary" },
-            { q: "বিশ্ব স্বাস্থ্য সংস্থা (WHO)-এর সদর দপ্তর কোথায়?", options: ["জেনেভা", "প্যারিস", "রোম", "ভিয়েনা"], ans: 0, level: "primary" },
-            { q: "এশিয়ার দীর্ঘতম নদীর নাম কী?", options: ["ইয়াংসিকিয়াং", "হুয়াংহো", "মেকং", "গঙ্গা"], ans: 0, level: "mid" },
-            { q: "'Gitanjali' এর ইংরেজি অনুবাদ কে করেছিলেন?", options: ["রবীন্দ্রনাথ ঠাকুর নিজে", "ডব্লিউ বি ইয়েটস", "অরবিন্দ", "টমাস হার্ডি"], ans: 0, level: "mastery" },
-            { q: "CPU-এর পূর্ণরূপ কী?", options: ["Central Processing Unit", "Central Program Unit", "Core Processing Unit", "Control Power Unit"], ans: 0, level: "primary" },
-            { q: "আইনের দৃষ্টিতে সবাই সমান—এটি সংবিধানের কত নম্বর অনুচ্ছেদ?", options: ["২৭", "২৮", "২৯", "৩১"], ans: 0, level: "executive" },
-            { q: "কোন তাপমাত্রায় সেলসিয়াস ও ফারেনহাইট স্কেল সমান পাঠ দেয়?", options: ["-৪০°", "০°", "১০০°", "-৩২°"], ans: 0, level: "mid" },
-            { q: "বিদ্যুৎ শক্তির বাণিজ্যিক একক কী?", options: ["কিলোওয়াট-ঘণ্টা (Board of Trade Unit)", "ওয়াট", "জুল", "ভোল্ট"], ans: 0, level: "mid" },
-            { q: "সবুজ পাতার কোষে সালোকসংশ্লেষণ কোথায় সম্পন্ন হয়?", options: ["ক্লোরোপ্লাস্টে", "মাইটোকন্ড্রিয়ায়", "রাইবোসোমে", "গলগি বডিতে"], ans: 0, level: "mid" },
-            { q: "ব্রহ্মপুত্র নদ হিমালয়ের কোন হিমবাহ থেকে উৎপন্ন হয়েছে?", options: ["চেমাযুংদুং", "গঙ্গোত্রী", "যমুনোত্রী", "সিয়াচেন"], ans: 0, level: "mastery" },
-            { q: "'The merchant of Venice' নাটকটির রচয়িতা কে?", options: ["William Shakespeare", "George Bernard Shaw", "John Milton", "Christopher Marlowe"], ans: 0, level: "mid" },
-            { q: "ছয় দফা দাবি কত সালে আনুষ্ঠানিকভাবে ঘোষিত হয়?", options: ["১৯৬৬", "১৯৬৯", "১৯৭০", "১৯৬২"], ans: 0, level: "primary" },
-            { q: "সুন্দরবনকে ইউনেস্কো কত সালে বিশ্ব ঐতিহ্য এলাকা (World Heritage) ঘোষণা করে?", options: ["১৯৯৭", "১৯৯৯", "২০০১", "১৯৯৫"], ans: 0, level: "executive" },
-            { q: "১ নটিক্যাল মাইল = কত কিলোমিটার?", options: ["১.৮৫২ কিমি", "১.৬১ কিমি", "২.০০ কিমি", "১.৭৫ কিমি"], ans: 0, level: "mastery" }
-        ]
+      default: [
+        {
+          q_bn: "বিসিএস প্রিলিমিনারি: বাংলাদেশের সংবিধানের কত অনুচ্ছেদ অনুযায়ী নাগরিকদের মৌলিক অধিকার নিশ্চিত করা হয়েছে?",
+          q_en: "BCS Preliminary: Under which part of Bangladesh Constitution are Fundamental Rights enshrined?",
+          options_bn: ["তৃতীয় ভাগ (অনুচ্ছেদ ২৭-৪৪)", "দ্বিতীয় ভাগ (অনুচ্ছেদ ৮-২৫)", "প্রথম ভাগ (অনুচ্ছেদ ১-৭)", "চতুর্থ ভাগ"],
+          options_en: ["Part III (Articles 27-44)", "Part II (Articles 8-25)", "Part I (Articles 1-7)", "Part IV"],
+          ans: 0
+        }
+      ]
     },
+    bankjob: {
+      default: [
+        {
+          q_bn: "ব্যাংক নিয়োগ পরীক্ষা: ব্যাংকিং ব্যবস্থায় 'CAMELS' রেটিং এর 'C' দ্বারা কী বোঝায়?",
+          q_en: "Bank Recruitment Exam: What does 'C' stand for in the CAMELS banking framework?",
+          options_bn: ["Capital Adequacy", "Credit Worthiness", "Cash Flow", "Commercial Ratio"],
+          options_en: ["Capital Adequacy", "Credit Worthiness", "Cash Flow", "Commercial Ratio"],
+          ans: 0
+        }
+      ]
+    },
+    job_others: {
+      default: [
+        {
+          q_bn: "সরকারি চাকরি ও প্রাইমারি প্রস্তুতি: জাতীয় স্মৃতিসৌধের স্থপতি কে?",
+          q_en: "Govt Job Exam: Who is the architect of the National Martyrs' Memorial (Jatiya Smriti Soudho)?",
+          options_bn: ["সৈয়দ মাইনুল হোসেন", "মাজহারুল ইসলাম", "হামিদুর রহমান", "শামীম শিকদার"],
+          options_en: ["Syed Mainul Hossain", "Muzharul Islam", "Hamidur Rahman", "Shamim Sikder"],
+          ans: 0
+        }
+      ]
+    },
+
     grammar: {
-        set1: [
-            { q: "Choose the correct article: \"She is ___ honest girl.\"", options: ["a", "an", "the", "no article"], ans: 1, level: "primary" },
-            { q: "Which word is a verb in the sentence: \"The cat sleeps on the sofa.\"", options: ["cat", "sleeps", "on", "sofa"], ans: 1, level: "primary" },
-            { q: "What is the plural form of \"Child\"?", options: ["Childs", "Childrens", "Children", "Childes"], ans: 2, level: "primary" },
-            { q: "Choose the correct pronoun: \"___ are going to the market.\"", options: ["He", "She", "They", "It"], ans: 2, level: "primary" },
-            { q: "Fill in the blank with the correct preposition: \"The book is ___ the table.\"", options: ["in", "on", "at", "into"], ans: 1, level: "primary" },
-            { q: "What is the opposite (antonym) of \"Brave\"?", options: ["Bold", "Coward", "Strong", "Happy"], ans: 1, level: "primary" },
-            { q: "Choose the correct spelling:", options: ["Recieve", "Receive", "Recive", "Receeve"], ans: 1, level: "primary" },
-            { q: "Identify the adjective in the sentence: \"He bought a red car.\"", options: ["He", "bought", "red", "car"], ans: 2, level: "primary" },
-            { q: "Fill in the blank: \"She ___ to school every day.\"", options: ["go", "goes", "going", "gone"], ans: 1, level: "mid" },
-            { q: "Choose the correct preposition: \"He is good ___ mathematics.\"", options: ["in", "on", "at", "with"], ans: 2, level: "mid" },
-            { q: "Identify the tense: \"I have finished my homework.\"", options: ["Simple Past", "Past Continuous", "Present Perfect", "Future Perfect"], ans: 2, level: "mid" },
-            { q: "Change into passive voice: \"He writes a letter.\"", options: ["A letter was written by him.", "A letter is written by him.", "A letter is being written by him.", "A letter has been written by him."], ans: 1, level: "mid" },
-            { q: "Fill in the blank: \"Neither of the boys ___ present today.\"", options: ["are", "were", "is", "have"], ans: 2, level: "mid" },
-            { q: "Choose the correct conjunction: \"Work hard ___ you will fail.\"", options: ["and", "but", "or", "so"], ans: 2, level: "mid" },
-            { q: "What is the synonym of \"Abandon\"?", options: ["Keep", "Forsake", "Adopt", "Continue"], ans: 1, level: "mid" },
-            { q: "Choose the correct question tag: \"You don't like coffee, ___?\"", options: ["do you", "don't you", "are you", "did you"], ans: 0, level: "mid" },
-            { q: "Fill in the blank: \"She has been living here ___ 2015.\"", options: ["for", "from", "since", "by"], ans: 2, level: "mid" },
-            { q: "Fill in the blank: \"Scarcely had he reached the station ___ the train left.\"", options: ["than", "when", "then", "after"], ans: 1, level: "mastery" },
-            { q: "Choose the grammatically correct sentence:", options: ["One of my friend is a doctor.", "One of my friends are a doctor.", "One of my friends is a doctor.", "One of my friend are doctors."], ans: 2, level: "mastery" },
-            { q: "Fill in the blank using the subjunctive mood: \"If I ___ a bird, I would fly in the sky.\"", options: ["was", "am", "were", "had been"], ans: 2, level: "mastery" },
-            { q: "Choose the correct preposition: \"He died ___ overwork, while his brother died ___ cholera.\"", options: ["of, from", "from, of", "by, of", "with, from"], ans: 1, level: "mastery" },
-            { q: "Identify the correct indirect speech: He said to me, \"Let us go for a walk.\"", options: ["He told me that let us go for a walk.", "He proposed to me that we should go for a walk.", "He asked me to go for a walk.", "He ordered me that we might go for a walk."], ans: 1, level: "mastery" },
-            { q: "Fill in the blank: \"The jury ___ divided in their opinions.\"", options: ["was", "were", "has", "is"], ans: 1, level: "mastery" },
-            { q: "What is the meaning of the idiom \"To beat around the bush\"?", options: ["To clean the garden", "To avoid coming to the main point", "To fight aggressively", "To search for something lost"], ans: 1, level: "mastery" },
-            { q: "Choose the correct sentence:", options: ["I look forward to meet you.", "I look forward to meeting you.", "I am looking forward to met you.", "I look forward for meeting you."], ans: 1, level: "mastery" }
-        ],
-        set2: [
-            { q: "Choose the correct form: 'Each of the students ___ done their work.'", options: ["have", "has", "are", "were"], ans: 1, level: "mid" },
-            { q: "Identify the part of speech of 'Fast' in 'He runs fast.'", options: ["Noun", "Verb", "Adverb", "Adjective"], ans: 2, level: "primary" },
-            { q: "What is the plural of 'Criterion'?", options: ["Criterions", "Criteria", "Criterias", "Criterium"], ans: 1, level: "mastery" }
-        ]
+      default: [
+        {
+          q_bn: "সঠিক Preposition নির্বাচন করুন: 'He is proficient ___ English.'",
+          q_en: "Select the correct Preposition: 'He is proficient ___ English.'",
+          options_bn: ["in", "at", "with", "for"],
+          options_en: ["in", "at", "with", "for"],
+          ans: 0
+        }
+      ]
     },
-    banker: {
-        set1: [
-            { q: "বাংলাদেশে ব্যাংক রেট (Bank Rate) কে নির্ধারণ করে?", options: ["অর্থ মন্ত্রণালয়", "বাংলাদেশ ব্যাংক", "এনবিআর", "বাণিজ্যিক ব্যাংক"], ans: 1, level: "mid" },
-            { q: "ব্যাংকিং পরিভাষায় 'CRR' এর পূর্ণরূপ কী?", options: ["Cash Reserve Ratio", "Credit Return Rate", "Current Ratio Reserve", "Central Revenue Rate"], ans: 0, level: "primary" },
-            { q: "Letter of Credit (LC) প্রধানত কোন বাণিজ্যে ব্যবহৃত হয়?", options: ["অভ্যন্তরীণ খুচরা বিক্রয়", "আন্তর্জাতিক আমদানি-রপ্তানি", "অনলাইন শপিং", "মাইক্রো ক্রেডিট"], ans: 1, level: "executive" },
-            { q: "চেকের মেয়াদ সাধারণত ইস্যু তারিখ থেকে কত মাস বৈধ থাকে?", options: ["৩ মাস", "৬ মাস", "১ বছর", "অনির্দিষ্ট"], ans: 1, level: "mid" },
-            { q: "CAMELS রেটিং এ 'C' অক্ষরটি কী নির্দেশ করে?", options: ["Credit", "Capital Adequacy", "Cash", "Customer"], ans: 1, level: "mastery" }
-        ]
+    bankers: {
+      default: [
+        {
+          q_bn: "ব্যাংকিং পরিভাষায় 'CRR' এর পূর্ণরূপ কোনটি?",
+          q_en: "What is the full form of 'CRR' in banking?",
+          options_bn: ["Credit Rate Ratio", "Cash Reserve Ratio", "Current Return Rate", "Central Reserve Rate"],
+          options_en: ["Credit Rate Ratio", "Cash Reserve Ratio", "Current Return Rate", "Central Reserve Rate"],
+          ans: 1
+        }
+      ]
     },
     affiliate: {
-        set1: [
-            { q: "massbd.org এ অ্যাফিলিয়েট পার্টনারদের প্রধান কাজ কী?", options: ["কোর্স ও সার্ভিস প্রমোট করে কমিশন অর্জন", "শুধুমাত্র ভিডিও দেখা", "সফটওয়্যার তৈরি করা", "সার্ভে পূরণ করা"], ans: 0, level: "primary" },
-            { q: "অ্যাফিলিয়েট মার্কেটিং এ 'CTR' এর পূর্ণরূপ কী?", options: ["Click Through Rate", "Cost To Return", "Commission Track Ratio", "Customer Target Rate"], ans: 0, level: "mid" },
-            { q: "কুকি ট্র্যাকিং (Cookie Tracking) এর সুবিধা কী?", options: ["ইউজারের রেফারেল হিস্ট্রি ট্র্যাক করে কমিশন নিশ্চিত করা", "কম্পিউটার ফাস্ট করা", "ওয়েবসাইট ডিলিট করা", "পাসওয়ার্ড চুরি করা"], ans: 0, level: "executive" },
-            { q: "CPA মার্কেটিং এর পূর্ণ অর্থ কী?", options: ["Cost Per Action", "Click Per Amount", "Commission Per Account", "Cost Per Ad"], ans: 0, level: "mid" },
-            { q: "massbd.org প্ল্যাটফর্মে অর্জিত ব্যালেন্স উত্তোলনের সঠিক মাধ্যম কোনটি?", options: ["বিকাশ, নগদ ও রকেট", "শুধুমাত্র পেপাল", "ক্যাশ ডেলিভারি", "আন্তর্জাতিক ব্যাংক"], ans: 0, level: "primary" }
-        ]
+      default: [
+        {
+          q_bn: "ডিজিটাল অ্যাফিলিয়েট মার্কেটিংয়ে 'CTR' বলতে কী বোঝায়?",
+          q_en: "What does 'CTR' stand for in Digital Affiliate Marketing?",
+          options_bn: ["Click Through Rate", "Cost To Revenue", "Customer Tracking Ratio", "Conversion Tax Rate"],
+          options_en: ["Click Through Rate", "Cost To Revenue", "Customer Tracking Ratio", "Conversion Tax Rate"],
+          ans: 0
+        }
+      ]
     },
     ielts: {
-        set1: [
-            { q: "What does 'Ubiquitous' mean in IELTS Academic Reading?", options: ["Present everywhere", "Very rare", "Harmful", "Ancient"], ans: 0, level: "executive" },
-            { q: "Choose the correct collocation: 'To ___ a conclusion.'", options: ["make", "draw", "do", "catch"], ans: 1, level: "mid" },
-            { q: "What is the synonym of 'Meticulous'?", options: ["Careless", "Thorough & careful", "Speedy", "Angry"], ans: 1, level: "mastery" }
-        ]
+      default: [
+        {
+          q_bn: "IELTS Reading এ 'Skimming' বলতে কী বোঝায়?",
+          q_en: "What does 'Skimming' mean in IELTS Reading?",
+          options_bn: ["দ্রুত পড়ে মূল ভাব বোঝা", "প্রতিটি শব্দের অর্থ খোঁজা", "বানান মুখস্থ করা", "গ্রামার চেক করা"],
+          options_en: ["Reading quickly to get the main idea", "Checking every word", "Memorizing spellings", "Grammar check"],
+          ans: 0
+        }
+      ]
     },
     admission: {
-        set1: [
-            { q: "মানবদেহের বৃহত্তম গ্রন্থি কোনটি?", options: ["যকৃত (Liver)", "অগ্ন্যাশয়", "থাইরয়েড", "পিটুইটারি"], ans: 0, level: "primary" },
-            { q: "মহাকর্ষীয় ধ্রুবক G এর মান কত?", options: ["6.673 x 10^-11 N m^2 kg^-2", "9.8 m s^-2", "3 x 10^8 m s^-1", "1.6 x 10^-19 C"], ans: 0, level: "mid" }
-        ]
+      default: [
+        {
+          q_bn: "উদ্ভিদ কোষে সালোকসংশ্লেষণ প্রক্রিয়ার প্রধান রঞ্জক পদার্থ কোনটি?",
+          q_en: "What is the primary pigment for photosynthesis in plant cells?",
+          options_bn: ["ক্লোরোফিল-এ", "ক্যারোটিন", "জ্যান্থোফিল", "অ্যান্থোসায়ানিন"],
+          options_en: ["Chlorophyll-a", "Carotene", "Xanthophyll", "Anthocyanin"],
+          ans: 0
+        }
+      ]
     },
     freelancing: {
-        set1: [
-            { q: "ফ্রিল্যান্সিংয়ে বায়ার রিকোয়েস্টে প্রধানত কী উল্লেখ করতে হয়?", options: ["কাজের সমাধান ও অভিজ্ঞতা", "ব্যক্তিগত পরিচয়", "টাকার পরিমাণ প্রথমে", "পরিবারের বিবরণ"], ans: 0, level: "primary" }
-        ]
+      default: [
+        {
+          q_bn: "আপওয়ার্কে ক্লায়েন্টকে প্রপোজাল পাঠানোর জন্য কোন ক্রেডিটটি প্রয়োজন হয়?",
+          q_en: "Which credit is required to submit proposals on Upwork?",
+          options_bn: ["কানেক্টস (Connects)", "টোকেন", "ক্রেডিট পয়েন্ট", "বিড ডলার"],
+          options_en: ["Connects", "Tokens", "Credit Points", "Bid Dollars"],
+          ans: 0
+        }
+      ]
     },
-    software: {
-        set1: [
-            { q: "SaaS এর পূর্ণরূপ কী?", options: ["Software as a Service", "System and Application Software", "Secure access as Service", "Server and Storage"], ans: 0, level: "mid" }
-        ]
+    tech: {
+      default: [
+        {
+          q_bn: "ওয়েব ডেভেলপমেন্টে 'DNS' এর পূর্ণরূপ কী?",
+          q_en: "What is the full form of 'DNS' in web development?",
+          options_bn: ["Domain Name System", "Data Network Server", "Digital Node Source", "Domain Network Security"],
+          options_en: ["Domain Name System", "Data Network Server", "Digital Node Source", "Domain Network Security"],
+          ans: 0
+        }
+      ]
     },
     school: {
-        set1: [
-            { q: "ত্রিভুজের তিন কোণের সমষ্টি কত ডিগ্রি?", options: ["১৮০°", "৩৬০°", "৯০°", "২৭০°"], ans: 0, level: "primary" }
-        ]
+      default: [
+        {
+          q_bn: "পানির রাসায়নিক সংকেত কোনটি?",
+          q_en: "What is the chemical formula of water?",
+          options_bn: ["H2O", "CO2", "NaCl", "O2"],
+          options_en: ["H2O", "CO2", "NaCl", "O2"],
+          ans: 0
+        }
+      ]
     },
     brain: {
-        set1: [
-            { q: "সিরিজটি পূর্ণ করুন: ২, ৪, ৮, ১৬, ___?", options: ["৩২", "২৪", "২০", "৩৬"], ans: 0, level: "primary" }
-        ]
-    }
-};
-
-let selectedGameKey = '';
-let activeQuizQuestions = [];
-let currentQuestionIndex = 0;
-let userScorePoints = 0;
-let userScoreTaka = 0.0;
-let timerInterval = null;
-let timeLeft = 28;
-let isDemoMode = true;
-let countCorrect = 0;
-let countWrong = 0;
-let countTimeout = 0;
-
-function openGameSelection(gameTitle, gameKey) {
-    selectedGameKey = gameKey;
-    document.getElementById('selModalTitle').innerText = gameTitle + (currentLang === 'bn' ? " - সেট ও লেভেল নির্বাচন" : " - Set & Level Selection");
-    document.getElementById('selectionModal').style.display = 'flex';
-}
-
-function closeSelectionModal() {
-    document.getElementById('selectionModal').style.display = 'none';
-}
-
-function launchQuizFromSelection() {
-    const setNum = document.getElementById('selSet').value;
-    const level = document.getElementById('selLevel').value;
-    const mode = document.getElementById('selMode').value;
-
-    if (mode === 'real') {
-        const approvedBalance = parseFloat(document.getElementById('realBalance').innerText.replace('৳', '')) || 0;
-        if (approvedBalance <= 0) {
-            alert(currentLang === 'bn' ?
-                '⚠️ রিয়েল টুর্নামেন্ট খেলতে অনুমোদিত রিয়েল ব্যালেন্স প্রয়োজন!\n\nঅনুগ্রহ করে ডিপোজিট সেকশন থেকে ডিপোজিট রিকোয়েস্ট পাঠান।' :
-                '⚠️ Approved Real Balance is required to play Real Tournament!\n\nPlease send a deposit request from the Deposit section.'
-            );
-            closeSelectionModal();
-            switchView('deposit_view');
-            return;
+      default: [
+        {
+          q_bn: "ধারার পরবর্তী সংখ্যাটি কত? ৩, ৬, ১২, ২৪, ___?",
+          q_en: "What is the next number in sequence: 3, 6, 12, 24, ___?",
+          options_bn: ["৪৮", "৩৬", "৫০", "৫২"],
+          options_en: ["48", "36", "50", "52"],
+          ans: 0
         }
-        isDemoMode = false;
-    } else {
-        isDemoMode = true;
+      ]
     }
+  };
 
-    closeSelectionModal();
-
-    const gameData = QUESTION_DATABASE[selectedGameKey] || QUESTION_DATABASE['bcs'];
-    const setQuestions = (setNum == 2 && gameData.set2) ? gameData.set2 : gameData.set1;
-
-    if (level === 'all') {
-        activeQuizQuestions = [...setQuestions];
-    } else {
-        const filtered = setQuestions.filter(q => q.level === level);
-        activeQuizQuestions = filtered.length > 0 ? filtered : [...setQuestions];
+  // COMPLETE GAMES CATALOG (INCLUDING HEALTH, SSC, HSC, JOB PREPARATION)
+  const GAMES_CATALOG = [
+    {
+      key: 'health',
+      set: 'set1',
+      isHealth: true,
+      category_bn: 'Health',
+      category_en: 'Health',
+      title_bn: 'Set 01 - Health Related Issues',
+      title_en: 'Set 01 - Health Related Issues',
+      desc_bn: 'স্বাস্থ্য-সম্পর্কিত ২৫টি গুরুত্বপূর্ণ বহুনির্বাচনি প্রশ্ন ও সঠিক উত্তর (MASSBD Health Awareness).',
+      desc_en: '25 Essential Health Awareness & Medical MCQs with clinical explanations.'
+    },
+    {
+      key: 'ssc',
+      set: 'science',
+      category_bn: 'Board Exam: SSC',
+      category_en: 'Board Exam: SSC',
+      title_bn: 'SSC Game (General Science)',
+      title_en: 'SSC Game (General Science)',
+      desc_bn: 'এসএসসি সাধারণ বিজ্ঞান, জীববিজ্ঞান, পদার্থ ও রসায়নের বোর্ড মডেল প্রস্তুতি।',
+      desc_en: 'General Science, Biology, Chemistry & Physics for SSC Board examinees.'
+    },
+    {
+      key: 'ssc',
+      set: 'math',
+      category_bn: 'Board Exam: SSC',
+      category_en: 'Board Exam: SSC',
+      title_bn: 'SSC Game (General Math)',
+      title_en: 'SSC Game (General Math)',
+      desc_bn: 'বীজগণিত, জ্যামিতি, ত্রিকোণমিতি ও পরিমিতির গুরুত্বপূর্ণ বহুনির্বাচনি প্রশ্ন।',
+      desc_en: 'Algebra, Geometry, Trigonometry and Mensuration MCQ speed drills.'
+    },
+    {
+      key: 'hsc',
+      set: 'phy',
+      category_bn: 'Higher Secondary: HSC',
+      category_en: 'Higher Secondary: HSC',
+      title_bn: 'HSC Game (Physics)',
+      title_en: 'HSC Game (Physics)',
+      desc_bn: 'পদার্থবিজ্ঞান ১ম ও ২য় পত্রের গতিবিদ্যা, কাজ-শক্তি ও তড়িৎ সম্পর্কিত প্রশ্ন।',
+      desc_en: 'Dynamics, Work-Energy, Gravitation and Modern Physics drills.'
+    },
+    {
+      key: 'hsc',
+      set: 'che',
+      category_bn: 'Higher Secondary: HSC',
+      category_en: 'Higher Secondary: HSC',
+      title_bn: 'HSC Game (Chemistry)',
+      title_en: 'HSC Game (Chemistry)',
+      desc_bn: 'গুণগত রসায়ন, মৌলের পর্যায়বৃত্ত ধর্ম, রাসায়নিক পরিবর্তন ও জৈব রসায়ন।',
+      desc_en: 'Qualitative Chemistry, Periodic Properties and Organic Chemistry.'
+    },
+    {
+      key: 'hsc',
+      set: 'ict',
+      category_bn: 'Higher Secondary: HSC',
+      category_en: 'Higher Secondary: HSC',
+      title_bn: 'HSC Game (ICT)',
+      title_en: 'HSC Game (ICT)',
+      desc_bn: 'সংখ্যা পদ্ধতি, ডিজিটাল ডিভাইস, ওয়েব ডিজাইন ও সি প্রোগ্রামিং ভাষা।',
+      desc_en: 'Number systems, Logic gates, HTML web design and C programming.'
+    },
+    {
+      key: 'bcs',
+      set: 'default',
+      category_bn: 'Job Preparation: BCS',
+      category_en: 'Job Preparation: BCS',
+      title_bn: 'BCS Preliminary Simulator',
+      title_en: 'BCS Preliminary Simulator',
+      desc_bn: 'বাংলা, সাধারণ জ্ঞান, আন্তর্জাতিক বিষয়াবলি ও সংবিধানের উপর স্পেশাল বিসিএস প্রিলিমিনারি কুইজ।',
+      desc_en: 'BCS Preliminary standard preparation and model questions.'
+    },
+    {
+      key: 'bankjob',
+      set: 'default',
+      category_bn: 'Job Preparation: Bank',
+      category_en: 'Job Preparation: Bank',
+      title_bn: 'Bank Job Recruitment Test',
+      title_en: 'Bank Job Recruitment Test',
+      desc_bn: 'Bank Math, Analytical Ability, Banking GK, General Knowledge & English Vocab.',
+      desc_en: 'Targeted preparation for Govt and Private Commercial Bank officer recruitment.'
+    },
+    {
+      key: 'job_others',
+      set: 'default',
+      category_bn: 'Job Preparation: Others',
+      category_en: 'Job Preparation: Others',
+      title_bn: 'Govt & Primary Job Preparation',
+      title_en: 'Govt & Primary Job Preparation',
+      desc_bn: 'প্রাথমিক সহকারী শিক্ষক, এনটিআরসিএ ও অন্যান্য সরকারি চাকরির প্রস্তুতি মডেল।',
+      desc_en: 'Primary Teacher, NTRCA and other government examination test simulator.'
+    },
+    {
+      key: 'grammar',
+      set: 'default',
+      category_bn: 'English & Grammar',
+      category_en: 'English & Grammar',
+      title_bn: 'Basic Grammar Master Game',
+      title_en: 'Basic Grammar Master Game',
+      desc_bn: 'Articles, Prepositions, Tenses, Subjunctive Mood, Voice & Idioms (Official 25 Questions).',
+      desc_en: 'Articles, Prepositions, Tenses, Subjunctive Mood, Voice & Idioms (Official 25 Questions).'
+    },
+    {
+      key: 'bankers',
+      set: 'default',
+      category_bn: 'Finance & Banking',
+      category_en: 'Finance & Banking',
+      title_bn: 'Game For Bankers',
+      title_en: 'Game For Bankers',
+      desc_bn: 'Bank Math, CRR, SLR, General Banking, LC, Forex, CAMELS Rating & Financial Analysis.',
+      desc_en: 'Bank Math, CRR, SLR, General Banking, LC, Forex, CAMELS Rating & Financial Analysis.'
+    },
+    {
+      key: 'affiliate',
+      set: 'default',
+      category_bn: 'Digital Sales & SEO',
+      category_en: 'Digital Sales & SEO',
+      title_bn: 'MassBD Affiliate Game',
+      title_en: 'MassBD Affiliate Game',
+      desc_bn: 'CPA, Cookie tracking, Referral link, CTR, SEO, কমিশন ও ডিজিটাল সেলিং (massbd.org)।',
+      desc_en: 'CPA, Cookie tracking, Referral link, CTR, SEO, Commission & digital sales (massbd.org).'
+    },
+    {
+      key: 'ielts',
+      set: 'default',
+      category_bn: 'Language Proficiency',
+      category_en: 'Language Proficiency',
+      title_bn: 'IELTS Master Game',
+      title_en: 'IELTS Master Game',
+      desc_bn: 'Academic & General Training Vocabulary, Collocations, Reading Tricks & Grammar.',
+      desc_en: 'Academic & General Training Vocabulary, Collocations, Reading Tricks & Grammar.'
+    },
+    {
+      key: 'admission',
+      set: 'default',
+      category_bn: 'Higher Education',
+      category_en: 'Higher Education',
+      title_bn: 'University & Medical Admission',
+      title_en: 'University & Medical Admission',
+      desc_bn: 'Physics, Chemistry, Biology, Higher Math & Medical-Engineering admission test model.',
+      desc_en: 'Physics, Chemistry, Biology, Higher Math & Medical-Engineering admission test model.'
+    },
+    {
+      key: 'freelancing',
+      set: 'default',
+      category_bn: 'Freelancing Skills',
+      category_en: 'Freelancing Skills',
+      title_bn: 'Online Income & Freelancing',
+      title_en: 'Online Income & Freelancing',
+      desc_bn: 'Marketplace rules, Client handling, CPA strategies, Remote work & Sales conversion.',
+      desc_en: 'Marketplace rules, Client handling, CPA strategies, Remote work & Sales conversion.'
+    },
+    {
+      key: 'tech',
+      set: 'default',
+      category_bn: 'IT & Tech',
+      category_en: 'IT & Tech',
+      title_bn: 'Skills & Software Selling',
+      title_en: 'Skills & Software Selling',
+      desc_bn: 'Software licenses, SaaS sales, Tech support, CMS & Website management fundamentals.',
+      desc_en: 'Software licenses, SaaS sales, Tech support, CMS & Website management fundamentals.'
+    },
+    {
+      key: 'school',
+      set: 'default',
+      category_bn: 'School Level',
+      category_en: 'School Level',
+      title_bn: 'School Foundation (Class 1-10)',
+      title_en: 'School Foundation (Class 1-10)',
+      desc_bn: 'Basic Arithmetic, Elementary Science, General Knowledge & Kids IQ Development.',
+      desc_en: 'Basic Arithmetic, Elementary Science, General Knowledge & Kids IQ Development.'
+    },
+    {
+      key: 'brain',
+      set: 'default',
+      category_bn: 'IQ & Brain Booster',
+      category_en: 'IQ & Brain Booster',
+      title_bn: 'Brain Booster & Quick IQ',
+      title_en: 'Brain Booster & Quick IQ',
+      desc_bn: 'Mental Math, Pattern Recognition, Analytical Reasoning & Quick Cognitive Puzzles.',
+      desc_en: 'Mental Math, Pattern Recognition, Analytical Reasoning & Quick Cognitive Puzzles.'
     }
+  ];
 
-    activeQuizQuestions.sort(() => Math.random() - 0.5);
+  function renderArena() {
+    const container = document.getElementById('games_grid_container');
+    container.innerHTML = '';
+    GAMES_CATALOG.forEach(g => {
+      const card = document.createElement('div');
+      card.className = g.isHealth ? 'game-card health-card' : 'game-card';
+      const cat = currentLang === 'bn' ? g.category_bn : g.category_en;
+      const title = currentLang === 'bn' ? g.title_bn : g.title_en;
+      const desc = currentLang === 'bn' ? g.desc_bn : g.desc_en;
+      const btnText = currentLang === 'bn' ? '🚀 গেম খেলুন' : '🚀 Play Game';
+      const tagClass = g.isHealth ? 'tag-category tag-health' : 'tag-category';
+      const btnClass = g.isHealth ? 'btn-play btn-play-health' : 'btn-play';
 
-    currentQuestionIndex = 0;
-    userScorePoints = 0;
-    userScoreTaka = 0.0;
-    countCorrect = 0;
-    countWrong = 0;
-    countTimeout = 0;
-    updateScoreDisplay();
+      card.innerHTML = `
+        <div>
+          <span class="${tagClass}">${cat}</span>
+          <div class="game-title">${title}</div>
+          <div class="game-desc">${desc}</div>
+        </div>
+        <button class="${btnClass}" onclick="startGame('${g.key}', '${g.set}')">${btnText}</button>
+      `;
+      container.appendChild(card);
+    });
+  }
 
-    document.getElementById('quizModal').style.display = 'flex';
-    document.getElementById('questionContainer').style.display = 'block';
-    document.getElementById('quizResultView').style.display = 'none';
-    document.getElementById('quizGameTitle').innerText = (isDemoMode ? "🎮 [Demo] " : "💰 [Real] ") + selectedGameKey.toUpperCase();
+  // NAVIGATION
+  function navigate(view) {
+    document.getElementById('view_arena').style.display = 'none';
+    document.getElementById('view_quiz').style.display = 'none';
+    document.getElementById('view_auth').style.display = 'none';
 
-    renderCurrentQuestion();
-}
+    if (view === 'arena') {
+      if (!isLoggedIn) {
+        document.getElementById('view_auth').style.display = 'block';
+      } else {
+        document.getElementById('view_arena').style.display = 'block';
+        renderArena();
+      }
+    } else if (view === 'quiz') {
+      document.getElementById('view_quiz').style.display = 'block';
+    } else if (view === 'auth') {
+      document.getElementById('view_auth').style.display = 'block';
+    }
+  }
 
-function updateScoreDisplay() {
-    document.getElementById('curPoints').innerText = userScorePoints + " Pts";
-    document.getElementById('curTaka').innerText = "৳" + userScoreTaka.toFixed(2);
-}
+  // START GAME
+  function startGame(gameKey, setKey) {
+    if (!isLoggedIn) {
+      navigate('auth');
+      return;
+    }
+    const setList = QUESTION_DATABASE[gameKey] && QUESTION_DATABASE[gameKey][setKey];
+    if (!setList || setList.length === 0) {
+      alert(currentLang === 'bn' ? 'শীঘ্রই প্রশ্ন যুক্ত করা হচ্ছে।' : 'Questions loading soon.');
+      return;
+    }
+    currentGame = gameKey;
+    currentSet = setKey;
+    qIndex = 0;
+    correctAnswers = 0;
+    wrongAnswers = 0;
 
-function renderCurrentQuestion() {
+    const catalogItem = GAMES_CATALOG.find(g => g.key === gameKey && g.set === setKey);
+    const title = catalogItem ? (currentLang === 'bn' ? catalogItem.title_bn : catalogItem.title_en) : `${gameKey.toUpperCase()} (${setKey.toUpperCase()})`;
+    document.getElementById('quiz_game_title').innerText = title;
+
+    navigate('quiz');
+    loadQuestion();
+  }
+
+  // LOAD QUESTION
+  function loadQuestion() {
     clearInterval(timerInterval);
+    clearTimeout(autoAdvanceTimeout);
+    hasAnsweredCurrentQ = false;
 
-    if (currentQuestionIndex >= activeQuizQuestions.length) {
-        finishQuiz();
-        return;
+    // Reset Next Button state
+    const nextBtn = document.getElementById('btn_next_q');
+    if (nextBtn) {
+      nextBtn.disabled = true;
+      nextBtn.classList.remove('active-ready');
+    }
+    const statusHint = document.getElementById('quiz_status_hint');
+    if (statusHint) {
+      statusHint.innerText = currentLang === 'bn' ? 'একটি উত্তর নির্বাচন করুন (নো স্কিপ)' : 'Select an answer (No Skip)';
     }
 
-    const currentQ = activeQuizQuestions[currentQuestionIndex];
-    document.getElementById('quizProgress').innerText = `Q ${currentQuestionIndex + 1}/${activeQuizQuestions.length}`;
-    document.getElementById('questionText').innerText = currentQ.q;
+    const qList = QUESTION_DATABASE[currentGame][currentSet];
+    if (qIndex >= qList.length) {
+      endGame();
+      return;
+    }
 
-    const optContainer = document.getElementById('optionsList');
-    optContainer.innerHTML = '';
+    const qData = qList[qIndex];
+    document.getElementById('quiz_progress').innerText = 
+      currentLang === 'bn' ? `প্রশ্ন: ${qIndex + 1} / ${qList.length}` : `Question: ${qIndex + 1} / ${qList.length}`;
+    document.getElementById('question_text').innerText = currentLang === 'bn' ? qData.q_bn : qData.q_en;
 
-    currentQ.options.forEach((opt, idx) => {
-        const div = document.createElement('div');
-        div.className = 'option-item';
-        div.innerText = `${String.fromCharCode(65 + idx)}) ${opt}`;
-        div.onclick = function(e) { handleAnswerClick(e, idx, currentQ.ans, div); };
-        optContainer.appendChild(div);
+    const optsContainer = document.getElementById('options_container');
+    optsContainer.innerHTML = '';
+    const opts = currentLang === 'bn' ? qData.options_bn : qData.options_en;
+    const prefixes = ['ক', 'খ', 'গ', 'ঘ'];
+    const prefixesEn = ['A', 'B', 'C', 'D'];
+
+    opts.forEach((optText, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      btn.innerHTML = `<span class="opt-prefix">${currentLang === 'bn' ? prefixes[i] : prefixesEn[i]}</span> <span>${optText}</span>`;
+      btn.onclick = (e) => handleAnswer(i, btn, e);
+      optsContainer.appendChild(btn);
     });
 
-    questionRenderTime = Date.now();
     timeLeft = 28;
-    document.getElementById('timerSec').innerText = timeLeft;
+    document.getElementById('timer_display').innerText = `${timeLeft}s`;
+    qStartTime = Date.now();
+
     timerInterval = setInterval(() => {
-        timeLeft--;
-        document.getElementById('timerSec').innerText = timeLeft;
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            countTimeout++;
-            playErrorSound();
-            userScorePoints -= 10;
-            userScoreTaka -= 0.50;
-            updateScoreDisplay();
-            currentQuestionIndex++;
-            renderCurrentQuestion();
-        }
+      timeLeft--;
+      document.getElementById('timer_display').innerText = `${timeLeft}s`;
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        handleTimeout();
+      }
     }, 1000);
-}
+  }
 
-function handleAnswerClick(e, selectedIdx, correctIdx, optionEl) {
-    if (e && !e.isTrusted) {
-        alert('🛡️ Anti-Bot Alert: Synthetic click event blocked!');
-        return;
-    }
-
-    const timeTaken = Date.now() - questionRenderTime;
-    if (timeTaken < 700) {
-        alert('🛡️ Anti-Bot Alert: Click too fast! Please read carefully before answering.');
-        return;
-    }
+  // ANSWER HANDLING
+  function handleAnswer(selectedIdx, btnElement, event) {
+    if (event && !event.isTrusted) return;
+    if (Date.now() - qStartTime < 650) return;
+    if (hasAnsweredCurrentQ) return;
+    hasAnsweredCurrentQ = true;
 
     clearInterval(timerInterval);
-    const allOptions = document.querySelectorAll('.option-item');
-    allOptions.forEach(el => el.onclick = null);
+    const qList = QUESTION_DATABASE[currentGame][currentSet];
+    const qData = qList[qIndex];
+    const allBtns = document.querySelectorAll('.opt-btn');
+    allBtns.forEach(b => b.disabled = true);
 
-    if (selectedIdx === correctIdx) {
-        optionEl.classList.add('correct');
-        playSuccessSound();
-        countCorrect++;
-        userScorePoints += 5;
-        userScoreTaka += 0.25;
+    if (selectedIdx === qData.ans) {
+      btnElement.classList.add('correct');
+      playTone('correct');
+      correctAnswers++;
+      userPoints += 5;
     } else {
-        optionEl.classList.add('wrong');
-        playErrorSound();
-        countWrong++;
-        userScorePoints -= 10;
-        userScoreTaka -= 0.50;
-        if (allOptions[correctIdx]) {
-            allOptions[correctIdx].classList.add('correct');
-        }
+      btnElement.classList.add('wrong');
+      allBtns[qData.ans].classList.add('correct');
+      playTone('wrong');
+      wrongAnswers++;
+      userPoints = Math.max(0, userPoints - 10);
     }
+    updatePointsUI();
 
-    updateScoreDisplay();
+    // Enable NEXT button
+    activateNextButton();
 
-    setTimeout(() => {
-        currentQuestionIndex++;
-        renderCurrentQuestion();
-    }, 1100);
-}
+    // Auto advance fallback after 2.2s
+    autoAdvanceTimeout = setTimeout(() => {
+      goToNextQuestion();
+    }, 2200);
+  }
 
-function finishQuiz() {
+  function handleTimeout() {
+    if (hasAnsweredCurrentQ) return;
+    hasAnsweredCurrentQ = true;
+
+    playTone('wrong');
+    wrongAnswers++;
+    userPoints = Math.max(0, userPoints - 10);
+    updatePointsUI();
+
+    const qList = QUESTION_DATABASE[currentGame][currentSet];
+    const qData = qList[qIndex];
+    const allBtns = document.querySelectorAll('.opt-btn');
+    allBtns.forEach(b => b.disabled = true);
+    if (allBtns[qData.ans]) allBtns[qData.ans].classList.add('correct');
+
+    activateNextButton();
+
+    autoAdvanceTimeout = setTimeout(() => {
+      goToNextQuestion();
+    }, 2200);
+  }
+
+  function activateNextButton() {
+    const nextBtn = document.getElementById('btn_next_q');
+    if (nextBtn) {
+      nextBtn.disabled = false;
+      nextBtn.classList.add('active-ready');
+    }
+    const statusHint = document.getElementById('quiz_status_hint');
+    if (statusHint) {
+      statusHint.innerText = currentLang === 'bn' ? 'উত্তর গ্রহণ করা হয়েছে! পরবর্তী প্রশ্নে যান।' : 'Answer recorded! Proceed to next.';
+    }
+  }
+
+  function goToNextQuestion() {
+    if (!hasAnsweredCurrentQ && timeLeft > 0) {
+      alert(currentLang === 'bn' ? 'দয়া করে একটি উত্তর নির্বাচন করুন (নো স্কিপ)!' : 'Please select an answer (No Skip)!');
+      return;
+    }
+    clearTimeout(autoAdvanceTimeout);
+    qIndex++;
+    loadQuestion();
+  }
+
+  function updatePointsUI() {
+    localStorage.setItem('edu_points', userPoints);
+    document.getElementById('txt_points').innerText = userPoints.toLocaleString();
+  }
+
+  // END GAME
+  function endGame() {
     clearInterval(timerInterval);
-    document.getElementById('questionContainer').style.display = 'none';
-    document.getElementById('quizResultView').style.display = 'block';
+    clearTimeout(autoAdvanceTimeout);
+    const qList = QUESTION_DATABASE[currentGame][currentSet];
+    const totalQ = qList.length;
+    const netPts = (correctAnswers * 5) - (wrongAnswers * 10);
+    const earnedBdt = (netPts * 0.05).toFixed(2);
 
-    let totalPointsDisplay = 0;
-    if (isDemoMode) {
-        let currentDemo = parseInt(localStorage.getItem('edu_demo_points') || '10000');
-        let newDemo = Math.max(0, currentDemo + userScorePoints);
-        localStorage.setItem('edu_demo_points', newDemo);
-        document.getElementById('demoPoints').innerText = newDemo.toLocaleString() + " Pts";
-        totalPointsDisplay = newDemo.toLocaleString() + " Pts (Demo)";
+    document.getElementById('sc_total').innerText = totalQ;
+    document.getElementById('sc_correct').innerText = correctAnswers;
+    document.getElementById('sc_wrong').innerText = wrongAnswers;
+    document.getElementById('sc_net_pts').innerText = `${netPts >= 0 ? '+' : ''}${netPts} Pts`;
+    document.getElementById('sc_earned_bdt').innerText = `৳${earnedBdt}`;
+
+    document.getElementById('scorecard_modal').style.display = 'flex';
+  }
+
+  function closeScorecard(action) {
+    document.getElementById('scorecard_modal').style.display = 'none';
+    if (action === 'replay') {
+      startGame(currentGame, currentSet);
     } else {
-        let currentReal = parseFloat(document.getElementById('realBalance').innerText.replace('৳', '')) || 0;
-        let newReal = Math.max(0, currentReal + userScoreTaka);
-        document.getElementById('realBalance').innerText = "৳" + newReal.toFixed(2);
-        totalPointsDisplay = "৳" + newReal.toFixed(2) + " (Real)";
+      navigate('arena');
     }
+  }
 
-    document.getElementById('resTotalQ').innerText = activeQuizQuestions.length;
-    document.getElementById('resCorrect').innerText = `${countCorrect} (+${countCorrect * 5} Pts / +৳${(countCorrect * 0.25).toFixed(2)})`;
-    document.getElementById('resWrong').innerText = `${countWrong} (-${countWrong * 10} Pts / -৳${(countWrong * 0.50).toFixed(2)})`;
-    document.getElementById('resTimeout').innerText = `${countTimeout} (-${countTimeout * 10} Pts)`;
-    document.getElementById('resNetPoints').innerText = (userScorePoints >= 0 ? "+" : "") + userScorePoints + " Pts";
-    document.getElementById('resNetTaka').innerText = (userScoreTaka >= 0 ? "+৳" : "-৳") + Math.abs(userScoreTaka).toFixed(2);
-    document.getElementById('resCurrentTotal').innerText = totalPointsDisplay;
+  // AUTH
+  function handleLogout() {
+    isLoggedIn = false;
+    localStorage.setItem('edu_logged_in', 'false');
+    navigate('auth');
+    alert(currentLang === 'bn' ? 'সফলভাবে লগআউট সম্পন্ন হয়েছে।' : 'Logged out successfully!');
+  }
 
-    const nextGameBox = document.getElementById('nextGameActionButtons');
-    const noticeEl = document.getElementById('nextGameBalanceNotice');
-    nextGameBox.innerHTML = '';
+  function loginDemoAccount() {
+    isLoggedIn = true;
+    localStorage.setItem('edu_logged_in', 'true');
+    userPoints = 10000;
+    updatePointsUI();
+    navigate('arena');
+  }
 
-    let canPlayNext = false;
-    if (isDemoMode) {
-        const demoPts = parseInt(localStorage.getItem('edu_demo_points') || '10000');
-        canPlayNext = demoPts >= 10;
-        noticeEl.innerHTML = canPlayNext ? 
-            (currentLang === 'bn' ? `✅ আপনার প্র্যাকটিস ব্যালেন্স: <strong>${demoPts.toLocaleString()} Pts</strong> (পরবর্তী গেম খেলার জন্য পর্যাপ্ত)।` : `✅ Practice Balance: <strong>${demoPts.toLocaleString()} Pts</strong> (Available for next game).`) : 
-            (currentLang === 'bn' ? `⚠️ আপনার প্র্যাকটিস ব্যালেন্স শেষ হয়ে গেছে।` : `⚠️ Practice balance exhausted.`);
+  // TOGGLES
+  function toggleTheme() {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    localStorage.setItem('edu_theme', currentTheme);
+    document.getElementById('lbl_theme').innerText = currentTheme === 'dark' ? (currentLang === 'bn' ? 'ডার্ক' : 'Dark') : (currentLang === 'bn' ? 'লাইট' : 'Light');
+  }
+
+  function toggleLanguage() {
+    currentLang = currentLang === 'bn' ? 'en' : 'bn';
+    localStorage.setItem('edu_lang', currentLang);
+    applyTranslations();
+  }
+
+  function applyTranslations() {
+    if (currentLang === 'bn') {
+      document.getElementById('lbl_lang').innerText = 'বাংলা (BN)';
+      document.getElementById('txt_arena_title').innerText = '🎯 এডুকেশনাল এক্সাম ও টুর্নামেন্ট অ্যারিনা';
+      document.getElementById('txt_arena_sub').innerText = 'প্রতি প্রশ্ন: ২৮ সেকেন্ড | নো স্কিপ | সঠিক উত্তর: +৫ পয়েন্ট (+৳০.২৫) | ভুল উত্তর: -১০ পয়েন্ট (-৳০.৫০)';
+      document.getElementById('lbl_nav_all').innerText = 'সকল গেম অ্যারিনা';
+      document.getElementById('lbl_nav_health').innerText = 'Health (Set 01)';
+      document.getElementById('lbl_nav_job').innerText = 'Job Preparation';
+      document.getElementById('lbl_nav_ssc').innerText = 'SSC Game';
+      document.getElementById('lbl_nav_hsc').innerText = 'HSC Game';
+      document.getElementById('lbl_menu_games').innerText = 'গেমস অ্যারিনা';
+      document.getElementById('lbl_menu_user').innerText = 'ইউজার ও লিডারবোর্ড';
+      document.getElementById('lbl_logout').innerText = 'লগআউট';
+      document.getElementById('lbl_next_btn').innerText = 'পরবর্তী প্রশ্ন ❯';
+      document.getElementById('lbl_theme').innerText = currentTheme === 'dark' ? 'ডার্ক' : 'লাইট';
     } else {
-        const realBal = parseFloat(document.getElementById('realBalance').innerText.replace('৳', '')) || 0;
-        canPlayNext = realBal >= 10;
-        noticeEl.innerHTML = canPlayNext ? 
-            (currentLang === 'bn' ? `✅ আপনার রিয়েল ব্যালেন্স: <strong>৳${realBal.toFixed(2)}</strong> (পরবর্তী গেম খেলার জন্য প্রস্তুত)।` : `✅ Real Balance: <strong>৳${realBal.toFixed(2)}</strong> (Ready for next game).`) : 
-            (currentLang === 'bn' ? `❌ আপনার রিয়েল ব্যালেন্স অপ্রতুল। পরবর্তী গেম খেলতে ডিপোজিট প্রয়োজন।` : `❌ Insufficient real balance. Deposit required.`);
+      document.getElementById('lbl_lang').innerText = 'English (EN)';
+      document.getElementById('txt_arena_title').innerText = '🎯 Educational Exam & Tournament Arena';
+      document.getElementById('txt_arena_sub').innerText = '28s per Question | No Skip | Correct: +5 Pts (+৳0.25) | Wrong: -10 Pts (-৳0.50)';
+      document.getElementById('lbl_nav_all').innerText = 'All Games Arena';
+      document.getElementById('lbl_nav_health').innerText = 'Health (Set 01)';
+      document.getElementById('lbl_nav_job').innerText = 'Job Preparation';
+      document.getElementById('lbl_nav_ssc').innerText = 'SSC Game';
+      document.getElementById('lbl_nav_hsc').innerText = 'HSC Game';
+      document.getElementById('lbl_menu_games').innerText = 'GAMES ARENA';
+      document.getElementById('lbl_menu_user').innerText = 'USER & LEADERBOARD';
+      document.getElementById('lbl_logout').innerText = 'Logout';
+      document.getElementById('lbl_next_btn').innerText = 'Next Question ❯';
+      document.getElementById('lbl_theme').innerText = currentTheme === 'dark' ? 'Dark' : 'Light';
     }
+    renderArena();
+  }
 
-    if (canPlayNext) {
-        const btnNext = document.createElement('button');
-        btnNext.className = 'btn-play';
-        btnNext.style.background = '#10b981';
-        btnNext.innerHTML = currentLang === 'bn' ? '▶️ হ্যাঁ, পরবর্তী গেম খেলুন' : '▶️ Yes, Play Next Game';
-        btnNext.onclick = function() { exitQuiz(); switchView('game_arena'); };
-        nextGameBox.appendChild(btnNext);
-    } else {
-        const btnDep = document.createElement('button');
-        btnDep.className = 'btn-play';
-        btnDep.style.background = '#f59e0b';
-        btnDep.innerHTML = currentLang === 'bn' ? '💳 ব্যালেন্স নেই - ডিপোজিট করুন' : '💳 Insufficient Balance - Deposit';
-        btnDep.onclick = function() { exitQuiz(); switchView('deposit_view'); };
-        nextGameBox.appendChild(btnDep);
-    }
-
-    const history = JSON.parse(localStorage.getItem('edu_quiz_records') || '[]');
-    history.push({
-        user: "User_" + Math.floor(Math.random() * 9000 + 1000),
-        game: selectedGameKey,
-        score: userScorePoints,
-        taka: userScoreTaka.toFixed(2),
-        date: new Date().toLocaleDateString(currentLang === 'bn' ? 'bn-BD' : 'en-US')
-    });
-    localStorage.setItem('edu_quiz_records', JSON.stringify(history));
-
-    renderArenaCards();
-}
-
-function exitQuiz() {
-    clearInterval(timerInterval);
-    document.getElementById('quizModal').style.display = 'none';
-    renderArenaCards();
-}
-
-function submitDeposit() {
-    const phone = document.getElementById('depPhone').value.trim();
-    const trx = document.getElementById('depTrx').value.trim();
-    if (!phone || !trx) {
-        alert(currentLang === 'bn' ? 'অনুগ্রহ করে মোবাইল নাম্বার ও TrxID প্রদান করুন।' : 'Please enter Mobile Number & TrxID.');
-        return;
-    }
-    alert(currentLang === 'bn' ? 
-        '✅ ডিপোজিট রিকোয়েস্ট সফলভাবে সাবমিট হয়েছে!\nএডমিন আনোয়ার কর্তৃক ভেরিফাই করার পর আপনার ব্যালেন্সে যুক্ত হবে।' :
-        '✅ Deposit request submitted successfully!\nBalance will be credited upon Admin Anwar verification.'
-    );
-    document.getElementById('depPhone').value = '';
-    document.getElementById('depTrx').value = '';
-    switchView('game_arena');
-}
-
-function renderAdminHistory() {
-    const history = JSON.parse(localStorage.getItem('edu_quiz_records') || '[]');
-    const tbody = document.getElementById('quizHistoryBody');
-    if (history.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="padding:15px; text-align:center;">No quiz records found.</td></tr>';
-        return;
-    }
-
-    tbody.innerHTML = history.slice(-15).reverse().map(item => `
-        <tr>
-            <td style="padding:10px; border:1px solid var(--border-color);">${item.user}</td>
-            <td style="padding:10px; border:1px solid var(--border-color);">${item.game}</td>
-            <td style="padding:10px; border:1px solid var(--border-color); font-weight:600; color:#38bdf8;">${item.score}</td>
-            <td style="padding:10px; border:1px solid var(--border-color); font-weight:600; color:#10b981;">৳${item.taka}</td>
-            <td style="padding:10px; border:1px solid var(--border-color);">${item.date}</td>
-        </tr>
-    `).join('');
-}
-
-function downloadQuizReportCSV() {
-    const history = JSON.parse(localStorage.getItem('edu_quiz_records') || '[]');
-    if (history.length === 0) {
-        alert('No data to export!');
-        return;
-    }
-
-    let csvContent = "data:text/csv;charset=utf-8,User,Game,Points,Earned_Taka,Date\n";
-    history.forEach(row => {
-        csvContent += `${row.user},${row.game},${row.score},${row.taka},${row.date}\n`;
-    });
-
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "edu_game_history_report.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-window.onload = function() {
-    initDemoPoints();
-    applyTheme();
-    applyLanguage();
-    renderGlobalLeaderboard();
-    updateAuthUI();
-};
+  // INITIALIZE
+  window.onload = function() {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    updatePointsUI();
+    applyTranslations();
+    navigate(isLoggedIn ? 'arena' : 'auth');
+  };
 </script>
 </body>
 </html>
