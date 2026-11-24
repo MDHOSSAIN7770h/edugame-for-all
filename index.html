@@ -4,35 +4,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EDU GAME FOR ALL - OFFICIAL ARENA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#00f2fe">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-body: #070b19;
-      --bg-card: rgba(15, 23, 42, 0.95);
-      --border-glow: rgba(0, 242, 254, 0.35);
+      --bg-body: #060913;
+      --bg-surface: rgba(13, 20, 38, 0.82);
+      --bg-card: rgba(18, 28, 52, 0.75);
+      --border-glow: rgba(0, 242, 254, 0.32);
+      --border-subtle: rgba(255, 255, 255, 0.08);
       --neon-cyan: #00f2fe;
+      --neon-blue: #38bdf8;
       --neon-green: #00ff87;
       --neon-red: #ff4757;
       --neon-gold: #ffbe0b;
+      --neon-purple: #a855f7;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --font-main: 'Hind Siliguri', 'Segoe UI', sans-serif;
-      --font-head: 'Rajdhani', 'Hind Siliguri', sans-serif;
+      --font-head: 'Orbitron', 'Rajdhani', sans-serif;
     }
     [data-theme="light"] {
-      --bg-body: #f1f5f9;
-      --bg-card: #ffffff;
-      --border-glow: rgba(0, 102, 255, 0.25);
+      --bg-body: #f8fafc;
+      --bg-surface: rgba(255, 255, 255, 0.9);
+      --bg-card: rgba(241, 245, 249, 0.85);
+      --border-glow: rgba(2, 132, 199, 0.3);
+      --border-subtle: rgba(0, 0, 0, 0.08);
       --neon-cyan: #0284c7;
+      --neon-blue: #0369a1;
       --neon-green: #10b981;
       --neon-red: #ef4444;
       --neon-gold: #d97706;
+      --neon-purple: #7e22ce;
       --text-main: #0f172a;
       --text-muted: #64748b;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: var(--bg-body);
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(0, 242, 254, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 45%);
       color: var(--text-main);
       font-family: var(--font-main);
       display: flex;
@@ -40,50 +54,63 @@
       height: 100vh;
       overflow: hidden;
     }
+
     /* TOPBAR */
     .topbar {
-      height: 64px;
-      background: var(--bg-card);
+      height: 66px;
+      background: var(--bg-surface);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-glow);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
+      padding: 0 22px;
       flex-shrink: 0;
-      z-index: 10;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
     }
     .logo {
-      font-size: 1.3rem;
-      font-weight: 700;
-      letter-spacing: 1px;
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
       color: var(--neon-cyan);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       cursor: pointer;
+      text-shadow: 0 0 12px rgba(0, 242, 254, 0.6);
+      transition: transform 0.2s;
+    }
+    .logo:hover { transform: scale(1.02); }
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      filter: drop-shadow(0 0 6px var(--neon-cyan));
     }
     .top-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .btn-top {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-subtle);
       color: var(--text-main);
-      padding: 6px 14px;
-      border-radius: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
       cursor: pointer;
       font-size: 0.85rem;
       font-weight: 600;
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .btn-top:hover {
       border-color: var(--neon-cyan);
-      background: rgba(0,242,254,0.1);
+      background: rgba(0,242,254,0.12);
+      transform: translateY(-1px);
     }
     .btn-logout {
       background: rgba(255,71,87,0.15);
@@ -92,58 +119,64 @@
     }
     .btn-logout:hover {
       background: rgba(255,71,87,0.3);
+      box-shadow: 0 0 12px rgba(255,71,87,0.4);
     }
+
     .stat-badge {
       padding: 6px 14px;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 0.85rem;
       font-weight: 700;
       display: flex;
       align-items: center;
       gap: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
     .badge-practice {
-      background: rgba(0,255,135,0.15);
+      background: rgba(0,255,135,0.12);
       color: var(--neon-green);
       border: 1px solid rgba(0,255,135,0.3);
     }
     .badge-demo {
-      background: rgba(0,242,254,0.15);
+      background: rgba(0,242,254,0.12);
       color: var(--neon-cyan);
       border: 1px solid rgba(0,242,254,0.3);
+      font-family: var(--font-head);
     }
     .badge-real {
-      background: rgba(255,190,11,0.15);
+      background: rgba(255,190,11,0.12);
       color: var(--neon-gold);
-      border: 1px solid rgba(255,190,11,0.3);
+      border: 1px solid rgba(255,190,11,0.35);
+      font-family: var(--font-head);
     }
 
     /* MAIN CONTAINER */
     .main-wrapper {
       display: flex;
       flex: 1;
-      height: calc(100vh - 64px);
+      height: calc(100vh - 66px);
       overflow: hidden;
     }
 
     /* SIDEBAR */
     .sidebar {
-      width: 250px;
-      background: var(--bg-card);
+      width: 256px;
+      background: var(--bg-surface);
+      backdrop-filter: blur(16px);
       border-right: 1px solid var(--border-glow);
       display: flex;
       flex-direction: column;
       overflow-y: auto;
       flex-shrink: 0;
-      padding: 15px 10px;
+      padding: 16px 10px;
       gap: 5px;
     }
     .nav-section-title {
       font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       color: var(--text-muted);
-      margin: 12px 10px 4px 10px;
+      margin: 14px 10px 4px 10px;
       font-weight: 700;
     }
     .nav-item {
@@ -151,21 +184,22 @@
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 9px 12px;
+      padding: 10px 14px;
       background: transparent;
       border: 1px solid transparent;
-      border-radius: 6px;
+      border-radius: 8px;
       color: var(--text-main);
       font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       text-align: left;
-      transition: all 0.2s;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .nav-item:hover, .nav-item.active {
-      background: rgba(0,242,254,0.1);
+      background: linear-gradient(90deg, rgba(0,242,254,0.15), rgba(0,242,254,0.03));
       border-color: var(--border-glow);
       color: var(--neon-cyan);
+      box-shadow: inset 3px 0 0 var(--neon-cyan);
     }
     .nav-item-content {
       display: flex;
@@ -175,27 +209,26 @@
     .dropdown-container {
       display: none;
       flex-direction: column;
-      gap: 3px;
-      padding-left: 24px;
+      gap: 4px;
+      padding-left: 22px;
       margin-top: 3px;
     }
-    .dropdown-container.show {
-      display: flex;
-    }
+    .dropdown-container.show { display: flex; }
     .dropdown-item {
-      padding: 7px 12px;
-      background: rgba(255,255,255,0.03);
-      border-radius: 5px;
-      font-size: 0.82rem;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 6px;
+      font-size: 0.84rem;
       color: var(--text-muted);
       cursor: pointer;
       border: 1px solid transparent;
       transition: all 0.2s;
     }
     .dropdown-item:hover {
-      background: rgba(0,242,254,0.15);
+      background: rgba(0,242,254,0.12);
       color: var(--neon-cyan);
       border-color: var(--border-glow);
+      padding-left: 16px;
     }
 
     /* CONTENT AREA */
@@ -206,45 +239,59 @@
       position: relative;
     }
 
-    /* AUTH VIEW */
+    /* AUTH VIEW (LOGIN & SIGN UP) */
     .auth-container {
       max-width: 440px;
-      margin: 40px auto;
-      background: var(--bg-card);
+      margin: 30px auto;
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
       border: 1px solid var(--border-glow);
-      border-radius: 12px;
+      border-radius: 16px;
       padding: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.6);
+      position: relative;
     }
-    .auth-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--neon-cyan);
-      margin-bottom: 8px;
-      text-align: center;
+    .auth-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
     }
-    .auth-subtitle {
-      font-size: 0.88rem;
+    .auth-tab-btn {
+      flex: 1;
+      padding: 10px;
+      background: transparent;
+      border: none;
       color: var(--text-muted);
-      text-align: center;
-      margin-bottom: 24px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.25s;
+    }
+    .auth-tab-btn.active {
+      color: #070b19;
+      background: var(--neon-cyan);
+      box-shadow: 0 0 14px rgba(0,242,254,0.5);
     }
 
     /* ARENA VIEW */
     .arena-banner {
-      background: linear-gradient(135deg, rgba(0,242,254,0.12), rgba(0,255,135,0.08));
+      background: linear-gradient(135deg, rgba(0,242,254,0.12), rgba(168,85,247,0.1));
       border: 1px solid var(--border-glow);
-      border-radius: 10px;
-      padding: 16px 20px;
+      border-radius: 14px;
+      padding: 18px 24px;
       margin-bottom: 24px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
     }
     .arena-banner h2 {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       color: var(--neon-cyan);
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 4px;
+      gap: 10px;
+      margin-bottom: 6px;
     }
     .arena-banner p {
       font-size: 0.88rem;
@@ -252,54 +299,67 @@
     }
     .arena-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 20px;
     }
     .game-card {
       background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
-      padding: 18px;
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 180px;
-      transition: all 0.25s;
+      min-height: 190px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .game-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
     .game-card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-4px);
       border-color: var(--neon-cyan);
-      box-shadow: 0 6px 20px rgba(0,242,254,0.15);
+      box-shadow: 0 10px 25px rgba(0,242,254,0.18);
     }
+    .game-card:hover::before { opacity: 1; }
     .card-tag {
       align-self: flex-start;
       background: rgba(0,242,254,0.12);
       color: var(--neon-cyan);
-      padding: 3px 8px;
-      border-radius: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
       font-size: 0.72rem;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     .card-title {
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       color: var(--text-main);
     }
     .card-desc {
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
-      margin-bottom: 15px;
-      line-height: 1.4;
+      margin-bottom: 16px;
+      line-height: 1.45;
     }
     .btn-play {
       background: linear-gradient(90deg, #0284c7, #00f2fe);
       border: none;
-      color: #000;
-      padding: 9px 14px;
-      border-radius: 6px;
+      color: #050b18;
+      padding: 10px 16px;
+      border-radius: 8px;
       font-weight: 700;
       font-size: 0.88rem;
       cursor: pointer;
@@ -307,90 +367,111 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: opacity 0.2s;
+      box-shadow: 0 4px 14px rgba(0,242,254,0.25);
+      transition: all 0.2s;
     }
-    .btn-play:hover { opacity: 0.9; }
+    .btn-play:hover {
+      box-shadow: 0 6px 20px rgba(0,242,254,0.45);
+      transform: translateY(-1px);
+    }
 
     /* QUIZ VIEW */
     .quiz-container {
-      max-width: 820px;
+      max-width: 840px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
     }
     .quiz-header {
-      background: var(--bg-card);
+      background: var(--bg-surface);
+      backdrop-filter: blur(16px);
       border: 1px solid var(--border-glow);
-      border-radius: 10px;
-      padding: 16px 20px;
+      border-radius: 12px;
+      padding: 18px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     .quiz-title {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: var(--neon-gold);
     }
     .quiz-progress {
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
       margin-top: 4px;
     }
     .timer-badge {
-      background: rgba(255,190,11,0.15);
+      background: rgba(255,190,11,0.12);
       border: 1px solid var(--neon-gold);
       color: var(--neon-gold);
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 1.1rem;
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      font-family: var(--font-head);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      box-shadow: 0 0 12px rgba(255,190,11,0.25);
+    }
+    .timer-badge.urgent {
+      border-color: var(--neon-red);
+      color: var(--neon-red);
+      background: rgba(255,71,87,0.15);
+      box-shadow: 0 0 16px rgba(255,71,87,0.5);
+      animation: pulseAlert 0.8s infinite;
+    }
+    @keyframes pulseAlert {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
     }
     .question-box {
       background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
-      padding: 24px;
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 26px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
     }
     .question-text {
-      font-size: 1.15rem;
+      font-size: 1.18rem;
       font-weight: 600;
-      line-height: 1.6;
-      margin-bottom: 24px;
+      line-height: 1.65;
+      margin-bottom: 26px;
     }
     .options-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 16px;
     }
     .btn-option {
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 8px;
-      padding: 14px 18px;
+      border-radius: 10px;
+      padding: 16px 20px;
       color: var(--text-main);
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       font-weight: 500;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 12px;
       text-align: left;
-      transition: all 0.2s;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .btn-option:hover:not(:disabled) {
-      background: rgba(0,242,254,0.1);
+      background: rgba(0,242,254,0.12);
       border-color: var(--neon-cyan);
+      transform: translateX(3px);
     }
     .opt-label {
       background: rgba(255,255,255,0.1);
       color: var(--neon-gold);
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -400,14 +481,16 @@
       flex-shrink: 0;
     }
     .btn-option.correct {
-      background: rgba(0,255,135,0.2) !important;
+      background: rgba(0,255,135,0.22) !important;
       border-color: var(--neon-green) !important;
       color: var(--neon-green) !important;
+      box-shadow: 0 0 14px rgba(0,255,135,0.3);
     }
     .btn-option.wrong {
-      background: rgba(255,71,87,0.2) !important;
+      background: rgba(255,71,87,0.22) !important;
       border-color: var(--neon-red) !important;
       color: var(--neon-red) !important;
+      box-shadow: 0 0 14px rgba(255,71,87,0.3);
     }
     .quiz-footer {
       display: flex;
@@ -423,22 +506,25 @@
       background: linear-gradient(90deg, #00f2fe, #00ff87);
       border: none;
       color: #070b19;
-      font-weight: 700;
-      padding: 10px 24px;
-      border-radius: 8px;
-      font-size: 0.95rem;
+      font-weight: 800;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-size: 0.98rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 12px rgba(0,242,254,0.3);
-      transition: transform 0.15s;
+      box-shadow: 0 4px 18px rgba(0,242,254,0.35);
+      transition: all 0.2s;
     }
-    .btn-next-q:hover { transform: scale(1.02); }
+    .btn-next-q:hover {
+      box-shadow: 0 6px 24px rgba(0,255,135,0.45);
+      transform: translateY(-2px);
+    }
 
     /* REPORT VIEW */
     .report-container, .panel-container {
-      max-width: 1000px;
+      max-width: 1040px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -451,20 +537,23 @@
     }
     .stat-card {
       background: var(--bg-card);
+      backdrop-filter: blur(14px);
       border: 1px solid var(--border-glow);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 18px;
       text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
     }
     .stat-card-title {
       font-size: 0.8rem;
       text-transform: uppercase;
+      letter-spacing: 0.8px;
       color: var(--text-muted);
       margin-bottom: 6px;
       font-weight: 600;
     }
     .stat-card-val {
-      font-size: 1.5rem;
+      font-size: 1.55rem;
       font-weight: 700;
       font-family: var(--font-head);
     }
@@ -475,9 +564,11 @@
 
     .data-card {
       background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
-      padding: 20px;
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
     }
     .data-header {
       display: flex;
@@ -488,32 +579,34 @@
       gap: 10px;
     }
     .data-title {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--neon-cyan);
     }
     .data-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
     }
     .data-table th {
       background: rgba(255,255,255,0.03);
       color: var(--text-muted);
       text-align: left;
-      padding: 10px 12px;
+      padding: 12px 14px;
       border-bottom: 1px solid rgba(255,255,255,0.1);
       font-weight: 600;
+      white-space: nowrap;
     }
     .data-table td {
-      padding: 12px;
+      padding: 12px 14px;
       border-bottom: 1px solid rgba(255,255,255,0.05);
       color: var(--text-main);
+      white-space: nowrap;
     }
     .badge-pill {
       display: inline-block;
-      padding: 3px 8px;
-      border-radius: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
       font-size: 0.75rem;
       font-weight: 700;
     }
@@ -527,10 +620,10 @@
       gap: 20px;
     }
     .pay-method-btn {
-      background: rgba(255,255,255,0.04);
+      background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: 12px;
+      border-radius: 10px;
+      padding: 14px;
       color: var(--text-main);
       font-weight: 600;
       cursor: pointer;
@@ -539,11 +632,13 @@
       gap: 10px;
       width: 100%;
       margin-bottom: 10px;
+      transition: all 0.2s;
     }
     .pay-method-btn.selected {
       border-color: var(--neon-cyan);
-      background: rgba(0,242,254,0.1);
+      background: rgba(0,242,254,0.12);
       color: var(--neon-cyan);
+      box-shadow: 0 0 14px rgba(0,242,254,0.25);
     }
     .input-group {
       display: flex;
@@ -561,12 +656,14 @@
       border: 1px solid rgba(255,255,255,0.15);
       color: #fff;
       padding: 10px 14px;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 0.95rem;
       outline: none;
+      transition: border-color 0.2s;
     }
     .input-group input:focus {
       border-color: var(--neon-cyan);
+      box-shadow: 0 0 8px rgba(0,242,254,0.3);
     }
     .btn-submit-action {
       background: linear-gradient(90deg, #ffbe0b, #ff007f);
@@ -578,33 +675,74 @@
       font-size: 1rem;
       cursor: pointer;
       width: 100%;
-      transition: opacity 0.2s;
+      transition: all 0.2s;
     }
-    .btn-submit-action:hover { opacity: 0.9; }
+    .btn-submit-action:hover {
+      box-shadow: 0 4px 16px rgba(255,0,127,0.4);
+      transform: translateY(-1px);
+    }
 
     /* ADMIN MASTER STYLES */
     .admin-auth-box {
-      max-width: 420px;
+      max-width: 440px;
       margin: 50px auto;
-      background: var(--bg-card);
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
       border: 1px solid var(--neon-red);
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(255,71,87,0.2);
+      border-radius: 14px;
+      padding: 32px;
+      box-shadow: 0 10px 35px rgba(255,71,87,0.25);
       text-align: center;
     }
     .admin-search-bar {
-      padding: 8px 14px;
+      padding: 9px 16px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 6px;
+      border-radius: 8px;
       color: #fff;
       font-size: 0.9rem;
       outline: none;
-      min-width: 260px;
+      min-width: 250px;
     }
     .admin-search-bar:focus {
       border-color: var(--neon-cyan);
+      box-shadow: 0 0 8px rgba(0,242,254,0.3);
+    }
+    .btn-danger-sm {
+      background: rgba(255,71,87,0.2);
+      border: 1px solid var(--neon-red);
+      color: #ff6b81;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .btn-danger-sm:hover {
+      background: var(--neon-red);
+      color: #fff;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glow);
+      border-radius: 14px;
+      width: 90%;
+      max-width: 440px;
+      padding: 26px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.7);
     }
 
     /* TOAST */
@@ -612,13 +750,13 @@
       position: fixed;
       bottom: 24px;
       right: 24px;
-      padding: 12px 20px;
-      border-radius: 8px;
+      padding: 12px 22px;
+      border-radius: 10px;
       font-weight: 600;
-      font-size: 0.9rem;
-      z-index: 100;
+      font-size: 0.92rem;
+      z-index: 1100;
       display: none;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
       animation: fadeIn 0.3s forwards;
     }
     .toast.success { background: #00ff87; color: #070b19; }
@@ -635,13 +773,23 @@
   <!-- TOPBAR -->
   <div class="topbar">
     <div class="logo" onclick="handleLogoClick()">
-      ⚡ EDU GAME FOR ALL
+      <svg class="logo-icon" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="topbarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00f2fe" />
+            <stop offset="100%" stop-color="#00ff87" />
+          </linearGradient>
+        </defs>
+        <path d="M55 12 L26 53 L48 53 L41 86 L74 45 L52 45 Z" fill="url(#topbarGrad)"/>
+      </svg>
+      <span>EDU GAME FOR ALL</span>
     </div>
     <div class="top-actions">
+      <button class="btn-top" onclick="toggleSound()" id="btn_sound">🔊 সাউন্ড: অন</button>
       <button class="btn-top" onclick="toggleLang()" id="btn_lang">🌐 বাংলা (BN)</button>
       <button class="btn-top" onclick="toggleTheme()" id="btn_theme">🌙 ডার্ক</button>
       <button class="btn-top btn-logout" onclick="logout()" id="btn_logout">🚪 লগআউট</button>
-      <div class="stat-badge badge-practice" id="badge_practice">⚡ নো কুলডাউন / আনলিমিটেড প্র্যাকটিস</div>
+      <div class="stat-badge badge-practice" id="badge_practice">⚡ নো কুলডাউন / আনলিমিটেড</div>
       <div class="stat-badge badge-demo" id="badge_demo">🎮 Demo: <span id="txt_points">10,000</span> Pts</div>
       <div class="stat-badge badge-real" id="badge_real">💰 Real: <span id="txt_real_tk">৳0.00</span></div>
     </div>
@@ -750,26 +898,45 @@
     <!-- CONTENT AREA -->
     <div class="content-area">
       
-      <!-- 0. AUTH VIEW (LOGIN / REGISTER) -->
+      <!-- 0. AUTH VIEW (LOGIN & SIGN UP TABS) -->
       <div id="view_auth" style="display:none;">
         <div class="auth-container">
-          <div class="auth-title">🔐 একাউন্টে লগইন করুন</div>
-          <div class="auth-subtitle">আপনার শিক্ষামূলক কুইজ প্ল্যাটফর্মে স্বাগতম</div>
-          
-          <div class="input-group">
-            <label>মোবাইল নাম্বার বা ইমেইল:</label>
-            <input type="text" id="auth_user" value="01712345678" placeholder="উদা: 017XXXXXXXX">
+          <div class="auth-tabs">
+            <button class="auth-tab-btn active" id="tab_btn_login" onclick="switchAuthTab('login')">লগইন (Login)</button>
+            <button class="auth-tab-btn" id="tab_btn_signup" onclick="switchAuthTab('signup')">নতুন সাইন আপ (Sign Up)</button>
           </div>
-          <div class="input-group">
-            <label>পাসওয়ার্ড:</label>
-            <input type="password" id="auth_pass" value="123456" placeholder="পাসওয়ার্ড দিন">
+
+          <!-- LOGIN FORM -->
+          <div id="auth_login_form">
+            <div class="input-group">
+              <label>মোবাইল নাম্বার বা ইমেইল:</label>
+              <input type="text" id="auth_user" value="01712-345678" placeholder="উদা: 017XXXXXXXX">
+            </div>
+            <div class="input-group">
+              <label>পাসওয়ার্ড:</label>
+              <input type="password" id="auth_pass" value="123456" placeholder="পাসওয়ার্ড দিন">
+            </div>
+            <button class="btn-submit-action" onclick="handleLogin()" style="margin-top:6px;">লগইন করুন 🚀</button>
+            <div style="text-align:center; margin:14px 0; color:var(--text-muted); font-size:0.85rem;">— অথবা সরাসরি অংশগ্রহণ —</div>
+            <button class="btn-play" style="width:100%;" onclick="handleQuickLogin()">⚡ ডেমো প্লেয়ার হিসেবে প্রবেশ করুন</button>
           </div>
-          
-          <button class="btn-submit-action" onclick="handleLogin()" style="margin-top:6px;">লগইন করুন 🚀</button>
-          
-          <div style="text-align:center; margin:16px 0; color:var(--text-muted); font-size:0.85rem;">— অথবা সরাসরি অংশগ্রহণ করুন —</div>
-          
-          <button class="btn-play" style="width:100%;" onclick="handleQuickLogin()">⚡ ডেমো প্লেয়ার হিসেবে প্রবেশ করুন</button>
+
+          <!-- SIGN UP FORM -->
+          <div id="auth_signup_form" style="display:none;">
+            <div class="input-group">
+              <label>আপনার পূর্ণ নাম:</label>
+              <input type="text" id="reg_name" placeholder="উদা: Md. Al-Amin">
+            </div>
+            <div class="input-group">
+              <label>মোবাইল নাম্বার:</label>
+              <input type="text" id="reg_phone" placeholder="উদা: 017XXXXXXXX">
+            </div>
+            <div class="input-group">
+              <label>গোপন পাসওয়ার্ড:</label>
+              <input type="password" id="reg_pass" placeholder="পাসওয়ার্ড তৈরি করুন">
+            </div>
+            <button class="btn-submit-action" onclick="handleUserSignUp()" style="background:linear-gradient(90deg, #00f2fe, #00ff87); color:#070b19;">নতুন অ্যাকাউন্ট তৈরি করুন 🎉</button>
+          </div>
         </div>
       </div>
 
@@ -790,7 +957,7 @@
               <div class="quiz-title" id="quiz_display_title">Set 01 - Health Related Issues</div>
               <div class="quiz-progress" id="quiz_display_progress">প্রশ্ন: ১/২৫</div>
             </div>
-            <div class="timer-badge">⏳ <span id="quiz_timer">28s</span></div>
+            <div class="timer-badge" id="quiz_timer_box">⏳ <span id="quiz_timer">28s</span></div>
           </div>
           <div class="question-box">
             <div class="question-text" id="quiz_question_text">প্রশ্ন লোড হচ্ছে...</div>
@@ -883,7 +1050,7 @@
               <div class="data-title" style="margin-bottom:14px;">📤 ব্যালেন্স উইথড্র / উত্তোলন</div>
               <div class="input-group">
                 <label>উইথড্র মাধ্যম:</label>
-                <select id="w_method" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:#fff; padding:10px; border-radius:6px;">
+                <select id="w_method" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:#fff; padding:10px; border-radius:8px;">
                   <option value="bkash">বিকাশ (bKash Personal)</option>
                   <option value="nagad">নগদ (Nagad Personal)</option>
                   <option value="rocket">রকেট (Rocket Personal)</option>
@@ -913,8 +1080,8 @@
           <div class="data-card">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <div>
-                <h3 style="color:var(--neon-cyan); margin-bottom:6px;">নাম: Md. Hossain (Player 777)</h3>
-                <p style="color:var(--text-muted); font-size:0.9rem;">মোবাইল: 01712-345678 | রোল: রেজিস্টার্ড প্লেয়ার</p>
+                <h3 style="color:var(--neon-cyan); margin-bottom:6px;" id="portal_disp_name">নাম: Md. Hossain (Player 777)</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem;" id="portal_disp_phone">মোবাইল: 01712-345678 | রোল: রেজিস্টার্ড প্লেয়ার</p>
               </div>
               <button class="btn-top" onclick="resetDemoPoints()">🔄 ডেমো পয়েন্ট রিসেট (১০,০০০ Pts)</button>
             </div>
@@ -951,8 +1118,8 @@
         
         <!-- ADMIN PASSWORD LOCK SCREEN -->
         <div id="admin_lock_screen" class="admin-auth-box">
-          <div style="font-size:2.5rem; margin-bottom:12px;">🛡️</div>
-          <h2 style="color:var(--neon-red); margin-bottom:8px;">এডমিন ভেরিফিকেশন</h2>
+          <div style="font-size:2.8rem; margin-bottom:12px;">🛡️</div>
+          <h2 style="color:var(--neon-red); margin-bottom:8px; font-family:var(--font-head); letter-spacing:1px;">এডমিন ভেরিফিকেশন</h2>
           <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:20px;">এই প্যানেলটি সুরক্ষার জন্য মাস্টার পাসওয়ার্ড সংরক্ষিত</p>
           <div class="input-group">
             <label style="text-align:left;">মাস্টার পাসওয়ার্ড (Master Password):</label>
@@ -963,37 +1130,40 @@
 
         <!-- ADMIN DASHBOARD (VISIBLE AFTER UNLOCK) -->
         <div id="admin_content_screen" class="panel-container" style="display:none;">
-          <div class="arena-banner" style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="arena-banner" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
             <div>
-              <h2>🛡️ সুপার এডমিন কন্ট্রোল ড্যাশবোর্ড</h2>
+              <h2>🛡️ সুপার এডমিন ইউজার কন্ট্রোল ড্যাশবোর্ড</h2>
               <p>এডমিন অথরিটি: Anwar (Master Authority Verified)</p>
             </div>
-            <button class="btn-top btn-logout" onclick="lockAdminPanel()">🔒 প্যানেল লক করুন</button>
+            <div style="display:flex; gap:10px;">
+              <button class="btn-top" onclick="openAddUserModal()" style="border-color:var(--neon-green); color:var(--neon-green);">➕ নতুন ইউজার যোগ করুন</button>
+              <button class="btn-top btn-logout" onclick="lockAdminPanel()">🔒 প্যানেল লক করুন</button>
+            </div>
           </div>
 
           <div class="report-stats-grid">
             <div class="stat-card">
-              <div class="stat-card-title">মোট নিবন্ধিত ইউজার</div>
-              <div class="stat-card-val val-points" id="adm_total_users">৬ জন</div>
+              <div class="stat-card-title">মোট ইউজার সংখ্যা</div>
+              <div class="stat-card-val val-points" id="adm_total_users">0 জন</div>
             </div>
             <div class="stat-card">
               <div class="stat-card-title">মোট BDT ইনকাম</div>
-              <div class="stat-card-val val-correct" id="adm_total_bdt_inc">+৳৮,৭২৫.০০</div>
+              <div class="stat-card-val val-correct" id="adm_total_bdt_inc">+৳০.০০</div>
             </div>
             <div class="stat-card">
               <div class="stat-card-title">মোট BDT লস/কর্তন</div>
-              <div class="stat-card-val val-wrong" id="adm_total_bdt_loss">-৳১,৩৪০.০০</div>
+              <div class="stat-card-val val-wrong" id="adm_total_bdt_loss">-৳০.০০</div>
             </div>
             <div class="stat-card">
               <div class="stat-card-title">মোট সাইট সময় (লাইভ)</div>
-              <div class="stat-card-val val-tk" id="adm_total_time">২৩ ঘণ্টা ৩৫ মি.</div>
+              <div class="stat-card-val val-tk" id="adm_total_time">০ মি.</div>
             </div>
           </div>
 
-          <!-- ALL USERS TABLE -->
+          <!-- ALL USERS TABLE WITH SIGNUP & LOGIN DATA -->
           <div class="data-card">
             <div class="data-header">
-              <div class="data-title">👥 সকল ইউজারের সম্পূর্ণ হিসাব (ইনকাম, লস ও সাইট টাইম)</div>
+              <div class="data-title">👥 ইউজারের সাইন আপ, লগইন, আয়-ব্যয় ও সাইট টাইম রেকর্ড</div>
               <div style="display:flex; gap:10px;">
                 <input type="text" id="admin_search" class="admin-search-bar" placeholder="🔍 নাম বা মোবাইল নাম্বার দিয়ে খুঁজুন..." oninput="filterAdminTable()">
                 <button class="btn-top" onclick="exportAdminCSV()">📥 এক্সপোর্ট (CSV)</button>
@@ -1005,15 +1175,15 @@
                   <tr>
                     <th>ইউজার নাম</th>
                     <th>মোবাইল নম্বর</th>
-                    <th>পয়েন্ট অর্জন ও লস</th>
-                    <th>টাকা (BDT) আয় ও লস</th>
-                    <th>সাইটে ব্যয়কৃত সময়</th>
-                    <th>স্ট্যাটাস</th>
+                    <th>সাইন আপ তারিখ ও সময়</th>
+                    <th>শেষ লগইন ও সংখ্যা</th>
+                    <th>পয়েন্ট অর্জন / লস</th>
+                    <th>টাকা (BDT) আয় / লস</th>
+                    <th>সাইটে সময়</th>
+                    <th>অ্যাকশন</th>
                   </tr>
                 </thead>
-                <tbody id="admin_user_tbody">
-                  <!-- Generated Dynamically -->
-                </tbody>
+                <tbody id="admin_user_tbody"></tbody>
               </table>
             </div>
           </div>
@@ -1025,9 +1195,57 @@
     </div>
   </div>
 
+  <!-- ADMIN ADD USER MODAL -->
+  <div class="modal-overlay" id="addUserModal">
+    <div class="modal-box">
+      <h3 style="color:var(--neon-cyan); margin-bottom:14px;">➕ নতুন ইউজার যোগ করুন (Admin Only)</h3>
+      <div class="input-group">
+        <label>ইউজারের নাম:</label>
+        <input type="text" id="m_user_name" placeholder="উদা: Tariqul Islam">
+      </div>
+      <div class="input-group">
+        <label>মোবাইল নম্বর:</label>
+        <input type="text" id="m_user_phone" placeholder="উদা: 018XXXXXXXX">
+      </div>
+      <div class="input-group">
+        <label>পাসওয়ার্ড:</label>
+        <input type="password" id="m_user_pass" placeholder="পাসওয়ার্ড">
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+        <button class="btn-top" onclick="closeAddUserModal()">বাতিল</button>
+        <button class="btn-submit-action" style="width:auto; padding:8px 18px;" onclick="saveNewAdminUser()">সংরক্ষণ করুন</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="sys_toast"></div>
 
   <script>
+    // AUDIO SYNTHESIZER FOR SOUND EFFECTS
+    let soundEnabled = true;
+    function playBeep(freq, type='sine', duration=0.15) {
+      if (!soundEnabled) return;
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      document.getElementById('btn_sound').innerText = soundEnabled ? '🔊 সাউন্ড: অন' : '🔇 সাউন্ড: অফ';
+      showToast(soundEnabled ? 'সাউন্ড সক্রিয় হয়েছে' : 'সাউন্ড বন্ধ করা হয়েছে');
+    }
+
     // MASTER ADMIN PASSWORD
     const ADMIN_MASTER_PASS = "Z@rajshahi4512";
     let isAdminUnlocked = false;
@@ -1081,18 +1299,95 @@
     let totalPoints = parseInt(localStorage.getItem('edu_points') || '10000');
     let realTkBalance = parseFloat(localStorage.getItem('edu_real_tk') || '0.00');
     
-    // Live User Analytics
     let userPtsEarned = parseInt(localStorage.getItem('edu_pts_earned') || '1250');
     let userPtsLost = parseInt(localStorage.getItem('edu_pts_lost') || '250');
     let userBdtEarned = parseFloat(localStorage.getItem('edu_bdt_earned') || '62.50');
     let userBdtLost = parseFloat(localStorage.getItem('edu_bdt_lost') || '12.50');
     let userTimeSpentSec = parseInt(localStorage.getItem('edu_time_spent_sec') || '4520');
 
-    // Timer for Time Spent on Site
+    // Timer for Site Time
     setInterval(() => {
       userTimeSpentSec++;
       localStorage.setItem('edu_time_spent_sec', userTimeSpentSec);
     }, 1000);
+
+    // PERSISTENT REGISTERED USERS DATABASE
+    let registeredUsers = JSON.parse(localStorage.getItem('edu_registered_users') || 'null');
+    if (!registeredUsers || registeredUsers.length === 0) {
+      registeredUsers = [
+        {
+          id: "USR-101",
+          name: "Md. Hossain (Player 777)",
+          phone: "01712-345678",
+          pass: "123456",
+          signupDate: "20/11/2026, ০৩:১৫ PM",
+          lastLogin: new Date().toLocaleString('bn-BD'),
+          loginCount: 14,
+          ptsEarned: userPtsEarned,
+          ptsLost: userPtsLost,
+          bdtEarned: userBdtEarned,
+          bdtLost: userBdtLost,
+          timeSpentSec: userTimeSpentSec
+        },
+        {
+          id: "USR-102",
+          name: "Anwar Hossain (Admin)",
+          phone: "01811-987654",
+          pass: "Z@rajshahi4512",
+          signupDate: "18/11/2026, ১০:০০ AM",
+          lastLogin: "24/11/2026, ০৭:২০ PM",
+          loginCount: 32,
+          ptsEarned: 48500,
+          ptsLost: 4200,
+          bdtEarned: 2425.00,
+          bdtLost: 210.00,
+          timeSpentSec: 18720
+        },
+        {
+          id: "USR-103",
+          name: "Sadia Afrin",
+          phone: "01923-456789",
+          pass: "pass123",
+          signupDate: "21/11/2026, ১১:৩০ AM",
+          lastLogin: "24/11/2026, ০২:১৫ PM",
+          loginCount: 9,
+          ptsEarned: 39800,
+          ptsLost: 5600,
+          bdtEarned: 1990.00,
+          bdtLost: 280.00,
+          timeSpentSec: 15900
+        },
+        {
+          id: "USR-104",
+          name: "Tanvir Ahmed",
+          phone: "01634-567890",
+          pass: "tanvir123",
+          signupDate: "22/11/2026, ০৪:৪৫ PM",
+          lastLogin: "23/11/2026, ০৯:১০ PM",
+          loginCount: 6,
+          ptsEarned: 35400,
+          ptsLost: 6100,
+          bdtEarned: 1770.00,
+          bdtLost: 305.00,
+          timeSpentSec: 13800
+        },
+        {
+          id: "USR-105",
+          name: "Nusrat Jahan",
+          phone: "01745-678901",
+          pass: "nusrat456",
+          signupDate: "23/11/2026, ০৯:০০ AM",
+          lastLogin: "24/11/2026, ১২:৪০ PM",
+          loginCount: 7,
+          ptsEarned: 31900,
+          ptsLost: 4800,
+          bdtEarned: 1595.00,
+          bdtLost: 240.00,
+          timeSpentSec: 11700
+        }
+      ];
+      localStorage.setItem('edu_registered_users', JSON.stringify(registeredUsers));
+    }
 
     let gameHistory = JSON.parse(localStorage.getItem('edu_game_history') || '[]');
     if (gameHistory.length === 0) {
@@ -1149,27 +1444,35 @@
     }
 
     function handleLogoClick() {
+      playBeep(440);
       if (isLoggedIn) navigate('arena');
       else navigate('auth');
     }
 
-    function logout() {
-      if (confirm('আপনি কি নিশ্চিত যে লগআউট করতে চান?')) {
-        isLoggedIn = false;
-        localStorage.setItem('edu_is_logged_in', 'false');
-        updateAuthState();
-        navigate('auth');
-        showToast('সফলভাবে লগআউট হয়েছে!', 'success');
-      }
+    function switchAuthTab(type) {
+      playBeep(520);
+      document.getElementById('tab_btn_login').classList.toggle('active', type === 'login');
+      document.getElementById('tab_btn_signup').classList.toggle('active', type === 'signup');
+      document.getElementById('auth_login_form').style.display = (type === 'login') ? 'block' : 'none';
+      document.getElementById('auth_signup_form').style.display = (type === 'signup') ? 'block' : 'none';
     }
 
     function handleLogin() {
+      playBeep(600);
       const u = document.getElementById('auth_user').value.trim();
       const p = document.getElementById('auth_pass').value.trim();
       if (!u || !p) {
-        showToast('মোবাইল/ইমেইল এবং পাসওয়ার্ড পূরণ করুন!', 'error');
+        showToast('মোবাইল/ইমেইল এবং পাসওয়ার্ড দিন!', 'error');
         return;
       }
+
+      const foundUser = registeredUsers.find(x => x.phone === u || x.name.toLowerCase().includes(u.toLowerCase()));
+      if (foundUser) {
+        foundUser.lastLogin = new Date().toLocaleString('bn-BD');
+        foundUser.loginCount = (foundUser.loginCount || 1) + 1;
+        localStorage.setItem('edu_registered_users', JSON.stringify(registeredUsers));
+      }
+
       isLoggedIn = true;
       localStorage.setItem('edu_is_logged_in', 'true');
       updateAuthState();
@@ -1177,12 +1480,59 @@
       showToast('স্বাগতম! সফলভাবে লগইন হয়েছে।', 'success');
     }
 
-    function handleQuickLogin() {
+    function handleUserSignUp() {
+      playBeep(700);
+      const name = document.getElementById('reg_name').value.trim();
+      const phone = document.getElementById('reg_phone').value.trim();
+      const pass = document.getElementById('reg_pass').value.trim();
+      if (!name || !phone || !pass) {
+        showToast('সকল তথ্য সঠিকভাবে পূরণ করুন!', 'error');
+        return;
+      }
+
+      const newUser = {
+        id: "USR-" + (Date.now().toString().slice(-4)),
+        name: name,
+        phone: phone,
+        pass: pass,
+        signupDate: new Date().toLocaleString('bn-BD'),
+        lastLogin: new Date().toLocaleString('bn-BD'),
+        loginCount: 1,
+        ptsEarned: 0,
+        ptsLost: 0,
+        bdtEarned: 0.00,
+        bdtLost: 0.00,
+        timeSpentSec: 0
+      };
+
+      registeredUsers.unshift(newUser);
+      localStorage.setItem('edu_registered_users', JSON.stringify(registeredUsers));
+
       isLoggedIn = true;
       localStorage.setItem('edu_is_logged_in', 'true');
       updateAuthState();
       navigate('arena');
-      showToast('ডেমো প্লেয়ার হিসেবে সফলভাবে প্রবেশ করেছেন!', 'success');
+      showToast('অভিনন্দন! আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।', 'success');
+    }
+
+    function handleQuickLogin() {
+      playBeep(580);
+      isLoggedIn = true;
+      localStorage.setItem('edu_is_logged_in', 'true');
+      updateAuthState();
+      navigate('arena');
+      showToast('ডেমো প্লেয়ার হিসেবে প্রবেশ করেছেন!', 'success');
+    }
+
+    function logout() {
+      if (confirm('আপনি কি নিশ্চিত যে লগআউট করতে চান?')) {
+        playBeep(350);
+        isLoggedIn = false;
+        localStorage.setItem('edu_is_logged_in', 'false');
+        updateAuthState();
+        navigate('auth');
+        showToast('সফলভাবে লগআউট হয়েছে!', 'success');
+      }
     }
 
     function updatePointsUI() {
@@ -1194,6 +1544,15 @@
       localStorage.setItem('edu_pts_lost', userPtsLost);
       localStorage.setItem('edu_bdt_earned', userBdtEarned.toFixed(2));
       localStorage.setItem('edu_bdt_lost', userBdtLost.toFixed(2));
+
+      if (registeredUsers && registeredUsers.length > 0) {
+        registeredUsers[0].ptsEarned = userPtsEarned;
+        registeredUsers[0].ptsLost = userPtsLost;
+        registeredUsers[0].bdtEarned = userBdtEarned;
+        registeredUsers[0].bdtLost = userBdtLost;
+        registeredUsers[0].timeSpentSec = userTimeSpentSec;
+        localStorage.setItem('edu_registered_users', JSON.stringify(registeredUsers));
+      }
     }
 
     function showToast(msg, type='success') {
@@ -1205,11 +1564,13 @@
     }
 
     function toggleDropdown(id) {
+      playBeep(480);
       const drop = document.getElementById(id);
       drop.classList.toggle('show');
     }
 
     function navigate(viewName) {
+      playBeep(450);
       if (!isLoggedIn && viewName !== 'auth') {
         viewName = 'auth';
       }
@@ -1228,8 +1589,9 @@
       if (viewName === 'admin' && isAdminUnlocked) renderAdminUsers();
     }
 
-    /* ADMIN MASTER PASSWORD LOGIC */
+    /* ADMIN MASTER PASSWORD & USER MANAGEMENT */
     function openAdminPanel() {
+      playBeep(520);
       navigate('admin');
       if (!isAdminUnlocked) {
         document.getElementById('admin_lock_screen').style.display = 'block';
@@ -1245,17 +1607,20 @@
     function verifyAdminPass() {
       const p = document.getElementById('admin_input_pass').value;
       if (p === ADMIN_MASTER_PASS) {
+        playBeep(880, 'triangle');
         isAdminUnlocked = true;
         document.getElementById('admin_lock_screen').style.display = 'none';
         document.getElementById('admin_content_screen').style.display = 'block';
         renderAdminUsers();
         showToast('মাস্টার অথেনটিকেশন সফল! স্বাগতম সুপার এডমিন।', 'success');
       } else {
+        playBeep(220, 'sawtooth');
         showToast('ভুল মাস্টার পাসওয়ার্ড! প্রবেশাধিকার প্রত্যাখ্যাত।', 'error');
       }
     }
 
     function lockAdminPanel() {
+      playBeep(320);
       isAdminUnlocked = false;
       document.getElementById('admin_lock_screen').style.display = 'block';
       document.getElementById('admin_content_screen').style.display = 'none';
@@ -1266,82 +1631,30 @@
     function formatSiteTime(sec) {
       const h = Math.floor(sec / 3600);
       const m = Math.floor((sec % 3600) / 60);
-      const s = sec % 60;
-      if (h > 0) return `${h} ঘণ্টা ${m} মি. ${s} সে.`;
-      return `${m} মিনিট ${s} সেকেন্ড`;
-    }
-
-    // Dynamic Admin Users Database
-    function getAdminUsersList() {
-      return [
-        {
-          name: "Md. Hossain (Player 777)",
-          phone: "01712-345678",
-          ptsEarned: userPtsEarned,
-          ptsLost: userPtsLost,
-          bdtEarned: userBdtEarned,
-          bdtLost: userBdtLost,
-          timeSpent: formatSiteTime(userTimeSpentSec),
-          status: "অনলাইন 🟢"
-        },
-        {
-          name: "Anwar Hossain (Admin)",
-          phone: "01811-987654",
-          ptsEarned: 48500,
-          ptsLost: 4200,
-          bdtEarned: 2425.00,
-          bdtLost: 210.00,
-          timeSpent: "৫ ঘণ্টা ১২ মি.",
-          status: "অ্যাক্টিভ 🟢"
-        },
-        {
-          name: "Sadia Afrin",
-          phone: "01923-456789",
-          ptsEarned: 39800,
-          ptsLost: 5600,
-          bdtEarned: 1990.00,
-          bdtLost: 280.00,
-          timeSpent: "৪ ঘণ্টা ২৫ মি.",
-          status: "অ্যাক্টিভ 🟢"
-        },
-        {
-          name: "Tanvir Ahmed",
-          phone: "01634-567890",
-          ptsEarned: 35400,
-          ptsLost: 6100,
-          bdtEarned: 1770.00,
-          bdtLost: 305.00,
-          timeSpent: "৩ ঘণ্টা ৫০ মি.",
-          status: "অফলাইন ⚪"
-        },
-        {
-          name: "Nusrat Jahan",
-          phone: "01745-678901",
-          ptsEarned: 31900,
-          ptsLost: 4800,
-          bdtEarned: 1595.00,
-          bdtLost: 240.00,
-          timeSpent: "৩ ঘণ্টা ১৫ মি.",
-          status: "অ্যাক্টিভ 🟢"
-        },
-        {
-          name: "Rakibul Hasan",
-          phone: "01556-789012",
-          ptsEarned: 28200,
-          ptsLost: 3900,
-          bdtEarned: 1410.00,
-          bdtLost: 195.00,
-          timeSpent: "২ ঘণ্টা ৪৫ মি.",
-          status: "অফলাইন ⚪"
-        }
-      ];
+      if (h > 0) return `${h} ঘণ্টা ${m} মি.`;
+      return `${m} মিনিট`;
     }
 
     function renderAdminUsers(filter="") {
       const tbody = document.getElementById('admin_user_tbody');
       tbody.innerHTML = '';
-      const list = getAdminUsersList();
-      const filtered = list.filter(u => 
+      
+      let totalBdtInc = 0;
+      let totalBdtLoss = 0;
+      let totalSec = 0;
+
+      registeredUsers.forEach(u => {
+        totalBdtInc += (u.bdtEarned || 0);
+        totalBdtLoss += (u.bdtLost || 0);
+        totalSec += (u.timeSpentSec || 0);
+      });
+
+      document.getElementById('adm_total_users').innerText = registeredUsers.length + " জন";
+      document.getElementById('adm_total_bdt_inc').innerText = "+৳" + totalBdtInc.toFixed(2);
+      document.getElementById('adm_total_bdt_loss').innerText = "-৳" + totalBdtLoss.toFixed(2);
+      document.getElementById('adm_total_time').innerText = formatSiteTime(totalSec);
+
+      const filtered = registeredUsers.filter(u => 
         u.name.toLowerCase().includes(filter.toLowerCase()) || 
         u.phone.includes(filter)
       );
@@ -1351,16 +1664,23 @@
         tr.innerHTML = `
           <td><strong>${u.name}</strong></td>
           <td style="color:var(--neon-cyan);">${u.phone}</td>
+          <td><span style="font-size:0.8rem; color:var(--text-muted);">${u.signupDate || 'N/A'}</span></td>
           <td>
-            <span style="color:var(--neon-green); font-weight:700;">+${u.ptsEarned.toLocaleString()} Pts</span> / 
-            <span style="color:var(--neon-red); font-weight:700;">-${u.ptsLost.toLocaleString()} Pts</span>
+            <span style="font-size:0.8rem; color:var(--neon-green); font-weight:600;">${u.lastLogin || 'N/A'}</span>
+            <div style="font-size:0.75rem; color:var(--text-muted);">${u.loginCount || 1} বার লগইন</div>
           </td>
           <td>
-            <span style="color:var(--neon-gold); font-weight:700;">+৳${u.bdtEarned.toFixed(2)}</span> / 
-            <span style="color:var(--neon-red); font-weight:700;">-৳${u.bdtLost.toFixed(2)}</span>
+            <span style="color:var(--neon-green); font-weight:700;">+${(u.ptsEarned||0).toLocaleString()} Pts</span> / 
+            <span style="color:var(--neon-red); font-weight:700;">-${(u.ptsLost||0).toLocaleString()} Pts</span>
           </td>
-          <td><span style="background:rgba(255,255,255,0.06); padding:4px 8px; border-radius:4px;">⏱️ ${u.timeSpent}</span></td>
-          <td><span class="badge-pill badge-pass">${u.status}</span></td>
+          <td>
+            <span style="color:var(--neon-gold); font-weight:700;">+৳${(u.bdtEarned||0).toFixed(2)}</span> / 
+            <span style="color:var(--neon-red); font-weight:700;">-৳${(u.bdtLost||0).toFixed(2)}</span>
+          </td>
+          <td><span style="background:rgba(255,255,255,0.06); padding:4px 8px; border-radius:6px;">⏱️ ${formatSiteTime(u.timeSpentSec||0)}</span></td>
+          <td>
+            <button class="btn-danger-sm" onclick="deleteUser('${u.id}')">🗑️ মুছুন</button>
+          </td>
         `;
         tbody.appendChild(tr);
       });
@@ -1371,17 +1691,70 @@
       renderAdminUsers(q);
     }
 
+    function openAddUserModal() {
+      playBeep(520);
+      document.getElementById('addUserModal').style.display = 'flex';
+      document.getElementById('m_user_name').value = '';
+      document.getElementById('m_user_phone').value = '';
+      document.getElementById('m_user_pass').value = '';
+    }
+
+    function closeAddUserModal() {
+      document.getElementById('addUserModal').style.display = 'none';
+    }
+
+    function saveNewAdminUser() {
+      const name = document.getElementById('m_user_name').value.trim();
+      const phone = document.getElementById('m_user_phone').value.trim();
+      const pass = document.getElementById('m_user_pass').value.trim();
+      if (!name || !phone) {
+        showToast('ইউজারের নাম ও মোবাইল নম্বর পূরণ করুন!', 'error');
+        return;
+      }
+
+      const newUser = {
+        id: "USR-" + (Date.now().toString().slice(-4)),
+        name: name,
+        phone: phone,
+        pass: pass || "123456",
+        signupDate: new Date().toLocaleString('bn-BD') + " (এডমিন দ্বারা যোগ)",
+        lastLogin: "এখনও লগইন করেনি",
+        loginCount: 0,
+        ptsEarned: 0,
+        ptsLost: 0,
+        bdtEarned: 0.00,
+        bdtLost: 0.00,
+        timeSpentSec: 0
+      };
+
+      registeredUsers.push(newUser);
+      localStorage.setItem('edu_registered_users', JSON.stringify(registeredUsers));
+      closeAddUserModal();
+      renderAdminUsers();
+      playBeep(750, 'triangle');
+      showToast('নতুন ইউজার সফলভাবে ডাটাবেজে যুক্ত করা হয়েছে!', 'success');
+    }
+
+    function deleteUser(userId) {
+      if (confirm('আপনি কি নিশ্চিত যে এই ইউজারকে সম্পূর্ণ মুছে ফেলতে চান?')) {
+        registeredUsers = registeredUsers.filter(u => u.id !== userId);
+        localStorage.setItem('edu_registered_users', JSON.stringify(registeredUsers));
+        renderAdminUsers();
+        playBeep(300, 'sawtooth');
+        showToast('ইউজার সফলভাবে মুছে ফেলা হয়েছে!', 'success');
+      }
+    }
+
     function exportAdminCSV() {
-      let csv = "User Name,Mobile No,Points Earned,Points Lost,BDT Earned,BDT Lost,Time Spent,Status\n";
-      const list = getAdminUsersList();
-      list.forEach(u => {
-        csv += `"${u.name}","${u.phone}",${u.ptsEarned},${u.ptsLost},${u.bdtEarned},${u.bdtLost},"${u.timeSpent}","${u.status}"\n`;
+      let csv = "ID,Name,Phone,SignUpDate,LastLogin,LoginCount,PtsEarned,PtsLost,BDTEarned,BDTLost,TimeSpent\n";
+      registeredUsers.forEach(u => {
+        csv += `"${u.id}","${u.name}","${u.phone}","${u.signupDate}","${u.lastLogin}",${u.loginCount||1},${u.ptsEarned||0},${u.ptsLost||0},${u.bdtEarned||0},${u.bdtLost||0},"${formatSiteTime(u.timeSpentSec||0)}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Admin_User_Financial_Report_${Date.now()}.csv`;
+      a.download = `Admin_User_DB_${Date.now()}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -1406,6 +1779,7 @@
     }
 
     function startSectorQuiz(sectorId) {
+      playBeep(620);
       activeSector = sectorId;
       if (sectorId === 'health') {
         currentQuestions = [...healthQuestions];
@@ -1445,12 +1819,17 @@
         optsContainer.appendChild(btn);
       });
 
-      // 28s Timer
+      const timerBox = document.getElementById('quiz_timer_box');
+      timerBox.classList.remove('urgent');
       timerVal = 28;
       document.getElementById('quiz_timer').innerText = timerVal + 's';
       timerInterval = setInterval(() => {
         timerVal--;
         document.getElementById('quiz_timer').innerText = timerVal + 's';
+        if (timerVal <= 5) {
+          timerBox.classList.add('urgent');
+          playBeep(380, 'sine', 0.08);
+        }
         if (timerVal <= 0) {
           clearInterval(timerInterval);
           if (!questionAnswered) {
@@ -1470,6 +1849,7 @@
       const chosenBtn = document.getElementById('opt_btn_' + chosenIdx);
 
       if (isCorrect) {
+        playBeep(880, 'triangle', 0.25);
         chosenBtn.classList.add('correct');
         totalPoints += 5;
         realTkBalance += 0.25;
@@ -1480,6 +1860,7 @@
         currentSession.tk += 0.25;
         showToast('সঠিক উত্তর! +৫ পয়েন্ট ও +৳০.২৫ যোগ হয়েছে!', 'success');
       } else {
+        playBeep(220, 'sawtooth', 0.3);
         chosenBtn.classList.add('wrong');
         const correctBtn = document.getElementById('opt_btn_' + q.a);
         if (correctBtn) correctBtn.classList.add('correct');
@@ -1501,6 +1882,7 @@
     }
 
     function handleTimeout() {
+      playBeep(180, 'sawtooth', 0.4);
       questionAnswered = true;
       const q = currentQuestions[currentQIndex];
       const correctBtn = document.getElementById('opt_btn_' + q.a);
@@ -1520,6 +1902,7 @@
 
     function nextQuestion() {
       if (!questionAnswered) {
+        playBeep(250);
         showToast('অনুগ্রহ করে আগে যেকোনো একটি উত্তর নির্বাচন করুন!', 'error');
         return;
       }
@@ -1533,6 +1916,7 @@
     }
 
     function finishQuizSession() {
+      playBeep(920, 'triangle', 0.4);
       alert(`কুইজ সমাপ্ত!\nসঠিক: ${currentSession.correct}\nভুল: ${currentSession.wrong}\nপয়েন্ট পরিবর্তন: ${currentSession.points}\nটাকা পরিবর্তন: ৳${currentSession.tk.toFixed(2)}`);
       
       gameHistory.unshift({
@@ -1602,6 +1986,7 @@
 
     // PAYMENT SYSTEM
     function selectPayMethod(btn) {
+      playBeep(450);
       document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
     }
@@ -1613,6 +1998,7 @@
         showToast('পরিমাণ এবং Transaction ID উভয়ই পূরণ করুন!', 'error');
         return;
       }
+      playBeep(700);
       showToast('ডিপোজিট রিকোয়েস্ট সফলভাবে গৃহীত হয়েছে! এডমিন যাচাই শেষে ব্যালেন্সে যোগ হবে।', 'success');
       document.getElementById('dep_amount').value = '';
       document.getElementById('dep_trxid').value = '';
@@ -1629,6 +2015,7 @@
         showToast('আপনার পর্যাপ্ত রিয়েল ক্যাশ ব্যালেন্স নেই!', 'error');
         return;
       }
+      playBeep(750);
       realTkBalance -= amt;
       updatePointsUI();
       showToast(`৳${amt} টাকা উত্তোলনের আবেদন সফল হয়েছে!`, 'success');
@@ -1637,6 +2024,7 @@
     }
 
     function resetDemoPoints() {
+      playBeep(650);
       totalPoints = 10000;
       updatePointsUI();
       showToast('ডেমো পয়েন্ট পুনরায় ১০,০০০ Pts এ রিসেট করা হয়েছে!', 'success');
@@ -1660,6 +2048,7 @@
     }
 
     function toggleTheme() {
+      playBeep(550);
       const current = document.documentElement.getAttribute('data-theme');
       const next = (current === 'dark') ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
@@ -1667,6 +2056,7 @@
     }
 
     function toggleLang() {
+      playBeep(550);
       showToast('ভাষা পরিবর্তন প্রক্রিয়াধীন...', 'success');
     }
   </script>

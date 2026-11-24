@@ -1,0 +1,16 @@
+﻿{
+  "name": "EDU GAME FOR ALL - Official Workspace",
+  "short_name": "EduGame",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#070b19",
+  "theme_color": "#00f2fe",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
