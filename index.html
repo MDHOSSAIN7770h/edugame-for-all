@@ -76,7 +76,7 @@
     }
     .badge-unlimited { background: rgba(0, 255, 135, 0.15); border: 1px solid rgba(0, 255, 135, 0.3); color: var(--neon-green); }
     .badge-demo { background: rgba(0, 242, 254, 0.12); border: 1px solid var(--border-glow); color: var(--neon-cyan); }
-    .badge-real { background: rgba(255, 215, 0, 0.15); border: 1px solid rgba(255, 215, 0, 0.3); color: var(--gold); }
+    .badge-real { background: rgba(255, 215, 0, 0.18); border: 1px solid rgba(255, 215, 0, 0.4); color: var(--gold); font-weight: 700; }
     .btn-toggle {
       background: var(--btn-bg);
       border: 1px solid var(--sidebar-border);
@@ -247,16 +247,26 @@
     }
 
     /* QUIZ VIEW */
-    .quiz-view { display: none; max-width: 900px; margin: 0 auto; }
+    .quiz-view { display: none; max-width: 900px; margin: 0 auto; position: relative; }
     .quiz-header {
       background: var(--bg-card);
       border: 1px solid var(--border-glow);
       border-radius: 14px;
-      padding: 18px 22px;
+      padding: 16px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
+    }
+    .live-score-pill {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 12px;
+      align-items: center;
     }
     .timer-badge {
       font-size: 1.3rem;
@@ -264,7 +274,7 @@
       color: var(--gold);
       background: rgba(255, 215, 0, 0.15);
       border: 1px solid rgba(255, 215, 0, 0.3);
-      padding: 6px 16px;
+      padding: 5px 14px;
       border-radius: 10px;
     }
     .quiz-card {
@@ -273,6 +283,7 @@
       border-radius: 16px;
       padding: 26px;
       margin-bottom: 20px;
+      position: relative;
     }
     .question-title { font-size: 1.22rem; font-weight: 600; margin-bottom: 20px; line-height: 1.6; }
     .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
@@ -311,7 +322,7 @@
       color: var(--gold);
     }
 
-    /* NEXT QUESTION BUTTON BAR */
+    /* ACTION BAR & NEXT BUTTON */
     .quiz-action-bar {
       margin-top: 22px;
       display: flex;
@@ -319,10 +330,6 @@
       align-items: center;
       padding-top: 16px;
       border-top: 1px solid var(--sidebar-border);
-    }
-    .quiz-hint-text {
-      font-size: 0.9rem;
-      color: var(--text-muted);
     }
     .btn-next-question {
       background: rgba(30, 41, 59, 0.6);
@@ -350,6 +357,35 @@
     .btn-next-question.active-ready:hover {
       box-shadow: 0 6px 24px rgba(0, 242, 254, 0.5);
       transform: translateY(-3px);
+    }
+
+    /* FLOATING REWARD TOAST */
+    .floating-reward {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 12px;
+      display: none;
+      animation: floatUp 0.7s ease forwards;
+      z-index: 50;
+    }
+    .floating-reward.reward-plus {
+      background: rgba(0, 255, 135, 0.25);
+      border: 1px solid var(--neon-green);
+      color: var(--neon-green);
+    }
+    .floating-reward.reward-minus {
+      background: rgba(255, 59, 92, 0.25);
+      border: 1px solid var(--bright-red);
+      color: var(--bright-red);
+    }
+    @keyframes floatUp {
+      0% { opacity: 0; transform: translateY(10px); }
+      50% { opacity: 1; transform: translateY(-5px); }
+      100% { opacity: 0.9; transform: translateY(-10px); }
     }
 
     /* SCORECARD MODAL */
@@ -418,9 +454,11 @@
       <button class="btn-toggle btn-logout" onclick="handleLogout()" id="btn_auth_state">
         🚪 <span id="lbl_logout">লগআউট</span>
       </button>
-      <div class="badge badge-unlimited">⚡ <span>নো কুলডাউন / আনলিমিটেড প্র্যাকটিস</span></div>
+      <div class="badge badge-unlimited">⚡ <span>নো কুলডাউন / আনলিমিটেড</span></div>
+      <!-- DEMO POINTS BADGE -->
       <div class="badge badge-demo">🎮 Demo: <span id="txt_points">10,000</span> Pts</div>
-      <div class="badge badge-real">💰 Real: ৳00.00</div>
+      <!-- REAL TK EARNINGS BADGE (DYNAMIC LIVE) -->
+      <div class="badge badge-real">💰 Real: <span id="txt_real_tk">৳0.00</span></div>
     </div>
   </header>
 
@@ -446,7 +484,7 @@
         </div>
       </div>
 
-      <!-- SSC GAME DROPDOWN (MATH, ENG, SCIENCE) -->
+      <!-- SSC GAME DROPDOWN -->
       <div class="dropdown-container">
         <button class="nav-btn dropdown-trigger" onclick="toggleDropdown('ssc_dropdown_menu', 'ssc_arrow')">
           <span>🎓 <span id="lbl_nav_ssc">SSC Game</span></span>
@@ -459,7 +497,7 @@
         </div>
       </div>
 
-      <!-- HSC GAME DROPDOWN (CHE, PHY, BIO, ICT, ENG) -->
+      <!-- HSC GAME DROPDOWN -->
       <div class="dropdown-container">
         <button class="nav-btn dropdown-trigger" onclick="toggleDropdown('hsc_dropdown_menu', 'hsc_arrow')">
           <span>🎓 <span id="lbl_nav_hsc">HSC Game</span></span>
@@ -513,15 +551,25 @@
             <h3 id="quiz_game_title" style="color: var(--gold); font-size: 1.35rem;">গেমের নাম</h3>
             <p id="quiz_progress" style="color: var(--text-muted); font-size: 0.95rem;">প্রশ্ন ১/২৫</p>
           </div>
+          <!-- LIVE IN-QUIZ STATS PILL -->
+          <div class="live-score-pill">
+            <span style="color: var(--neon-green);">✓ <span id="live_correct_cnt">০</span></span>
+            <span style="color: var(--bright-red);">✗ <span id="live_wrong_cnt">০</span></span>
+            <span style="color: var(--gold); font-weight: 700;" id="live_tk_earned">৳০.০০</span>
+          </div>
           <div class="timer-badge">⏳ <span id="timer_display">28s</span></div>
         </div>
+
         <div class="quiz-card">
+          <!-- FLOATING REWARD TOAST -->
+          <div id="floating_reward_toast" class="floating-reward"></div>
+
           <div class="question-title" id="question_text">প্রশ্ন লোড হচ্ছে...</div>
           <div class="options-grid" id="options_container"></div>
           
           <!-- NEXT QUESTION BUTTON ACTION BAR -->
           <div class="quiz-action-bar">
-            <div class="quiz-hint-text" id="quiz_status_hint">একটি উত্তর নির্বাচন করুন (নো স্কিপ)</div>
+            <div class="quiz-hint-text" id="quiz_status_hint">একটি উত্তর নির্বাচন করুন (সঠিক: +৫ Pts / ভুল: -১০ Pts)</div>
             <button id="btn_next_q" class="btn-next-question" onclick="goToNextQuestion()" disabled>
               <span id="lbl_next_btn">পরবর্তী প্রশ্ন ❯</span>
             </button>
@@ -546,10 +594,13 @@
       <h2 id="sc_title">🎉 ফলাফল ও স্কোরকার্ড</h2>
       <div class="score-stats">
         <div class="stat-row"><span>মোট প্রশ্ন:</span><span id="sc_total">২৫</span></div>
-        <div class="stat-row"><span>সঠিক উত্তর:</span><span id="sc_correct" style="color: var(--neon-green);">০</span></div>
-        <div class="stat-row"><span>ভুল / টাইমআউট:</span><span id="sc_wrong" style="color: var(--bright-red);">০</span></div>
-        <div class="stat-row"><span>অর্জিত পয়েন্ট:</span><span id="sc_net_pts">০ Pts</span></div>
-        <div class="stat-row"><span>উপার্জিত টাকা:</span><span id="sc_earned_bdt">৳০.০০</span></div>
+        <div class="stat-row"><span>সঠিক উত্তর (+৫ Pts / +৳০.২৫):</span><span id="sc_correct" style="color: var(--neon-green);">০</span></div>
+        <div class="stat-row"><span>ভুল উত্তর (-১০ Pts / -৳০.৫০):</span><span id="sc_wrong" style="color: var(--bright-red);">০</span></div>
+        <div class="stat-row"><span>অর্জিত নিট পয়েন্ট:</span><span id="sc_net_pts">০ Pts</span></div>
+        <div class="stat-row" style="border: 1px solid rgba(255, 215, 0, 0.4); background: rgba(255, 215, 0, 0.1);">
+          <span style="font-weight: 700; color: var(--gold);">মোট উপার্জিত টাকা:</span>
+          <span id="sc_earned_bdt" style="font-weight: 700; color: var(--gold); font-size: 1.2rem;">৳০.০০</span>
+        </div>
       </div>
       <p id="sc_next_prompt" style="margin-bottom: 20px; color: var(--text-muted);">আপনি কি পরবর্তী গেম খেলতে চান?</p>
       <div style="display: flex; gap: 10px; justify-content: center;">
@@ -589,6 +640,7 @@
   let currentLang = localStorage.getItem('edu_lang') || 'bn';
   let currentTheme = localStorage.getItem('edu_theme') || 'dark';
   let userPoints = parseInt(localStorage.getItem('edu_points') || '10000');
+  let userRealTk = parseFloat(localStorage.getItem('edu_real_tk') || '0.00');
   let isLoggedIn = localStorage.getItem('edu_logged_in') !== 'false';
 
   let currentGame = null;
@@ -602,7 +654,7 @@
   let qStartTime = 0;
   let hasAnsweredCurrentQ = false;
 
-  // GENERIC DROPDOWN HANDLER
+  // DROPDOWN HANDLER
   function toggleDropdown(menuId, arrowId) {
     const menu = document.getElementById(menuId);
     const arrow = document.getElementById(arrowId);
@@ -798,7 +850,7 @@
       ]
     },
 
-    // SSC SUBJECTS: MATH, ENG, SCIENCE
+    // SSC SUBJECTS
     ssc: {
       math: [
         {
@@ -823,13 +875,6 @@
           options_bn: ["was", "were", "are", "have been"],
           options_en: ["was", "were", "are", "have been"],
           ans: 0
-        },
-        {
-          q_bn: "SSC English: Identify the noun form of 'Glorious':",
-          q_en: "SSC English: Identify the noun form of 'Glorious':",
-          options_bn: ["Glory", "Glorify", "Gloriously", "Glorifying"],
-          options_en: ["Glory", "Glorify", "Gloriously", "Glorifying"],
-          ans: 0
         }
       ],
       science: [
@@ -839,18 +884,11 @@
           options_bn: ["যকৃত (Liver)", "অগ্ন্যাশয় (Pancreas)", "থাইরয়েড (Thyroid)", "পিটুইটারি (Pituitary)"],
           options_en: ["Liver", "Pancreas", "Thyroid", "Pituitary"],
           ans: 0
-        },
-        {
-          q_bn: "এসএসসি সাধারণ বিজ্ঞান: বায়ুমণ্ডলে সবচেয়ে বেশি পরিমাণে কোন গ্যাস থাকে?",
-          q_en: "SSC Science: Which gas is most abundant in Earth's atmosphere?",
-          options_bn: ["নাইট্রোজেন (Nitrogen)", "অক্সিজেন (Oxygen)", "আর্গন (Argon)", "কার্বন ডাই অক্সাইড (CO2)"],
-          options_en: ["Nitrogen", "Oxygen", "Argon", "Carbon Dioxide"],
-          ans: 0
         }
       ]
     },
 
-    // HSC SUBJECTS: CHE, PHY, BIO, ICT, ENG
+    // HSC SUBJECTS
     hsc: {
       che: [
         {
@@ -858,13 +896,6 @@
           q_en: "HSC Chemistry: Which atomic orbital has a dumbbell shape?",
           options_bn: ["p অরবিটাল", "s অরবিটাল", "d অরবিটাল", "f অরবিটাল"],
           options_en: ["p orbital", "s orbital", "d orbital", "f orbital"],
-          ans: 0
-        },
-        {
-          q_bn: "এইচএসসি রসায়ন: সাধারণ তাপমাত্রায় কোন ধাতু তরল অবস্থায় থাকে?",
-          q_en: "HSC Chemistry: Which metal exists in liquid state at standard room temperature?",
-          options_bn: ["পারদ (Mercury)", "ব্রোমিন (Bromine)", "সোডিয়াম (Sodium)", "গ্যালিয়াম (Gallium)"],
-          options_en: ["Mercury", "Bromine", "Sodium", "Gallium"],
           ans: 0
         }
       ],
@@ -875,13 +906,6 @@
           options_bn: ["জুল (Joule)", "ওয়াট (Watt)", "নিউটন (Newton)", "প্যাসকেল (Pascal)"],
           options_en: ["Joule", "Watt", "Newton", "Pascal"],
           ans: 0
-        },
-        {
-          q_bn: "এইচএসসি পদার্থবিজ্ঞান: আলোর গতিবেগ প্রতি সেকেন্ডে কত?",
-          q_en: "HSC Physics: What is the speed of light in vacuum?",
-          options_bn: ["3 × 10⁸ m/s", "3 × 10⁶ m/s", "3 × 10¹⁰ m/s", "3 × 10⁵ m/s"],
-          options_en: ["3 × 10⁸ m/s", "3 × 10⁶ m/s", "3 × 10¹⁰ m/s", "3 × 10⁵ m/s"],
-          ans: 0
         }
       ],
       bio: [
@@ -891,13 +915,6 @@
           options_bn: ["মাইটোকন্ড্রিয়া (Mitochondria)", "রাইবোসোম (Ribosome)", "গলগি বডি (Golgi Body)", "লাইসোজোম (Lysosome)"],
           options_en: ["Mitochondria", "Ribosome", "Golgi Body", "Lysosome"],
           ans: 0
-        },
-        {
-          q_bn: "এইচএসসি জীববিজ্ঞান: মানবদেহের সার্বজনীন গ্রহীতা (Universal Recipient) রক্তের গ্রুপ কোনটি?",
-          q_en: "HSC Biology: Which blood group is known as the Universal Recipient?",
-          options_bn: ["AB+", "O-", "A+", "B+"],
-          options_en: ["AB+", "O-", "A+", "B+"],
-          ans: 0
         }
       ],
       ict: [
@@ -906,13 +923,6 @@
           q_en: "HSC ICT: How many fundamental digits are used in the binary number system?",
           options_bn: ["২টি (০ এবং ১)", "৮টি", "১০টি", "১৬টি"],
           options_en: ["2 (0 and 1)", "8", "10", "16"],
-          ans: 0
-        },
-        {
-          q_bn: "এইচএসসি আইসিটি: ওয়েবসাইটের একক পেজ তৈরি করতে কোন ভাষাটি প্রধানত ব্যবহৃত হয়?",
-          q_en: "HSC ICT: Which language is primarily used to structure web pages?",
-          options_bn: ["HTML", "C++", "SQL", "Python"],
-          options_en: ["HTML", "C++", "SQL", "Python"],
           ans: 0
         }
       ],
@@ -927,7 +937,7 @@
       ]
     },
 
-    // JOB PREPARATION: BCS, BANK, OTHERS
+    // JOB PREPARATION
     bcs: {
       default: [
         {
@@ -1063,7 +1073,7 @@
     }
   };
 
-  // COMPLETE GAMES CATALOG (INCLUDING HEALTH, SSC, HSC, JOB PREPARATION)
+  // COMPLETE GAMES CATALOG
   const GAMES_CATALOG = [
     {
       key: 'health',
@@ -1315,6 +1325,7 @@
     document.getElementById('quiz_game_title').innerText = title;
 
     navigate('quiz');
+    updateLiveInGameStats();
     loadQuestion();
   }
 
@@ -1332,7 +1343,7 @@
     }
     const statusHint = document.getElementById('quiz_status_hint');
     if (statusHint) {
-      statusHint.innerText = currentLang === 'bn' ? 'একটি উত্তর নির্বাচন করুন (নো স্কিপ)' : 'Select an answer (No Skip)';
+      statusHint.innerText = currentLang === 'bn' ? 'একটি উত্তর নির্বাচন করুন (সঠিক: +৫ Pts / ভুল: -১০ Pts)' : 'Select an answer (+5 Pts / -10 Pts)';
     }
 
     const qList = QUESTION_DATABASE[currentGame][currentSet];
@@ -1392,22 +1403,26 @@
       playTone('correct');
       correctAnswers++;
       userPoints += 5;
+      userRealTk += 0.25;
+      showFloatingToast('+5 Pts (+৳0.25)', 'reward-plus');
     } else {
       btnElement.classList.add('wrong');
       allBtns[qData.ans].classList.add('correct');
       playTone('wrong');
       wrongAnswers++;
       userPoints = Math.max(0, userPoints - 10);
+      userRealTk = Math.max(0, userRealTk - 0.50);
+      showFloatingToast('-10 Pts (-৳0.50)', 'reward-minus');
     }
-    updatePointsUI();
 
-    // Enable NEXT button
+    updatePointsAndTakaUI();
+    updateLiveInGameStats();
     activateNextButton();
 
-    // Auto advance fallback after 2.2s
+    // Auto advance fallback after 2s
     autoAdvanceTimeout = setTimeout(() => {
       goToNextQuestion();
-    }, 2200);
+    }, 2000);
   }
 
   function handleTimeout() {
@@ -1417,7 +1432,8 @@
     playTone('wrong');
     wrongAnswers++;
     userPoints = Math.max(0, userPoints - 10);
-    updatePointsUI();
+    userRealTk = Math.max(0, userRealTk - 0.50);
+    showFloatingToast('টাইমআউট! -10 Pts (-৳0.50)', 'reward-minus');
 
     const qList = QUESTION_DATABASE[currentGame][currentSet];
     const qData = qList[qIndex];
@@ -1425,11 +1441,38 @@
     allBtns.forEach(b => b.disabled = true);
     if (allBtns[qData.ans]) allBtns[qData.ans].classList.add('correct');
 
+    updatePointsAndTakaUI();
+    updateLiveInGameStats();
     activateNextButton();
 
     autoAdvanceTimeout = setTimeout(() => {
       goToNextQuestion();
-    }, 2200);
+    }, 2000);
+  }
+
+  function showFloatingToast(text, typeClass) {
+    const toast = document.getElementById('floating_reward_toast');
+    if (!toast) return;
+    toast.className = `floating-reward ${typeClass}`;
+    toast.innerText = text;
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 1800);
+  }
+
+  function updateLiveInGameStats() {
+    const corrEl = document.getElementById('live_correct_cnt');
+    const wrngEl = document.getElementById('live_wrong_cnt');
+    const liveTkEl = document.getElementById('live_tk_earned');
+    const netGained = (correctAnswers * 0.25) - (wrongAnswers * 0.50);
+
+    if (corrEl) corrEl.innerText = correctAnswers;
+    if (wrngEl) wrngEl.innerText = wrongAnswers;
+    if (liveTkEl) {
+      liveTkEl.innerText = `${netGained >= 0 ? '+' : ''}৳${netGained.toFixed(2)}`;
+      liveTkEl.style.color = netGained >= 0 ? 'var(--neon-green)' : 'var(--bright-red)';
+    }
   }
 
   function activateNextButton() {
@@ -1440,7 +1483,7 @@
     }
     const statusHint = document.getElementById('quiz_status_hint');
     if (statusHint) {
-      statusHint.innerText = currentLang === 'bn' ? 'উত্তর গ্রহণ করা হয়েছে! পরবর্তী প্রশ্নে যান।' : 'Answer recorded! Proceed to next.';
+      statusHint.innerText = currentLang === 'bn' ? 'উত্তর সম্পন্ন! পরবর্তী প্রশ্নে ক্লিক করুন।' : 'Answer recorded! Click Next Question.';
     }
   }
 
@@ -1454,9 +1497,11 @@
     loadQuestion();
   }
 
-  function updatePointsUI() {
+  function updatePointsAndTakaUI() {
     localStorage.setItem('edu_points', userPoints);
+    localStorage.setItem('edu_real_tk', userRealTk.toFixed(2));
     document.getElementById('txt_points').innerText = userPoints.toLocaleString();
+    document.getElementById('txt_real_tk').innerText = `৳${userRealTk.toFixed(2)}`;
   }
 
   // END GAME
@@ -1466,13 +1511,13 @@
     const qList = QUESTION_DATABASE[currentGame][currentSet];
     const totalQ = qList.length;
     const netPts = (correctAnswers * 5) - (wrongAnswers * 10);
-    const earnedBdt = (netPts * 0.05).toFixed(2);
+    const earnedBdt = ((correctAnswers * 0.25) - (wrongAnswers * 0.50)).toFixed(2);
 
     document.getElementById('sc_total').innerText = totalQ;
-    document.getElementById('sc_correct').innerText = correctAnswers;
-    document.getElementById('sc_wrong').innerText = wrongAnswers;
+    document.getElementById('sc_correct').innerText = `${correctAnswers} (+${correctAnswers * 5} Pts / +৳${(correctAnswers * 0.25).toFixed(2)})`;
+    document.getElementById('sc_wrong').innerText = `${wrongAnswers} (-${wrongAnswers * 10} Pts / -৳${(wrongAnswers * 0.50).toFixed(2)})`;
     document.getElementById('sc_net_pts').innerText = `${netPts >= 0 ? '+' : ''}${netPts} Pts`;
-    document.getElementById('sc_earned_bdt').innerText = `৳${earnedBdt}`;
+    document.getElementById('sc_earned_bdt').innerText = `${earnedBdt >= 0 ? '+' : ''}৳${earnedBdt}`;
 
     document.getElementById('scorecard_modal').style.display = 'flex';
   }
@@ -1498,7 +1543,8 @@
     isLoggedIn = true;
     localStorage.setItem('edu_logged_in', 'true');
     userPoints = 10000;
-    updatePointsUI();
+    userRealTk = 0.00;
+    updatePointsAndTakaUI();
     navigate('arena');
   }
 
@@ -1552,7 +1598,7 @@
   // INITIALIZE
   window.onload = function() {
     document.documentElement.setAttribute('data-theme', currentTheme);
-    updatePointsUI();
+    updatePointsAndTakaUI();
     applyTranslations();
     navigate(isLoggedIn ? 'arena' : 'auth');
   };
