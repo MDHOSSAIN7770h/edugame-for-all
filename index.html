@@ -438,7 +438,7 @@
 
     /* REPORT VIEW */
     .report-container, .panel-container {
-      max-width: 960px;
+      max-width: 1000px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -484,6 +484,8 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     .data-title {
       font-size: 1.1rem;
@@ -579,6 +581,31 @@
       transition: opacity 0.2s;
     }
     .btn-submit-action:hover { opacity: 0.9; }
+
+    /* ADMIN MASTER STYLES */
+    .admin-auth-box {
+      max-width: 420px;
+      margin: 50px auto;
+      background: var(--bg-card);
+      border: 1px solid var(--neon-red);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(255,71,87,0.2);
+      text-align: center;
+    }
+    .admin-search-bar {
+      padding: 8px 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      min-width: 260px;
+    }
+    .admin-search-bar:focus {
+      border-color: var(--neon-cyan);
+    }
 
     /* TOAST */
     .toast {
@@ -710,8 +737,8 @@
       <button class="nav-item" id="nav_btn_payment" onclick="navigate('payment')">
         <div class="nav-item-content"><span>💳</span> <span id="lbl_nav_payment">ডিপোজিট / পেমেন্ট</span></div>
       </button>
-      <button class="nav-item" id="nav_btn_admin" onclick="navigate('admin')">
-        <div class="nav-item-content"><span>🛡️</span> <span id="lbl_nav_admin">এডমিন প্যানেল</span></div>
+      <button class="nav-item" id="nav_btn_admin" onclick="openAdminPanel()">
+        <div class="nav-item-content"><span>🛡️</span> <span id="lbl_nav_admin">এডমিন প্যানেল 🔒</span></div>
       </button>
 
       <!-- Sidebar Logout Button -->
@@ -731,7 +758,7 @@
           
           <div class="input-group">
             <label>মোবাইল নাম্বার বা ইমেইল:</label>
-            <input type="text" id="auth_user" value="hossain@edugame.com" placeholder="উদা: 017XXXXXXXX">
+            <input type="text" id="auth_user" value="01712345678" placeholder="উদা: 017XXXXXXXX">
           </div>
           <div class="input-group">
             <label>পাসওয়ার্ড:</label>
@@ -887,7 +914,7 @@
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <div>
                 <h3 style="color:var(--neon-cyan); margin-bottom:6px;">নাম: Md. Hossain (Player 777)</h3>
-                <p style="color:var(--text-muted); font-size:0.9rem;">ইমেইল: hossain@edugame.com | রোল: রেজিস্টার্ড প্লেয়ার</p>
+                <p style="color:var(--text-muted); font-size:0.9rem;">মোবাইল: 01712-345678 | রোল: রেজিস্টার্ড প্লেয়ার</p>
               </div>
               <button class="btn-top" onclick="resetDemoPoints()">🔄 ডেমো পয়েন্ট রিসেট (১০,০০০ Pts)</button>
             </div>
@@ -919,17 +946,80 @@
         </div>
       </div>
 
-      <!-- 7. ADMIN VIEW -->
+      <!-- 7. ADMIN VIEW (PASSWORD PROTECTED) -->
       <div id="view_admin" style="display:none;">
-        <div class="panel-container">
-          <div class="arena-banner">
-            <h2>🛡️ সিস্টেম এডমিন প্যানেল</h2>
-            <p>এডমিন: Anwar (Super Authority Verified)</p>
+        
+        <!-- ADMIN PASSWORD LOCK SCREEN -->
+        <div id="admin_lock_screen" class="admin-auth-box">
+          <div style="font-size:2.5rem; margin-bottom:12px;">🛡️</div>
+          <h2 style="color:var(--neon-red); margin-bottom:8px;">এডমিন ভেরিফিকেশন</h2>
+          <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:20px;">এই প্যানেলটি সুরক্ষার জন্য মাস্টার পাসওয়ার্ড সংরক্ষিত</p>
+          <div class="input-group">
+            <label style="text-align:left;">মাস্টার পাসওয়ার্ড (Master Password):</label>
+            <input type="password" id="admin_input_pass" placeholder="পাসওয়ার্ড প্রদান করুন">
           </div>
-          <div class="data-card">
-            <p style="color:var(--neon-green);">✔️ সকল সেক্টর, প্রশ্ন এবং ডাটাবেজ সচল রয়েছে।</p>
-          </div>
+          <button class="btn-submit-action" onclick="verifyAdminPass()" style="background:linear-gradient(90deg, #ff4757, #ffbe0b);">প্যানেল আনলক করুন 🔓</button>
         </div>
+
+        <!-- ADMIN DASHBOARD (VISIBLE AFTER UNLOCK) -->
+        <div id="admin_content_screen" class="panel-container" style="display:none;">
+          <div class="arena-banner" style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h2>🛡️ সুপার এডমিন কন্ট্রোল ড্যাশবোর্ড</h2>
+              <p>এডমিন অথরিটি: Anwar (Master Authority Verified)</p>
+            </div>
+            <button class="btn-top btn-logout" onclick="lockAdminPanel()">🔒 প্যানেল লক করুন</button>
+          </div>
+
+          <div class="report-stats-grid">
+            <div class="stat-card">
+              <div class="stat-card-title">মোট নিবন্ধিত ইউজার</div>
+              <div class="stat-card-val val-points" id="adm_total_users">৬ জন</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-title">মোট BDT ইনকাম</div>
+              <div class="stat-card-val val-correct" id="adm_total_bdt_inc">+৳৮,৭২৫.০০</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-title">মোট BDT লস/কর্তন</div>
+              <div class="stat-card-val val-wrong" id="adm_total_bdt_loss">-৳১,৩৪০.০০</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-title">মোট সাইট সময় (লাইভ)</div>
+              <div class="stat-card-val val-tk" id="adm_total_time">২৩ ঘণ্টা ৩৫ মি.</div>
+            </div>
+          </div>
+
+          <!-- ALL USERS TABLE -->
+          <div class="data-card">
+            <div class="data-header">
+              <div class="data-title">👥 সকল ইউজারের সম্পূর্ণ হিসাব (ইনকাম, লস ও সাইট টাইম)</div>
+              <div style="display:flex; gap:10px;">
+                <input type="text" id="admin_search" class="admin-search-bar" placeholder="🔍 নাম বা মোবাইল নাম্বার দিয়ে খুঁজুন..." oninput="filterAdminTable()">
+                <button class="btn-top" onclick="exportAdminCSV()">📥 এক্সপোর্ট (CSV)</button>
+              </div>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ইউজার নাম</th>
+                    <th>মোবাইল নম্বর</th>
+                    <th>পয়েন্ট অর্জন ও লস</th>
+                    <th>টাকা (BDT) আয় ও লস</th>
+                    <th>সাইটে ব্যয়কৃত সময়</th>
+                    <th>স্ট্যাটাস</th>
+                  </tr>
+                </thead>
+                <tbody id="admin_user_tbody">
+                  <!-- Generated Dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
       </div>
 
     </div>
@@ -938,6 +1028,10 @@
   <div class="toast" id="sys_toast"></div>
 
   <script>
+    // MASTER ADMIN PASSWORD
+    const ADMIN_MASTER_PASS = "Z@rajshahi4512";
+    let isAdminUnlocked = false;
+
     // 25 HEALTH QUESTIONS
     const healthQuestions = [
       { q: "১. ডায়াবেটিস মেলিটাস প্রধানত কোন হরমোনের ঘাটতি বা অকার্যকারিতার কারণে হয়?", o: ["থাইরক্সিন", "ইনসুলিন", "অ্যাড্রেনালিন", "গ্লুকাগন"], a: 1 },
@@ -986,8 +1080,21 @@
     let isLoggedIn = localStorage.getItem('edu_is_logged_in') !== 'false';
     let totalPoints = parseInt(localStorage.getItem('edu_points') || '10000');
     let realTkBalance = parseFloat(localStorage.getItem('edu_real_tk') || '0.00');
-    let gameHistory = JSON.parse(localStorage.getItem('edu_game_history') || '[]');
+    
+    // Live User Analytics
+    let userPtsEarned = parseInt(localStorage.getItem('edu_pts_earned') || '1250');
+    let userPtsLost = parseInt(localStorage.getItem('edu_pts_lost') || '250');
+    let userBdtEarned = parseFloat(localStorage.getItem('edu_bdt_earned') || '62.50');
+    let userBdtLost = parseFloat(localStorage.getItem('edu_bdt_lost') || '12.50');
+    let userTimeSpentSec = parseInt(localStorage.getItem('edu_time_spent_sec') || '4520');
 
+    // Timer for Time Spent on Site
+    setInterval(() => {
+      userTimeSpentSec++;
+      localStorage.setItem('edu_time_spent_sec', userTimeSpentSec);
+    }, 1000);
+
+    let gameHistory = JSON.parse(localStorage.getItem('edu_game_history') || '[]');
     if (gameHistory.length === 0) {
       gameHistory.push({
         date: new Date().toLocaleString('bn-BD'),
@@ -1042,11 +1149,8 @@
     }
 
     function handleLogoClick() {
-      if (isLoggedIn) {
-        navigate('arena');
-      } else {
-        navigate('auth');
-      }
+      if (isLoggedIn) navigate('arena');
+      else navigate('auth');
     }
 
     function logout() {
@@ -1086,6 +1190,10 @@
       document.getElementById('txt_real_tk').innerText = '৳' + realTkBalance.toFixed(2);
       localStorage.setItem('edu_points', totalPoints);
       localStorage.setItem('edu_real_tk', realTkBalance.toFixed(2));
+      localStorage.setItem('edu_pts_earned', userPtsEarned);
+      localStorage.setItem('edu_pts_lost', userPtsLost);
+      localStorage.setItem('edu_bdt_earned', userBdtEarned.toFixed(2));
+      localStorage.setItem('edu_bdt_lost', userBdtLost.toFixed(2));
     }
 
     function showToast(msg, type='success') {
@@ -1112,12 +1220,171 @@
         if (el) el.style.display = (v === viewName) ? 'block' : 'none';
       });
 
-      // Update sidebar active states
       document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
       const activeNav = document.getElementById('nav_btn_' + viewName);
       if (activeNav) activeNav.classList.add('active');
 
       if (viewName === 'report') renderReport();
+      if (viewName === 'admin' && isAdminUnlocked) renderAdminUsers();
+    }
+
+    /* ADMIN MASTER PASSWORD LOGIC */
+    function openAdminPanel() {
+      navigate('admin');
+      if (!isAdminUnlocked) {
+        document.getElementById('admin_lock_screen').style.display = 'block';
+        document.getElementById('admin_content_screen').style.display = 'none';
+        document.getElementById('admin_input_pass').value = '';
+      } else {
+        document.getElementById('admin_lock_screen').style.display = 'none';
+        document.getElementById('admin_content_screen').style.display = 'block';
+        renderAdminUsers();
+      }
+    }
+
+    function verifyAdminPass() {
+      const p = document.getElementById('admin_input_pass').value;
+      if (p === ADMIN_MASTER_PASS) {
+        isAdminUnlocked = true;
+        document.getElementById('admin_lock_screen').style.display = 'none';
+        document.getElementById('admin_content_screen').style.display = 'block';
+        renderAdminUsers();
+        showToast('মাস্টার অথেনটিকেশন সফল! স্বাগতম সুপার এডমিন।', 'success');
+      } else {
+        showToast('ভুল মাস্টার পাসওয়ার্ড! প্রবেশাধিকার প্রত্যাখ্যাত।', 'error');
+      }
+    }
+
+    function lockAdminPanel() {
+      isAdminUnlocked = false;
+      document.getElementById('admin_lock_screen').style.display = 'block';
+      document.getElementById('admin_content_screen').style.display = 'none';
+      document.getElementById('admin_input_pass').value = '';
+      showToast('এডমিন প্যানেল সফলভাবে লক করা হয়েছে।', 'success');
+    }
+
+    function formatSiteTime(sec) {
+      const h = Math.floor(sec / 3600);
+      const m = Math.floor((sec % 3600) / 60);
+      const s = sec % 60;
+      if (h > 0) return `${h} ঘণ্টা ${m} মি. ${s} সে.`;
+      return `${m} মিনিট ${s} সেকেন্ড`;
+    }
+
+    // Dynamic Admin Users Database
+    function getAdminUsersList() {
+      return [
+        {
+          name: "Md. Hossain (Player 777)",
+          phone: "01712-345678",
+          ptsEarned: userPtsEarned,
+          ptsLost: userPtsLost,
+          bdtEarned: userBdtEarned,
+          bdtLost: userBdtLost,
+          timeSpent: formatSiteTime(userTimeSpentSec),
+          status: "অনলাইন 🟢"
+        },
+        {
+          name: "Anwar Hossain (Admin)",
+          phone: "01811-987654",
+          ptsEarned: 48500,
+          ptsLost: 4200,
+          bdtEarned: 2425.00,
+          bdtLost: 210.00,
+          timeSpent: "৫ ঘণ্টা ১২ মি.",
+          status: "অ্যাক্টিভ 🟢"
+        },
+        {
+          name: "Sadia Afrin",
+          phone: "01923-456789",
+          ptsEarned: 39800,
+          ptsLost: 5600,
+          bdtEarned: 1990.00,
+          bdtLost: 280.00,
+          timeSpent: "৪ ঘণ্টা ২৫ মি.",
+          status: "অ্যাক্টিভ 🟢"
+        },
+        {
+          name: "Tanvir Ahmed",
+          phone: "01634-567890",
+          ptsEarned: 35400,
+          ptsLost: 6100,
+          bdtEarned: 1770.00,
+          bdtLost: 305.00,
+          timeSpent: "৩ ঘণ্টা ৫০ মি.",
+          status: "অফলাইন ⚪"
+        },
+        {
+          name: "Nusrat Jahan",
+          phone: "01745-678901",
+          ptsEarned: 31900,
+          ptsLost: 4800,
+          bdtEarned: 1595.00,
+          bdtLost: 240.00,
+          timeSpent: "৩ ঘণ্টা ১৫ মি.",
+          status: "অ্যাক্টিভ 🟢"
+        },
+        {
+          name: "Rakibul Hasan",
+          phone: "01556-789012",
+          ptsEarned: 28200,
+          ptsLost: 3900,
+          bdtEarned: 1410.00,
+          bdtLost: 195.00,
+          timeSpent: "২ ঘণ্টা ৪৫ মি.",
+          status: "অফলাইন ⚪"
+        }
+      ];
+    }
+
+    function renderAdminUsers(filter="") {
+      const tbody = document.getElementById('admin_user_tbody');
+      tbody.innerHTML = '';
+      const list = getAdminUsersList();
+      const filtered = list.filter(u => 
+        u.name.toLowerCase().includes(filter.toLowerCase()) || 
+        u.phone.includes(filter)
+      );
+
+      filtered.forEach(u => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${u.name}</strong></td>
+          <td style="color:var(--neon-cyan);">${u.phone}</td>
+          <td>
+            <span style="color:var(--neon-green); font-weight:700;">+${u.ptsEarned.toLocaleString()} Pts</span> / 
+            <span style="color:var(--neon-red); font-weight:700;">-${u.ptsLost.toLocaleString()} Pts</span>
+          </td>
+          <td>
+            <span style="color:var(--neon-gold); font-weight:700;">+৳${u.bdtEarned.toFixed(2)}</span> / 
+            <span style="color:var(--neon-red); font-weight:700;">-৳${u.bdtLost.toFixed(2)}</span>
+          </td>
+          <td><span style="background:rgba(255,255,255,0.06); padding:4px 8px; border-radius:4px;">⏱️ ${u.timeSpent}</span></td>
+          <td><span class="badge-pill badge-pass">${u.status}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterAdminTable() {
+      const q = document.getElementById('admin_search').value;
+      renderAdminUsers(q);
+    }
+
+    function exportAdminCSV() {
+      let csv = "User Name,Mobile No,Points Earned,Points Lost,BDT Earned,BDT Lost,Time Spent,Status\n";
+      const list = getAdminUsersList();
+      list.forEach(u => {
+        csv += `"${u.name}","${u.phone}",${u.ptsEarned},${u.ptsLost},${u.bdtEarned},${u.bdtLost},"${u.timeSpent}","${u.status}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Admin_User_Financial_Report_${Date.now()}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
 
     function renderArenaCards() {
@@ -1206,6 +1473,8 @@
         chosenBtn.classList.add('correct');
         totalPoints += 5;
         realTkBalance += 0.25;
+        userPtsEarned += 5;
+        userBdtEarned += 0.25;
         currentSession.correct++;
         currentSession.points += 5;
         currentSession.tk += 0.25;
@@ -1216,6 +1485,8 @@
         if (correctBtn) correctBtn.classList.add('correct');
         totalPoints = Math.max(0, totalPoints - 10);
         realTkBalance = Math.max(0, realTkBalance - 0.50);
+        userPtsLost += 10;
+        userBdtLost += 0.50;
         currentSession.wrong++;
         currentSession.points -= 10;
         currentSession.tk -= 0.50;
@@ -1237,6 +1508,8 @@
       
       totalPoints = Math.max(0, totalPoints - 10);
       realTkBalance = Math.max(0, realTkBalance - 0.50);
+      userPtsLost += 10;
+      userBdtLost += 0.50;
       currentSession.wrong++;
       currentSession.points -= 10;
       currentSession.tk -= 0.50;
