@@ -92,7 +92,7 @@
     }
     .btn-logout { background: rgba(255, 59, 92, 0.2); border-color: var(--bright-red); color: #ff6b81; }
 
-    /* LAYOUT */
+    /* APP LAYOUT */
     .app-layout { display: flex; flex: 1; }
     .sidebar {
       width: 280px;
@@ -148,14 +148,8 @@
       border: 1px solid rgba(255, 255, 255, 0.06);
       margin-bottom: 3px;
     }
-    .dropdown-trigger {
-      width: 100%;
-      justify-content: space-between;
-    }
-    .dropdown-arrow {
-      font-size: 0.8rem;
-      transition: transform 0.25s ease;
-    }
+    .dropdown-trigger { width: 100%; justify-content: space-between; }
+    .dropdown-arrow { font-size: 0.8rem; transition: transform 0.25s ease; }
     .dropdown-menu {
       display: none;
       padding: 4px 6px 6px 18px;
@@ -165,19 +159,9 @@
       margin-left: 14px;
       margin-bottom: 6px;
     }
-    .dropdown-menu.open {
-      display: flex;
-    }
-    .dropdown-sub-btn {
-      padding: 7px 10px;
-      font-size: 0.86rem;
-      border-radius: 6px;
-      color: var(--text-muted);
-    }
-    .dropdown-sub-btn:hover {
-      color: var(--neon-cyan);
-      background: rgba(0, 242, 254, 0.1);
-    }
+    .dropdown-menu.open { display: flex; }
+    .dropdown-sub-btn { padding: 7px 10px; font-size: 0.86rem; border-radius: 6px; color: var(--text-muted); }
+    .dropdown-sub-btn:hover { color: var(--neon-cyan); background: rgba(0, 242, 254, 0.1); }
 
     .sidebar-footer {
       margin-top: auto;
@@ -187,13 +171,13 @@
       color: var(--text-muted);
     }
 
-    /* MAIN CONTENT */
+    /* MAIN VIEW */
     .main-view { flex: 1; padding: 25px 30px; max-width: 1400px; margin: 0 auto; width: 100%; }
     .arena-header { margin-bottom: 24px; }
     .arena-header h1 { font-size: 1.65rem; color: #ffffff; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
     .arena-header p { color: var(--text-muted); font-size: 0.95rem; }
 
-    /* GAMES GRID */
+    /* CARDS */
     .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
     .game-card {
       background: var(--bg-card);
@@ -244,6 +228,57 @@
     .btn-play-health {
       background: linear-gradient(135deg, #00ff87, #60efff);
       color: #05140d;
+    }
+
+    /* PANEL CARDS / TABLES */
+    .panel-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    .custom-table th, .custom-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--sidebar-border);
+      font-size: 0.92rem;
+    }
+    .custom-table th {
+      background: rgba(0, 242, 254, 0.08);
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: var(--btn-bg);
+      border: 1px solid var(--sidebar-border);
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.95rem;
+      margin-top: 6px;
+      margin-bottom: 14px;
+    }
+    .btn-action-primary {
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      border: none;
+      color: #070b19;
+      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
     /* QUIZ VIEW */
@@ -455,9 +490,7 @@
         🚪 <span id="lbl_logout">লগআউট</span>
       </button>
       <div class="badge badge-unlimited">⚡ <span>নো কুলডাউন / আনলিমিটেড</span></div>
-      <!-- DEMO POINTS BADGE -->
       <div class="badge badge-demo">🎮 Demo: <span id="txt_points">10,000</span> Pts</div>
-      <!-- REAL TK EARNINGS BADGE (DYNAMIC LIVE) -->
       <div class="badge badge-real">💰 Real: <span id="txt_real_tk">৳0.00</span></div>
     </div>
   </header>
@@ -471,7 +504,7 @@
       <!-- HEALTH SECTOR -->
       <button class="nav-btn health-btn" onclick="startGame('health', 'set1')">🩺 <span id="lbl_nav_health">Health (Set 01)</span></button>
 
-      <!-- JOB PREPARATION DROPDOWN ACCORDION -->
+      <!-- JOB PREPARATION DROPDOWN -->
       <div class="dropdown-container">
         <button class="nav-btn dropdown-trigger" onclick="toggleDropdown('job_dropdown_menu', 'job_arrow')">
           <span>📚 <span id="lbl_nav_job">Job Preparation</span></span>
@@ -512,19 +545,20 @@
         </div>
       </div>
 
-      <!-- EXISTING BUTTONS -->
+      <!-- EXISTING GAMES -->
       <button class="nav-btn" onclick="startGame('grammar', 'default')">📝 <span>বেসিক গ্রামার গেম</span></button>
       <button class="nav-btn" onclick="startGame('bankers', 'default')">💼 <span>গেম ফর ব্যাংকার্স</span></button>
       <button class="nav-btn" onclick="startGame('affiliate', 'default')">💼 <span>মাসবিডি অ্যাফিলিয়েট</span></button>
       <button class="nav-btn" onclick="startGame('ielts', 'default')">✈️ <span>আইইএলটিএস গেম</span></button>
       <button class="nav-btn" onclick="startGame('admission', 'default')">🎓 <span>ভর্তি পরীক্ষা অ্যারিনা</span></button>
 
+      <!-- USER & LEADERBOARD VIEWS -->
       <div class="sidebar-heading" id="lbl_menu_user">ইউজার ও লিডারবোর্ড</div>
-      <button class="nav-btn" onclick="alert('গ্লোবাল লিডারবোর্ড সক্রিয়')">🟢 <span>গ্লোবাল পজিশন (শীর্ষ ২০)</span></button>
-      <button class="nav-btn" onclick="alert('ইউজার পোর্টাল')">👤 <span>ইউজার পোর্টাল</span></button>
-      <button class="nav-btn" onclick="alert('আমার রিপোর্ট')">📊 <span>আমার রিপোর্ট</span></button>
-      <button class="nav-btn" onclick="alert('ডিপোজিট ও পেমেন্ট গেটওয়ে')">💳 <span>ডিপোজিট / পেমেন্ট</span></button>
-      <button class="nav-btn" onclick="alert('এডমিন প্যানেল')">🛡️ <span>এডমিন প্যানেল</span></button>
+      <button class="nav-btn" onclick="navigate('leaderboard')">🟢 <span>গ্লোবাল পজিশন (শীর্ষ ২০)</span></button>
+      <button class="nav-btn" onclick="navigate('portal')">👤 <span>ইউজার পোর্টাল</span></button>
+      <button class="nav-btn" onclick="navigate('report')">📊 <span>আমার রিপোর্ট</span></button>
+      <button class="nav-btn" onclick="navigate('payment')">💳 <span>ডিপোজিট / পেমেন্ট</span></button>
+      <button class="nav-btn" onclick="navigate('admin')">🛡️ <span>এডমিন প্যানেল</span></button>
       <button class="nav-btn" onclick="handleLogout()" style="color: #ff6b81;">🚪 <span>লগআউট</span></button>
 
       <div class="sidebar-footer">
@@ -535,7 +569,7 @@
 
     <!-- MAIN VIEW -->
     <main class="main-view">
-      <!-- ARENA VIEW -->
+      <!-- 1. ARENA VIEW -->
       <section id="view_arena">
         <div class="arena-header">
           <h1 id="txt_arena_title">🎯 এডুকেশনাল এক্সাম ও টুর্নামেন্ট অ্যারিনা</h1>
@@ -544,14 +578,13 @@
         <div class="games-grid" id="games_grid_container"></div>
       </section>
 
-      <!-- QUIZ VIEW -->
+      <!-- 2. QUIZ VIEW -->
       <section id="view_quiz" class="quiz-view">
         <div class="quiz-header">
           <div>
             <h3 id="quiz_game_title" style="color: var(--gold); font-size: 1.35rem;">গেমের নাম</h3>
             <p id="quiz_progress" style="color: var(--text-muted); font-size: 0.95rem;">প্রশ্ন ১/২৫</p>
           </div>
-          <!-- LIVE IN-QUIZ STATS PILL -->
           <div class="live-score-pill">
             <span style="color: var(--neon-green);">✓ <span id="live_correct_cnt">০</span></span>
             <span style="color: var(--bright-red);">✗ <span id="live_wrong_cnt">০</span></span>
@@ -561,13 +594,10 @@
         </div>
 
         <div class="quiz-card">
-          <!-- FLOATING REWARD TOAST -->
           <div id="floating_reward_toast" class="floating-reward"></div>
-
           <div class="question-title" id="question_text">প্রশ্ন লোড হচ্ছে...</div>
           <div class="options-grid" id="options_container"></div>
           
-          <!-- NEXT QUESTION BUTTON ACTION BAR -->
           <div class="quiz-action-bar">
             <div class="quiz-hint-text" id="quiz_status_hint">একটি উত্তর নির্বাচন করুন (সঠিক: +৫ Pts / ভুল: -১০ Pts)</div>
             <button id="btn_next_q" class="btn-next-question" onclick="goToNextQuestion()" disabled>
@@ -577,7 +607,158 @@
         </div>
       </section>
 
-      <!-- AUTH / LOGIN VIEW -->
+      <!-- 3. GLOBAL POSITION / LEADERBOARD VIEW -->
+      <section id="view_leaderboard" style="display: none;">
+        <div class="arena-header">
+          <h1>🏆 গ্লোবাল পজিশন ও লিডারবোর্ড (শীর্ষ ২০)</h1>
+          <p>বাংলাদেশের সেরা ২০ জন প্রতিযোগীর লাইভ র‍্যাঙ্কিং ও অর্জিত পয়েন্ট</p>
+        </div>
+        <div class="panel-card">
+          <table class="custom-table" id="leaderboard_table">
+            <thead>
+              <tr>
+                <th>র‍্যাঙ্ক</th>
+                <th>প্রতিযোগী</th>
+                <th>কুইজ খেলা</th>
+                <th>মোট পয়েন্ট</th>
+                <th>উপার্জিত টাকা</th>
+                <th>ব্যাজ</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard_tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 4. USER PORTAL VIEW -->
+      <section id="view_portal" style="display: none;">
+        <div class="arena-header">
+          <h1>👤 ইউজার পোর্টাল ও প্রোফাইল</h1>
+          <p>আপনার অ্যাকাউন্ট তথ্য, বর্তমান ব্যালেন্স ও নিরাপত্তা সেটিংস</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+          <div class="panel-card">
+            <h3 style="color: var(--gold); margin-bottom: 15px;">প্রোফাইল বিবরণ</h3>
+            <p><strong>ইউজার নাম:</strong> Md Hossain (Verified)</p>
+            <p style="margin-top: 8px;"><strong>রেজিস্টার্ড ফোন:</strong> +880 1789-XXXXXX</p>
+            <p style="margin-top: 8px;"><strong>স্ট্যাটাস:</strong> <span style="color: var(--neon-green);">Active Pro Competitor</span></p>
+            <p style="margin-top: 8px;"><strong>নিবন্ধন তারিখ:</strong> ২৪ নভেম্বর ২০২৬</p>
+          </div>
+          <div class="panel-card">
+            <h3 style="color: var(--neon-cyan); margin-bottom: 15px;">ব্যালেন্স সামারি</h3>
+            <p><strong>ডেমো পয়েন্ট:</strong> <span style="font-size: 1.2rem; color: var(--gold); font-weight: 700;" id="portal_pts">10,000 Pts</span></p>
+            <p style="margin-top: 8px;"><strong>রিয়েল ওয়ালেট ব্যালেন্স:</strong> <span style="font-size: 1.2rem; color: var(--neon-green); font-weight: 700;" id="portal_tk">৳০.০০</span></p>
+            <div style="margin-top: 20px; display: flex; gap: 10px;">
+              <button class="btn-action-primary" onclick="resetDemoPoints()">🔄 ডেমো ব্যালেন্স ১০,০০০ Pts এ রিসেট</button>
+              <button class="btn-play" onclick="navigate('payment')">💳 ডিপোজিট করুন</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. MY REPORT VIEW (WITH CSV DOWNLOAD) -->
+      <section id="view_report" style="display: none;">
+        <div class="arena-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+          <div>
+            <h1>📊 আমার পরীক্ষা রিপোর্ট ও হিস্ট্রি</h1>
+            <p>আপনার দেওয়া সকল পরীক্ষার বিস্তারিত ফলাফল ও সময়কাল</p>
+          </div>
+          <button class="btn-action-primary" onclick="downloadReportCSV()">📥 ডাউনলোড রিপোর্ট (CSV / Excel)</button>
+        </div>
+        <div class="panel-card">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>তারিখ ও সময়</th>
+                <th>গেমের নাম / সেক্টর</th>
+                <th>সঠিক উত্তর</th>
+                <th>ভুল উত্তর</th>
+                <th>অর্জিত পয়েন্ট</th>
+                <th>উপার্জিত টাকা</th>
+              </tr>
+            </thead>
+            <tbody id="report_tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 6. DEPOSIT / PAYMENT VIEW -->
+      <section id="view_payment" style="display: none;">
+        <div class="arena-header">
+          <h1>💳 ডিপোজিট ও পেমেন্ট গেটওয়ে</h1>
+          <p>বিকাশ, নগদ বা রকেটের মাধ্যমে টাকা ডিপোজিট বা উইথড্র করুন</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+          <div class="panel-card">
+            <h3 style="color: var(--neon-green); margin-bottom: 12px;">টাকা জমা (Deposit) ফর্ম</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;">বিকাশ / নগদ পার্সোনাল নম্বর: <strong style="color: var(--gold);">017XXXXXXXX</strong></p>
+            <label>পেমেন্ট মেথড:</label>
+            <select class="form-input" id="dep_method">
+              <option value="bkash">বিকাশ (bKash)</option>
+              <option value="nagad">নগদ (Nagad)</option>
+              <option value="rocket">রকেট (Rocket)</option>
+            </select>
+            <label>প্রেরকের মোবাইল নম্বর:</label>
+            <input type="text" class="form-input" id="dep_phone" placeholder="017XXXXXXXX">
+            <label>ডিপোজিট পরিমাণ (টাকা):</label>
+            <input type="number" class="form-input" id="dep_amount" placeholder="৳৫০ বা তদূর্ধ্ব">
+            <label>ট্রানজেকশন আইডি (TrxID):</label>
+            <input type="text" class="form-input" id="dep_trxid" placeholder="যেমন: 9J4K2L8X">
+            <button class="btn-action-primary" onclick="submitDeposit()">🚀 ডিপোজিট রিকোয়েস্ট পাঠান</button>
+          </div>
+
+          <div class="panel-card">
+            <h3 style="color: var(--gold); margin-bottom: 12px;">টাকা উত্তোলন (Withdrawal / Cashout)</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;">উত্তোলনের জন্য ন্যুনতম ব্যালেন্স: ৳১০০.০০</p>
+            <label>মেথড:</label>
+            <select class="form-input">
+              <option>বিকাশ পার্সোনাল</option>
+              <option>নগদ পার্সোনাল</option>
+            </select>
+            <label>যে নম্বরে টাকা নিবেন:</label>
+            <input type="text" class="form-input" placeholder="01XXXXXXXXX">
+            <label>উত্তোলনের পরিমাণ:</label>
+            <input type="number" class="form-input" placeholder="৳১০০ - ৳৫,০০০">
+            <button class="btn-play" onclick="alert('ক্যাশআউট রিকোয়েস্ট জমা হয়েছে। ২ ঘণ্টার মধ্যে প্রসেস করা হবে!')">💸 ক্যাশআউট রিকোয়েস্ট দিন</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. ADMIN PANEL VIEW -->
+      <section id="view_admin" style="display: none;">
+        <div class="arena-header">
+          <h1>🛡️ সুপার এডমিন প্যানেল</h1>
+          <p>এডমিন অথরিটি: <strong style="color: var(--neon-cyan);">Admin: Anwar (Super Authority Verified)</strong></p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px;">
+          <div class="panel-card" style="text-align: center;">
+            <div style="font-size: 0.85rem; color: var(--text-muted);">মোট ইউজার</div>
+            <div style="font-size: 1.8rem; font-weight: 700; color: var(--gold);">১,৪৮০ জন</div>
+          </div>
+          <div class="panel-card" style="text-align: center;">
+            <div style="font-size: 0.85rem; color: var(--text-muted);">আজকের পরীক্ষা অনুষ্ঠিত</div>
+            <div style="font-size: 1.8rem; font-weight: 700; color: var(--neon-cyan);">৫৪২ বার</div>
+          </div>
+          <div class="panel-card" style="text-align: center;">
+            <div style="font-size: 0.85rem; color: var(--text-muted);">মোট সংরক্ষিত ডিপোজিট</div>
+            <div style="font-size: 1.8rem; font-weight: 700; color: var(--neon-green);">৳১,৮৫,৪০০</div>
+          </div>
+          <div class="panel-card" style="text-align: center;">
+            <div style="font-size: 0.85rem; color: var(--text-muted);">সিস্টেম স্ট্যাটাস</div>
+            <div style="font-size: 1.8rem; font-weight: 700; color: var(--neon-green);">100% ONLINE</div>
+          </div>
+        </div>
+        <div class="panel-card">
+          <h3 style="color: var(--gold); margin-bottom: 12px;">এডমিন কুইক কন্ট্রোল</h3>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn-action-primary" onclick="alert('পেন্ডিং ডিপোজিট ভেরিফিকেশন কমপ্লিট!')">✅ ডিপোজিট এপ্রুভ করুন</button>
+            <button class="btn-action-primary" style="background: linear-gradient(135deg, #ffd700, #f59e0b);" onclick="alert('সিস্টেম ক্যাশ ক্লিয়ার করা হয়েছে!')">🧹 সিস্টেম ক্যাশ ক্লিয়ার</button>
+            <button class="btn-play" onclick="navigate('arena')">🎯 গেমস অ্যারিনায় ফিরে যান</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. AUTH VIEW -->
       <section id="view_auth" class="auth-view">
         <div class="auth-card">
           <h2>🔐 সাইন ইন / লগইন</h2>
@@ -669,7 +850,7 @@
 
   // QUESTION DATABASE
   const QUESTION_DATABASE = {
-    // HEALTH 25 QUESTIONS (USER SPECIFIED)
+    // HEALTH 25 QUESTIONS
     health: {
       set1: [
         {
@@ -859,13 +1040,6 @@
           options_bn: ["৮ সেমি", "৭ সেমি", "৯ সেমি", "৫ সেমি"],
           options_en: ["8 cm", "7 cm", "9 cm", "5 cm"],
           ans: 0
-        },
-        {
-          q_bn: "এসএসসি গণিত: (a + b)² - (a - b)² এর সমান কোনটি?",
-          q_en: "SSC Math: Which identity equals (a + b)² - (a - b)²?",
-          options_bn: ["4ab", "2(a² + b²)", "2ab", "a² - b²"],
-          options_en: ["4ab", "2(a² + b²)", "2ab", "a² - b²"],
-          ans: 0
         }
       ],
       eng: [
@@ -937,7 +1111,7 @@
       ]
     },
 
-    // JOB PREPARATION
+    // JOB PREP
     bcs: {
       default: [
         {
@@ -1283,32 +1457,152 @@
     });
   }
 
-  // NAVIGATION
+  // NAVIGATION ROUTER
   function navigate(view) {
     document.getElementById('view_arena').style.display = 'none';
     document.getElementById('view_quiz').style.display = 'none';
     document.getElementById('view_auth').style.display = 'none';
+    document.getElementById('view_leaderboard').style.display = 'none';
+    document.getElementById('view_portal').style.display = 'none';
+    document.getElementById('view_report').style.display = 'none';
+    document.getElementById('view_payment').style.display = 'none';
+    document.getElementById('view_admin').style.display = 'none';
+
+    document.querySelectorAll('.sidebar .nav-btn').forEach(btn => btn.classList.remove('active'));
 
     if (view === 'arena') {
-      if (!isLoggedIn) {
-        document.getElementById('view_auth').style.display = 'block';
-      } else {
-        document.getElementById('view_arena').style.display = 'block';
-        renderArena();
-      }
+      if (!isLoggedIn) { document.getElementById('view_auth').style.display = 'block'; }
+      else { document.getElementById('view_arena').style.display = 'block'; renderArena(); }
     } else if (view === 'quiz') {
       document.getElementById('view_quiz').style.display = 'block';
     } else if (view === 'auth') {
       document.getElementById('view_auth').style.display = 'block';
+    } else if (view === 'leaderboard') {
+      document.getElementById('view_leaderboard').style.display = 'block';
+      renderGlobalLeaderboard();
+    } else if (view === 'portal') {
+      document.getElementById('view_portal').style.display = 'block';
+      renderUserPortal();
+    } else if (view === 'report') {
+      document.getElementById('view_report').style.display = 'block';
+      renderMyReport();
+    } else if (view === 'payment') {
+      document.getElementById('view_payment').style.display = 'block';
+    } else if (view === 'admin') {
+      document.getElementById('view_admin').style.display = 'block';
     }
+  }
+
+  // LEADERBOARD RENDER
+  function renderGlobalLeaderboard() {
+    const tbody = document.getElementById('leaderboard_tbody');
+    const mockLeaders = [
+      { rank: "১", name: "Tanvir Ahmed", games: 45, pts: "14,850", tk: "৳742.50", badge: "🥇 চ্যাম্পিয়ন" },
+      { rank: "২", name: "Nusrat Jahan", games: 42, pts: "13,920", tk: "৳696.00", badge: "🥈 রানার আপ" },
+      { rank: "৩", name: "Sabbir Hossain", games: 39, pts: "12,650", tk: "৳632.50", badge: "🥉 ৩য় স্থান" },
+      { rank: "৪", name: "Mehedi Hasan", games: 36, pts: "11,800", tk: "৳590.00", badge: "⭐ টপ ৫" },
+      { rank: "৫", name: "Ayesha Siddiqua", games: 35, pts: "11,250", tk: "৳562.50", badge: "⭐ টপ ৫" },
+      { rank: "৬", name: "Md Hossain (আপনি)", games: 31, pts: userPoints.toLocaleString(), tk: `৳${userRealTk.toFixed(2)}`, badge: "🎯 প্রো" },
+      { rank: "৭", name: "Rifat Khan", games: 28, pts: "9,600", tk: "৳480.00", badge: "🏅 এলিট" },
+      { rank: "৮", name: "Farhana Akter", games: 27, pts: "9,150", tk: "৳457.50", badge: "🏅 এলিট" },
+      { rank: "৯", name: "Imran Nazir", games: 25, pts: "8,900", tk: "৳445.00", badge: "🎖️ মাস্টার" },
+      { rank: "১০", name: "Sumaiya Rahman", games: 24, pts: "8,500", tk: "৳425.00", badge: "🎖️ মাস্টার" }
+    ];
+    tbody.innerHTML = '';
+    mockLeaders.forEach(item => {
+      const tr = document.createElement('tr');
+      if (item.name.includes('(আপনি)')) {
+        tr.style.background = 'rgba(0, 242, 254, 0.15)';
+        tr.style.fontWeight = 'bold';
+      }
+      tr.innerHTML = `
+        <td><strong>${item.rank}</strong></td>
+        <td>${item.name}</td>
+        <td>${item.games}</td>
+        <td style="color: var(--gold);">${item.pts} Pts</td>
+        <td style="color: var(--neon-green);">${item.tk}</td>
+        <td>${item.badge}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // USER PORTAL
+  function renderUserPortal() {
+    document.getElementById('portal_pts').innerText = `${userPoints.toLocaleString()} Pts`;
+    document.getElementById('portal_tk').innerText = `৳${userRealTk.toFixed(2)}`;
+  }
+
+  function resetDemoPoints() {
+    userPoints = 10000;
+    updatePointsAndTakaUI();
+    renderUserPortal();
+    alert('ডেমো ব্যালেন্স সফলভাবে ১০,০০০ Pts এ রিসেট করা হয়েছে!');
+  }
+
+  // MY REPORT & CSV DOWNLOAD
+  function renderMyReport() {
+    const tbody = document.getElementById('report_tbody');
+    let history = JSON.parse(localStorage.getItem('edu_game_history') || '[]');
+    if (history.length === 0) {
+      history = [
+        { date: new Date().toLocaleDateString(), game: "Health Related Issues (Set 01)", correct: 20, wrong: 5, pts: "+50 Pts", tk: "+৳2.50" },
+        { date: new Date().toLocaleDateString(), game: "Job Preparation Arena", correct: 18, wrong: 4, pts: "+50 Pts", tk: "+৳2.50" }
+      ];
+    }
+    tbody.innerHTML = '';
+    history.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${row.date}</td>
+        <td><strong>${row.game}</strong></td>
+        <td style="color: var(--neon-green);">${row.correct}</td>
+        <td style="color: var(--bright-red);">${row.wrong}</td>
+        <td style="color: var(--gold);">${row.pts}</td>
+        <td style="color: var(--neon-green); font-weight: 700;">${row.tk}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function downloadReportCSV() {
+    let history = JSON.parse(localStorage.getItem('edu_game_history') || '[]');
+    if (history.length === 0) {
+      history = [
+        { user: "Md Hossain", game: "Health Related Issues (Set 01)", pts: "50", tk: "2.50", date: new Date().toLocaleString() },
+        { user: "Md Hossain", game: "Job Preparation Arena", pts: "50", tk: "2.50", date: new Date().toLocaleString() }
+      ];
+    }
+    let csvContent = "data:text/csv;charset=utf-8,User,Game,Points,Earned_Taka,Date\n";
+    history.forEach(row => {
+      csvContent += `"${row.user || 'Md Hossain'}","${row.game}","${row.pts}","${row.tk}","${row.date}"\n`;
+    });
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "edu_game_history_report.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function submitDeposit() {
+    const phone = document.getElementById('dep_phone').value;
+    const amount = document.getElementById('dep_amount').value;
+    const trxid = document.getElementById('dep_trxid').value;
+    if (!phone || !amount || !trxid) {
+      alert('দয়া করে মোবাইল নম্বর, টাকার পরিমাণ ও TrxID সঠিকভাবে পূরণ করুন!');
+      return;
+    }
+    alert(`ধন্যবাদ! আপনার ৳${amount} ডিপোজিট রিকোয়েস্ট জমা হয়েছে। TrxID: ${trxid}। অ্যাডমিন দ্রুত ভেরিফাই করে ব্যালেন্স যোগ করবেন।`);
+    document.getElementById('dep_phone').value = '';
+    document.getElementById('dep_amount').value = '';
+    document.getElementById('dep_trxid').value = '';
   }
 
   // START GAME
   function startGame(gameKey, setKey) {
-    if (!isLoggedIn) {
-      navigate('auth');
-      return;
-    }
+    if (!isLoggedIn) { navigate('auth'); return; }
     const setList = QUESTION_DATABASE[gameKey] && QUESTION_DATABASE[gameKey][setKey];
     if (!setList || setList.length === 0) {
       alert(currentLang === 'bn' ? 'শীঘ্রই প্রশ্ন যুক্ত করা হচ্ছে।' : 'Questions loading soon.');
@@ -1335,7 +1629,6 @@
     clearTimeout(autoAdvanceTimeout);
     hasAnsweredCurrentQ = false;
 
-    // Reset Next Button state
     const nextBtn = document.getElementById('btn_next_q');
     if (nextBtn) {
       nextBtn.disabled = true;
@@ -1419,7 +1712,6 @@
     updateLiveInGameStats();
     activateNextButton();
 
-    // Auto advance fallback after 2s
     autoAdvanceTimeout = setTimeout(() => {
       goToNextQuestion();
     }, 2000);
@@ -1518,6 +1810,19 @@
     document.getElementById('sc_wrong').innerText = `${wrongAnswers} (-${wrongAnswers * 10} Pts / -৳${(wrongAnswers * 0.50).toFixed(2)})`;
     document.getElementById('sc_net_pts').innerText = `${netPts >= 0 ? '+' : ''}${netPts} Pts`;
     document.getElementById('sc_earned_bdt').innerText = `${earnedBdt >= 0 ? '+' : ''}৳${earnedBdt}`;
+
+    // Save game record to history
+    let history = JSON.parse(localStorage.getItem('edu_game_history') || '[]');
+    history.unshift({
+      user: "Md Hossain",
+      game: document.getElementById('quiz_game_title').innerText,
+      correct: correctAnswers,
+      wrong: wrongAnswers,
+      pts: `${netPts >= 0 ? '+' : ''}${netPts} Pts`,
+      tk: `${earnedBdt >= 0 ? '+' : ''}৳${earnedBdt}`,
+      date: new Date().toLocaleDateString()
+    });
+    localStorage.setItem('edu_game_history', JSON.stringify(history.slice(0, 50)));
 
     document.getElementById('scorecard_modal').style.display = 'flex';
   }
